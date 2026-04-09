@@ -35,7 +35,7 @@ export function LoadingSkeleton() {
               
               {/* 按钮骨架 */}
               <div className="flex items-center gap-3 pt-1">
-                <div className="h-12 md:h-14 w-36 md:w-40 bg-zinc-800/50 rounded-lg animate-pulse" />
+                <div className="h-12 md:h-14 w-36 md:w-40 bg-zinc-800/50 rounded-full animate-pulse" />
               </div>
             </div>
           </div>
@@ -58,7 +58,8 @@ export function LoadingSkeleton() {
           <div key={i} className="px-4 md:px-12">
             {/* 分类标题骨架 */}
             <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 relative">
+                <span className="absolute -left-4 top-0 bottom-0 w-1 bg-red-600 rounded-full"></span>
                 <div className="w-5 h-5 md:w-6 md:h-6 bg-zinc-900/50 rounded animate-pulse" />
                 <div className="h-7 md:h-8 bg-zinc-900/50 rounded-lg w-32 md:w-40 animate-pulse" />
               </div>
@@ -71,13 +72,9 @@ export function LoadingSkeleton() {
               {[...Array(15)].map((_, j) => (
                 <div key={j} className="flex-shrink-0 w-40 sm:w-48 md:w-56">
                   {/* 海报骨架 */}
-                  <div className="relative aspect-[2/3] bg-gradient-to-br from-zinc-950 via-black to-zinc-950 rounded-lg overflow-hidden">
+                  <div className="relative aspect-[2/3] bg-gradient-to-br from-zinc-950 via-black to-zinc-950 rounded-xl overflow-hidden shadow-lg shadow-black/50">
                     <div className="absolute inset-0 animate-pulse bg-gradient-to-tr from-transparent via-white/10 to-transparent" />
                   </div>
-                  {/* 标题骨架 */}
-                  <div className="h-5 md:h-6 bg-zinc-900/50 rounded w-3/4 mt-2 animate-pulse" />
-                  {/* 评分骨架 */}
-                  <div className="h-4 bg-zinc-900/30 rounded w-1/2 mt-1.5 animate-pulse" />
                 </div>
               ))}
             </div>

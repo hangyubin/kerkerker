@@ -110,8 +110,8 @@ export function HeroBanner({
                 />
 
                 {/* 智能遮罩系统 */}
-                <div className="absolute inset-0 bg-linear-to-t from-black via-black/60 to-transparent opacity-90" />
-                <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/40 to-transparent hidden md:block" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-95" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent hidden md:block" />
               </div>
 
               {/* 内容区域 */}
@@ -187,7 +187,7 @@ export function HeroBanner({
                     <div className="flex items-center gap-4">
                       <button
                         onClick={() => onMovieClick(movie)}
-                        className="group flex items-center gap-3 bg-white text-black px-8 py-3.5 rounded-xl font-bold hover:bg-primary hover:scale-105 transition-all duration-300 shadow-lg shadow-white/5"
+                        className="group flex items-center gap-3 bg-white text-black px-8 py-3.5 rounded-full font-bold hover:bg-gray-200 hover:scale-105 transition-all duration-300 shadow-xl shadow-white/10 hover:shadow-white/20"
                       >
                         <Play className="w-6 h-6 fill-black group-hover:fill-black transition-colors" />
                         <span className="text-lg">立即播放</span>

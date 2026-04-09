@@ -25,7 +25,8 @@ export function CategoryRow({
     <div className="px-4 md:px-12">
       {/* 标题和查看更多 */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
+        <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3 relative">
+          <span className="absolute -left-4 top-0 bottom-0 w-1 bg-red-600 rounded-full"></span>
           {icon}
           <span>{title}</span>
         </h2>

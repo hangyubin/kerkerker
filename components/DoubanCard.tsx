@@ -21,10 +21,10 @@ export default function DoubanCard({ movie, onSelect, priority = false }: Douban
   return (
     <div
       onClick={() => onSelect(movie)}
-      className="group relative cursor-pointer transition-all duration-300 hover:scale-102 hover:z-10"
+      className="group relative cursor-pointer transition-all duration-300 hover:scale-105 hover:z-20"
     >
       {/* 海报图片 */}
-      <div className="relative aspect-2/3 overflow-hidden rounded-lg bg-gray-800">
+      <div className="relative aspect-2/3 overflow-hidden rounded-xl bg-gray-800 shadow-lg shadow-black/50 hover:shadow-2xl hover:shadow-black/70 transition-all duration-300">
         {!imageError ? (
           <img
             src={imageUrl}
@@ -70,25 +70,25 @@ export default function DoubanCard({ movie, onSelect, priority = false }: Douban
       </div>
 
       {/* 悬浮信息层 */}
-      <div className="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex flex-col justify-end p-4">
-        <h3 className="text-white font-bold text-base mb-2 line-clamp-2">
-          {movie.title}
-        </h3>
-        
-        {movie.episode_info && movie.episode_info.length > 0 && (
-          <p className="text-gray-300 text-xs mb-2">
-            {movie.episode_info}
-          </p>
-        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-xl flex flex-col justify-end p-4 transform group-hover:translate-y-0 translate-y-2">
+          <h3 className="text-white font-bold text-base mb-2 line-clamp-2 drop-shadow-lg">
+            {movie.title}
+          </h3>
+          
+          {movie.episode_info && movie.episode_info.length > 0 && (
+            <p className="text-gray-300 text-xs mb-2 drop-shadow-md">
+              {movie.episode_info}
+            </p>
+          )}
 
-        {/* 播放按钮 */}
-        <div className="mt-3 flex items-center space-x-2">
-          <button className="flex items-center gap-2 bg-white text-black px-4 py-2 rounded-lg text-sm font-semibold hover:bg-opacity-90 hover:scale-105 transition-all duration-200 shadow-lg">
-            <Play className="w-4 h-4 fill-current" />
-            <span>立即播放</span>
-          </button>
+          {/* 播放按钮 */}
+          <div className="mt-3 flex items-center space-x-2">
+            <button className="flex items-center gap-2 bg-white text-black px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-200 hover:scale-105 transition-all duration-200 shadow-xl shadow-white/10">
+              <Play className="w-4 h-4 fill-current" />
+              <span>立即播放</span>
+            </button>
+          </div>
         </div>
-      </div>
     </div>
   );
 }
