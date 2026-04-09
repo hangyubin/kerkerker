@@ -29,8 +29,8 @@ function LoginForm() {
       const data = await res.json();
 
       if (res.ok) {
+        // 只执行路由跳转，移除 router.refresh() 避免可能的 cookie 丢失
         router.push(redirect);
-        router.refresh();
       } else {
         setError(data.error || "登录失败");
       }
