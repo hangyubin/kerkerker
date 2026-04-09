@@ -2,8 +2,8 @@
 
 // 弹幕 API 配置
 const DANMU_API_URL =
-  process.env.NEXT_PUBLIC_DANMU_API_URL || "https://danmuapi1-eight.vercel.app";
-const DANMU_API_TOKEN = process.env.NEXT_PUBLIC_DANMU_API_TOKEN || "woshinidie";
+  process.env.NEXT_PUBLIC_DANMU_API_URL || "http://192.168.2.253:9321";
+const DANMU_API_TOKEN = process.env.NEXT_PUBLIC_DANMU_API_TOKEN || "";
 
 // 类型定义
 export interface Anime {
@@ -104,7 +104,10 @@ export interface MatchResponse {
 
 // 获取 API 基础 URL
 function getApiBaseUrl(): string {
-  return `${DANMU_API_URL}/${DANMU_API_TOKEN}`;
+  if (DANMU_API_TOKEN) {
+    return `${DANMU_API_URL}/${DANMU_API_TOKEN}`;
+  }
+  return DANMU_API_URL;
 }
 
 /**
