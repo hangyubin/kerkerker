@@ -373,39 +373,53 @@ export function LocalHlsPlayer({
               message: "正在自动匹配弹幕...",
             });
 
-            autoLoadDanmaku(title).then((result) => {
-              if (result.success && result.danmaku.length > 0) {
-                setDanmakuList(result.danmaku);
-                setAutoLoadStatus({
-                  loading: false,
-                  message: result.message,
-                  matchedTitle: result.matchedTitle,
-                });
+            // 创建 AbortController
+            const abortController = new AbortController();
+            const signal = abortController.signal;
 
-                // 加载弹幕到播放器
+            autoLoadDanmaku(title, signal).then((result) => {
+              if (isMountedRef.current) {
+                if (result.success && result.danmaku.length > 0) {
+                  setDanmakuList(result.danmaku);
+                  setAutoLoadStatus({
+                    loading: false,
+                    message: result.message,
+                    matchedTitle: result.matchedTitle,
+                  });
 
-                const plugin = art.plugins.artplayerPluginDanmuku as any;
-                if (plugin) {
-                  plugin.config({ danmuku: result.danmaku });
-                  plugin.load();
-                  console.log(`🎯 自动加载 ${result.danmaku.length} 条弹幕`);
+                  // 加载弹幕到播放器
+                  const plugin = art.plugins.artplayerPluginDanmuku as any;
+                  if (plugin) {
+                    plugin.config({ danmuku: result.danmaku });
+                    plugin.load();
+                    console.log(`🎯 自动加载 ${result.danmaku.length} 条弹幕`);
+                  }
+
+                  // 3秒后清除提示
+                  const clearTimer = setTimeout(() => {
+                    if (isMountedRef.current) {
+                      setAutoLoadStatus({ loading: false, message: "" });
+                    }
+                  }, 3000);
+                  timersRef.current.add(clearTimer);
+                } else {
+                  setAutoLoadStatus({
+                    loading: false,
+                    message: result.message,
+                  });
+                  // 5秒后清除错误提示
+                  const errorTimer = setTimeout(() => {
+                    if (isMountedRef.current) {
+                      setAutoLoadStatus({ loading: false, message: "" });
+                    }
+                  }, 5000);
+                  timersRef.current.add(errorTimer);
                 }
-
-                // 3秒后清除提示
-                setTimeout(() => {
-                  setAutoLoadStatus({ loading: false, message: "" });
-                }, 3000);
-              } else {
-                setAutoLoadStatus({
-                  loading: false,
-                  message: result.message,
-                });
-                // 5秒后清除错误提示
-                setTimeout(() => {
-                  setAutoLoadStatus({ loading: false, message: "" });
-                }, 5000);
               }
             });
+
+            // 存储 abortController 以便在组件卸载时取消
+            timersRef.current.add({ clear: () => abortController.abort() } as any);
           }
         });
 

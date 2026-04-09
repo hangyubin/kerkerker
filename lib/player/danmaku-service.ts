@@ -110,7 +110,7 @@ function getApiBaseUrl(): string {
 /**
  * 搜索动漫
  */
-export async function searchAnime(keyword: string): Promise<Anime[]> {
+export async function searchAnime(keyword: string, signal?: AbortSignal): Promise<Anime[]> {
   if (!keyword || keyword.trim() === "") {
     return [];
   }
@@ -119,7 +119,7 @@ export async function searchAnime(keyword: string): Promise<Anime[]> {
     const url = `${getApiBaseUrl()}/api/v2/search/anime?keyword=${encodeURIComponent(
       keyword
     )}`;
-    const response = await fetch(url);
+    const response = await fetch(url, { signal });
 
     if (!response.ok) {
       console.error(`搜索动漫失败: HTTP ${response.status}`);
@@ -134,6 +134,9 @@ export async function searchAnime(keyword: string): Promise<Anime[]> {
 
     return [];
   } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      return [];
+    }
     console.error("搜索动漫出错:", error);
     return [];
   }
@@ -142,10 +145,10 @@ export async function searchAnime(keyword: string): Promise<Anime[]> {
 /**
  * 获取动漫详情（包含剧集列表）
  */
-export async function getBangumi(animeId: number): Promise<Bangumi | null> {
+export async function getBangumi(animeId: number, signal?: AbortSignal): Promise<Bangumi | null> {
   try {
     const url = `${getApiBaseUrl()}/api/v2/bangumi/${animeId}`;
-    const response = await fetch(url);
+    const response = await fetch(url, { signal });
 
     if (!response.ok) {
       console.error(`获取动漫详情失败: HTTP ${response.status}`);
@@ -160,6 +163,9 @@ export async function getBangumi(animeId: number): Promise<Bangumi | null> {
 
     return null;
   } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      return null;
+    }
     console.error("获取动漫详情出错:", error);
     return null;
   }
@@ -168,10 +174,10 @@ export async function getBangumi(animeId: number): Promise<Bangumi | null> {
 /**
  * 获取弹幕数据
  */
-export async function getComments(episodeId: number): Promise<DanmakuItem[]> {
+export async function getComments(episodeId: number, signal?: AbortSignal): Promise<DanmakuItem[]> {
   try {
     const url = `${getApiBaseUrl()}/api/v2/comment/${episodeId}?format=json`;
-    const response = await fetch(url);
+    const response = await fetch(url, { signal });
 
     if (!response.ok) {
       console.error(`获取弹幕失败: HTTP ${response.status}`);
@@ -186,6 +192,9 @@ export async function getComments(episodeId: number): Promise<DanmakuItem[]> {
 
     return [];
   } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      return [];
+    }
     console.error("获取弹幕出错:", error);
     return [];
   }
@@ -195,7 +204,8 @@ export async function getComments(episodeId: number): Promise<DanmakuItem[]> {
  * 自动匹配动漫
  */
 export async function matchAnime(
-  fileName: string
+  fileName: string,
+  signal?: AbortSignal
 ): Promise<MatchResponse | null> {
   try {
     const url = `${getApiBaseUrl()}/api/v2/match`;
@@ -208,6 +218,7 @@ export async function matchAnime(
         fileName,
         matchMode: "hashAndFileName",
       } as MatchRequest),
+      signal,
     });
 
     if (!response.ok) {
@@ -218,6 +229,9 @@ export async function matchAnime(
     const data: MatchResponse = await response.json();
     return data;
   } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      return null;
+    }
     console.error("自动匹配出错:", error);
     return null;
   }
@@ -306,7 +320,7 @@ export interface AutoLoadResult {
  * 自动匹配并加载弹幕
  * 根据视频标题自动匹配动漫和剧集，然后加载弹幕
  */
-export async function autoLoadDanmaku(videoTitle: string): Promise<AutoLoadResult> {
+export async function autoLoadDanmaku(videoTitle: string, signal?: AbortSignal): Promise<AutoLoadResult> {
   if (!videoTitle || videoTitle.trim() === "") {
     return {
       success: false,
@@ -319,13 +333,13 @@ export async function autoLoadDanmaku(videoTitle: string): Promise<AutoLoadResul
 
   try {
     // 尝试自动匹配
-    const matchResult = await matchAnime(videoTitle);
+    const matchResult = await matchAnime(videoTitle, signal);
 
     if (matchResult && matchResult.success && matchResult.isMatched && matchResult.episodeId) {
       console.log(`✅ 匹配成功: ${matchResult.animeTitle} - ${matchResult.episodeTitle}`);
 
       // 获取弹幕
-      const danmaku = await getComments(matchResult.episodeId);
+      const danmaku = await getComments(matchResult.episodeId, signal);
 
       if (danmaku.length > 0) {
         return {
@@ -349,10 +363,10 @@ export async function autoLoadDanmaku(videoTitle: string): Promise<AutoLoadResul
     // 匹配失败，尝试通过搜索找到第一个结果
     const keyword = extractSearchKeyword(videoTitle);
     if (keyword) {
-      const animes = await searchAnime(keyword);
+      const animes = await searchAnime(keyword, signal);
       if (animes.length > 0) {
         // 获取第一个匹配的动漫的剧集
-        const bangumi = await getBangumi(animes[0].animeId);
+        const bangumi = await getBangumi(animes[0].animeId, signal);
         if (bangumi && bangumi.episodes.length > 0) {
           // 尝试从视频标题提取集数
           const episodeMatch = videoTitle.match(/(?:E|EP|第)(\d+)(?:集|话)?/i) ||
@@ -369,7 +383,7 @@ export async function autoLoadDanmaku(videoTitle: string): Promise<AutoLoadResul
             }
           }
 
-          const danmaku = await getComments(targetEpisode.episodeId);
+          const danmaku = await getComments(targetEpisode.episodeId, signal);
           if (danmaku.length > 0) {
             return {
               success: true,
@@ -389,6 +403,13 @@ export async function autoLoadDanmaku(videoTitle: string): Promise<AutoLoadResul
       message: "未找到匹配的弹幕，请手动搜索",
     };
   } catch (error) {
+    if (error instanceof Error && error.name === 'AbortError') {
+      return {
+        success: false,
+        danmaku: [],
+        message: "自动加载已取消",
+      };
+    }
     console.error("自动加载弹幕出错:", error);
     return {
       success: false,

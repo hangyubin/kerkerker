@@ -88,10 +88,26 @@ function parseEpisodes(playUrl: string): Episode[] {
   }
 }
 
-// 返回错误响应的辅助函数
+/**
+ * 返回错误响应的辅助函数
+ * @param msg - 错误消息
+ * @param status - HTTP 状态码
+ * @returns NextResponse 错误响应
+ */
 function errorResponse(msg: string, status: number = 500): NextResponse {
   const result: ApiResponse = { code: status, msg };
   return NextResponse.json(result, { status });
+}
+
+/**
+ * 返回成功响应的辅助函数
+ * @param data - 响应数据
+ * @param msg - 成功消息
+ * @returns NextResponse 成功响应
+ */
+function successResponse<T>(data: T, msg: string = 'success'): NextResponse {
+  const result: ApiResponse<T> = { code: 200, msg, data };
+  return NextResponse.json(result);
 }
 
 export async function POST(request: NextRequest) {
@@ -181,13 +197,7 @@ export async function POST(request: NextRequest) {
       return errorResponse('无法解析响应格式');
     }
 
-    const result: ApiResponse<DramaDetail> = {
-      code: 200,
-      msg: 'success',
-      data: dramaDetail,
-    };
-
-    return NextResponse.json(result);
+    return successResponse(dramaDetail);
   } catch (error) {
     // 只对意外错误输出完整日志
     if (error instanceof Error && error.name === 'AbortError') {

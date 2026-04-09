@@ -70,6 +70,7 @@ export function UnifiedPlayer({
   const switchTimerRef = useRef<NodeJS.Timeout | null>(null);
   const isMountedRef = useRef<boolean>(true);
   const lastParsedUrlRef = useRef<string>("");
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   // 使用 ref 保存回调，避免频繁重建
   const onIframePlayerSwitchRef = useRef(onIframePlayerSwitch);
@@ -79,11 +80,22 @@ export function UnifiedPlayer({
     onIframePlayerSwitchRef.current = onIframePlayerSwitch;
   });
 
-  // 设置 mounted 状态
+  // 设置 mounted 状态，并清理所有资源
   useEffect(() => {
     isMountedRef.current = true;
+    
     return () => {
       isMountedRef.current = false;
+      // 清理所有定时器
+      if (switchTimerRef.current) {
+        clearTimeout(switchTimerRef.current);
+        switchTimerRef.current = null;
+      }
+      // 中止进行中的请求
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
     };
   }, []);
 
@@ -105,6 +117,10 @@ export function UnifiedPlayer({
         return;
       }
 
+      // 创建新的 AbortController
+      abortControllerRef.current?.abort();
+      abortControllerRef.current = new AbortController();
+
       setIsParsing(true);
       try {
         const response = await fetch("/api/drama/parse", {
@@ -114,6 +130,7 @@ export function UnifiedPlayer({
             url: videoUrl,
             source: vodSource,
           }),
+          signal: abortControllerRef.current.signal,
         });
 
         if (!isMountedRef.current) return;
@@ -127,13 +144,19 @@ export function UnifiedPlayer({
           const errorMsg = result.msg || result.data?.error || "视频解析失败";
           console.warn("[Video Parse]", errorMsg);
           setParseError(errorMsg);
-          // 不设置 parsedVideoUrl，保持 null 状态
         }
       } catch (error) {
         if (!isMountedRef.current) return;
+        
+        // 忽略中止请求的错误
+        if (error instanceof Error && error.name === 'AbortError') {
+          return;
+        }
+        
         console.warn("[Video Parse] 请求失败:", error);
         setParseError("视频解析请求失败，请检查网络连接");
       } finally {
+        abortControllerRef.current = null;
         if (isMountedRef.current) {
           setIsParsing(false);
         }
@@ -231,12 +254,22 @@ export function UnifiedPlayer({
   }, [effectiveMode, currentMode]);
 
   // 处理播放器错误（降级）
-  const handlePlayerError = useCallback(() => {
-    // 使用 setCurrentMode 的函数式更新，避免依赖 currentMode
+  const handlePlayerError = useCallback((error?: string) => {
+    console.warn("[Player Error]", error || "播放器加载失败");
+    
     setCurrentMode((prevMode) => {
+      // 如果当前是 local 模式，降级到 iframe
       if (prevMode === "local") {
+        console.log("[Player] 从 local 降级到 iframe 模式");
         return "iframe";
       }
+      
+      // 如果 iframe 也失败，显示错误
+      if (prevMode === "iframe") {
+        console.error("[Player] 所有播放器都不可用");
+        setParseError("所有播放线路都不可用，请稍后重试或切换其他视频源");
+      }
+      
       return prevMode;
     });
   }, []);
