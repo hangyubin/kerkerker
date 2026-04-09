@@ -2,8 +2,8 @@
 # 修复 QEMU ARM64 兼容性问题
 
 # ==================== 阶段 1: 依赖安装 ====================
-# 使用 Node.js 24 基础镜像
-ARG NODE_VERSION=24
+# 使用 Node.js 20 基础镜像（避开 QEMU 兼容性问题）
+ARG NODE_VERSION=20
 FROM node:${NODE_VERSION}-alpine AS deps
 
 # 安装 libc6-compat 以提供更好的兼容性

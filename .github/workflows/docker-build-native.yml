@@ -44,7 +44,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            NODE_VERSION=24
+            NODE_VERSION=20
 
   # ARM64 原生构建任务（使用 ARM64 运行器）
   build-arm64:
@@ -77,7 +77,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            NODE_VERSION=24
+            NODE_VERSION=20
 
   # 合并多架构镜像
   merge-manifests:
