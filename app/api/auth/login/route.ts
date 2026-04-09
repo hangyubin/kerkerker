@@ -33,8 +33,8 @@ export async function POST(request: NextRequest) {
     const response = NextResponse.json({ success: true });
     response.cookies.set(SESSION_COOKIE_NAME, 'authenticated', {
       httpOnly: true,
-      secure: isProduction,
-      sameSite: 'strict',
+      secure: false, // 强制禁用 secure，避免 HTTP 环境下 cookie 无法设置
+      sameSite: 'lax', // 使用 lax 以确保跨域请求时 cookie 能被正确传递
       maxAge: SESSION_MAX_AGE,
       path: '/',
     });
