@@ -2,7 +2,9 @@
 # 修复 QEMU ARM64 兼容性问题
 
 # ==================== 阶段 1: 依赖安装 ====================
-FROM node:20-alpine AS deps
+# 使用 Node.js 24 基础镜像
+ARG NODE_VERSION=24
+FROM node:${NODE_VERSION}-alpine AS deps
 
 # 安装 libc6-compat 以提供更好的兼容性
 RUN apk add --no-cache libc6-compat
@@ -16,10 +18,13 @@ COPY package.json package-lock.json* ./
 # 安装依赖
 # 使用 --unsafe-perm 避免权限问题，--maxsockets 限制并发连接
 RUN npm ci --unsafe-perm --maxsockets 1 && \
+    # 运行 npm audit fix 修复安全漏洞
+    npm audit fix --force && \
+    # 清理缓存
     npm cache clean --force
 
 # ==================== 阶段 2: 构建应用 ====================
-FROM node:20-alpine AS builder
+FROM node:${NODE_VERSION}-alpine AS builder
 
 WORKDIR /app
 
@@ -35,7 +40,7 @@ ENV NODE_ENV=production
 RUN npm run build
 
 # ==================== 阶段 3: 运行应用 ====================
-FROM node:20-alpine AS runner
+FROM node:${NODE_VERSION}-alpine AS runner
 
 WORKDIR /app
 

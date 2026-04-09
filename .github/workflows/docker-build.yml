@@ -80,5 +80,6 @@ jobs:
           # 设置构建参数以优化 ARM64 构建
           build-args: |
             NODE_OPTIONS=--max-old-space-size=4096
+            NODE_VERSION=24
           # 增加构建超时时间
           timeout: 120m
