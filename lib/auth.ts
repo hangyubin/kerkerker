@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 /** Session cookie 名称 */
 const SESSION_COOKIE_NAME = 'admin_session';
@@ -25,36 +25,43 @@ function getAdminPassword(): string {
 /**
  * 创建会话
  * 设置 HTTP-only Cookie，生产环境启用 secure 标志
+ * @returns NextResponse 带有设置的 cookie
  */
-export async function createSession(): Promise<void> {
-  const cookieStore = await cookies();
+export function createSession(): NextResponse {
+  const response = NextResponse.next();
   
-  cookieStore.set(SESSION_COOKIE_NAME, 'authenticated', {
+  response.cookies.set(SESSION_COOKIE_NAME, 'authenticated', {
     httpOnly: true,
     secure: isProduction,
     sameSite: 'strict',
     maxAge: SESSION_MAX_AGE,
     path: '/',
   });
+  
+  return response;
 }
 
 /**
  * 删除会话
  * 清除客户端 Cookie
+ * @returns NextResponse 带有删除的 cookie
  */
-export async function deleteSession(): Promise<void> {
-  const cookieStore = await cookies();
-  cookieStore.delete(SESSION_COOKIE_NAME);
+export function deleteSession(): NextResponse {
+  const response = NextResponse.next();
+  
+  response.cookies.delete(SESSION_COOKIE_NAME);
+  
+  return response;
 }
 
 /**
  * 验证会话有效性
+ * @param cookies - 请求的 cookies 对象
  * @returns 会话是否有效
  */
-export async function validateSession(): Promise<boolean> {
+export function validateSession(cookies: any): boolean {
   try {
-    const cookieStore = await cookies();
-    const session = cookieStore.get(SESSION_COOKIE_NAME);
+    const session = cookies.get(SESSION_COOKIE_NAME);
     return session?.value === 'authenticated';
   } catch {
     return false;

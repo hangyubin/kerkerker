@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createSession, validatePassword } from '@/lib/auth';
+import { validatePassword } from '@/lib/auth';
+
+/** Session cookie 名称 */
+const SESSION_COOKIE_NAME = 'admin_session';
+
+/** Cookie 有效期：7天（单位：秒） */
+const SESSION_MAX_AGE = 60 * 60 * 24 * 7;
+
+/** 判断是否为生产环境 */
+const isProduction = process.env.NODE_ENV === 'production';
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,9 +30,15 @@ export async function POST(request: NextRequest) {
     }
 
     // 创建会话
-    await createSession();
-
-    return NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true });
+    response.cookies.set(SESSION_COOKIE_NAME, 'authenticated', {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: 'strict',
+      maxAge: SESSION_MAX_AGE,
+      path: '/',
+    });
+    return response;
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(

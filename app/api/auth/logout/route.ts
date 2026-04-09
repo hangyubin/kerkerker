@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server';
-import { deleteSession } from '@/lib/auth';
+
+/** Session cookie 名称 */
+const SESSION_COOKIE_NAME = 'admin_session';
 
 export async function POST() {
   try {
-    await deleteSession();
-    return NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true });
+    response.cookies.delete(SESSION_COOKIE_NAME);
+    return response;
   } catch (error) {
     console.error('Logout error:', error);
     return NextResponse.json(
