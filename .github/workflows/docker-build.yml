@@ -28,13 +28,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          # 使用最新版本的 QEMU，修复 ARM64 兼容性问题
-          platforms: linux/amd64,linux/arm64
-          # 启用 QEMU 的 TCG 加速
-          image: tonistiigi/binfmt:latest
+      # 暂时注释掉 QEMU 步骤，只构建 amd64 平台
+      # - name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v3
+      #   with:
+      #     # 使用最新版本的 QEMU，修复 ARM64 兼容性问题
+      #     platforms: linux/amd64,linux/arm64
+      #     # 启用 QEMU 的 TCG 加速
+      #     image: tonistiigi/binfmt:latest
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -74,12 +75,13 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: linux/amd64,linux/arm64
-          # 使用 BuildKit 的跨平台构建优化
+          # 只构建 linux/amd64 平台，注释掉 ARM64 以避免 QEMU 崩溃
+          platforms: linux/amd64
+          # 使用 BuildKit 的构建优化
           provenance: false
-          # 设置构建参数以优化 ARM64 构建
+          # 设置构建参数
           build-args: |
             NODE_OPTIONS=--max-old-space-size=4096
             NODE_VERSION=20
-          # 增加构建超时时间
-          timeout: 120m
+          # 设置合理的构建超时时间
+          timeout: 60m
