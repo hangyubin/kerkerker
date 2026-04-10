@@ -40,7 +40,7 @@ export default function HomePage() {
   useScrollRestoration("home", { delay: 100 });
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-[var(--theme-background)]">
       {/* 导航栏 */}
       <Navbar scrolled={scrolled} onSearchOpen={() => setShowSearch(true)} />
 
@@ -66,7 +66,7 @@ export default function HomePage() {
           />
 
           {/* 分类列表区域 */}
-          <div className="relative z-20 space-y-10 md:space-y-12 lg:space-y-16 pb-16">
+          <div className="relative z-20 mt-8 md:mt-12 lg:mt-16 space-y-10 md:space-y-12 lg:space-y-16 pb-16">
 
             {/* 渲染所有新 API 返回的分类 */}
             {categories.length > 0

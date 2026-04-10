@@ -43,7 +43,7 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#141414]">
+    <div className="min-h-screen flex items-center justify-center bg-[var(--theme-background)]">
       <div className="w-full max-w-md px-6">
         <div className="bg-[#1a1a1a] rounded-lg shadow-2xl p-10 border border-[#333]">
           {/* Netflix Logo Style */}

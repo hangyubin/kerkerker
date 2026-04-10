@@ -303,7 +303,7 @@ export default function CalendarPage() {
       <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} />
 
       {/* Hero 区域 */}
-      <div className="relative w-full pt-16 pb-8 md:pt-20 md:pb-12 bg-gradient-to-b from-gray-900 to-black">
+      <div className="relative w-full pt-16 pb-8 md:pt-20 md:pb-12 bg-gradient-to-b from-[var(--theme-background)] to-[var(--theme-background)]">
         <div className="px-4 md:px-12 lg:px-16">
           {/* 标题行 */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">

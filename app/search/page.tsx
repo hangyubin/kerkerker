@@ -214,9 +214,9 @@ function SearchContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-red-500/30">
+    <div className="min-h-screen bg-[var(--theme-background)] text-[var(--theme-text)] selection:bg-[var(--theme-primary)]/30">
       {/* 顶部导航栏 */}
-      <div className="sticky top-0 left-0 right-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-black/50">
+      <div className="sticky top-0 left-0 right-0 z-50 bg-[var(--theme-background)]/95 backdrop-blur-xl border-b border-[var(--theme-border)] shadow-2xl shadow-black/50">
         <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center gap-4">
             {/* 返回按钮和Logo */}

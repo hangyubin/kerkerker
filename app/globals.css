@@ -3,6 +3,19 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* 主题变量默认值 */
+  --theme-primary: #e50914;
+  --theme-secondary: #333333;
+  --theme-background: #000000;
+  --theme-surface: #121212;
+  --theme-text: #ffffff;
+  --theme-textSecondary: #b3b3b3;
+  --theme-border: #333333;
+  --theme-accent: #e50914;
+  --theme-error: #e50914;
+  --theme-success: #22c55e;
+  --theme-warning: #f59e0b;
+  --theme-info: #3b82f6;
 }
 
 @theme inline {
@@ -20,8 +33,8 @@
 }
 
 body {
-  background: #000000;
-  color: #ffffff;
+  background: var(--theme-background);
+  color: var(--theme-text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
   overflow-x: hidden;

@@ -154,16 +154,16 @@ export default function CategoryPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-950 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-b from-[var(--theme-background)] via-[var(--theme-background)] to-[var(--theme-background)] text-[var(--theme-text)]">
       {/* 顶部导航栏 */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-gray-800/50">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[var(--theme-background)]/90 backdrop-blur-md border-b border-[var(--theme-border)]">
         <div className="px-4 md:px-12 py-5">
           <div className="flex items-center justify-between">
             <button
               onClick={goBack}
-              className="flex items-center gap-2 text-white/80 hover:text-white transition-all group"
+              className="flex items-center gap-2 text-[var(--theme-text)]/80 hover:text-[var(--theme-text)] transition-all group"
             >
-              <div className="p-1.5 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors">
+              <div className="p-1.5 rounded-full bg-[var(--theme-hover)] group-hover:bg-[var(--theme-card)] transition-colors">
                 <svg
                   className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform"
                   fill="none"
@@ -180,7 +180,7 @@ export default function CategoryPage() {
               </div>
               <span className="text-sm md:text-base font-medium">返回</span>
             </button>
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] bg-clip-text text-transparent">
               壳儿
             </h1>
           </div>
@@ -188,7 +188,7 @@ export default function CategoryPage() {
       </nav>
 
       {/* Hero 区域 */}
-      <div className="relative pt-24 pb-6 px-4 md:px-12 overflow-hidden">
+      <div className="relative pt-24 pb-12 px-4 md:px-12 overflow-hidden">
         {/* 装饰性背景 */}
         <div
           className={`absolute inset-0 bg-gradient-to-r ${config.gradient}`}
@@ -203,7 +203,7 @@ export default function CategoryPage() {
         <div className="relative">
           <div className="flex items-center gap-4">
             <div className="text-2xl md:text-4xl">{config.emoji}</div>
-            <h1 className="text-4xl md:text-4xl font-bold text-white mb-2 tracking-tight">
+            <h1 className="text-4xl md:text-4xl font-bold text-[var(--theme-text)] mb-2 tracking-tight">
               {config.name}
             </h1>
           </div>
@@ -215,17 +215,17 @@ export default function CategoryPage() {
         {loading ? (
           <div className="flex items-center justify-center py-32">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-4 border-gray-700 border-t-red-600 mx-auto mb-4" />
-              <p className="text-gray-400 text-lg">正在加载精彩内容...</p>
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-[var(--theme-border)] border-t-[var(--theme-primary)] mx-auto mb-4" />
+              <p className="text-[var(--theme-text-secondary)] text-lg">正在加载精彩内容...</p>
             </div>
           </div>
         ) : error ? (
           <div className="flex items-center justify-center py-32">
             <div className="text-center">
-              <p className="text-red-500 mb-4">{error}</p>
+              <p className="text-[var(--theme-primary)] mb-4">{error}</p>
               <button
                 onClick={refetch}
-                className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors shadow-lg shadow-red-600/20"
+                className="px-6 py-3 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] text-white rounded-lg font-medium transition-colors shadow-lg shadow-[var(--theme-primary)]/20"
               >
                 重新加载
               </button>
@@ -234,14 +234,14 @@ export default function CategoryPage() {
         ) : movies.length === 0 ? (
           <div className="flex items-center justify-center py-32">
             <div className="text-center">
-              <div className="w-20 h-20 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Film className="w-10 h-10 text-gray-600" />
+              <div className="w-20 h-20 bg-[var(--theme-card)] rounded-full flex items-center justify-center mx-auto mb-4">
+                <Film className="w-10 h-10 text-[var(--theme-text-secondary)]" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">暂无内容</h3>
-              <p className="text-gray-400 mb-6">该分类暂无影片数据</p>
+              <h3 className="text-xl font-bold text-[var(--theme-text)] mb-2">暂无内容</h3>
+              <p className="text-[var(--theme-text-secondary)] mb-6">该分类暂无影片数据</p>
               <button
                 onClick={goBack}
-                className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors"
+                className="px-6 py-3 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] text-white rounded-lg font-medium transition-colors"
               >
                 返回首页
               </button>
@@ -266,7 +266,7 @@ export default function CategoryPage() {
                 <button
                   onClick={loadMore}
                   disabled={loadingMore}
-                  className="flex items-center gap-2 px-8 py-4 bg-white/5 hover:bg-white/10 disabled:bg-white/5 text-white rounded-xl font-medium transition-all border border-white/10 hover:border-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-8 py-4 bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] disabled:bg-[var(--theme-card)] text-[var(--theme-text)] rounded-xl font-medium transition-all border border-[var(--theme-border)] hover:border-[var(--theme-text)]/20 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loadingMore ? (
                     <>
@@ -297,8 +297,8 @@ export default function CategoryPage() {
 
             {/* 没有更多了 */}
             {!hasMore && movies.length > 0 && (
-              <div className="text-center mt-12 text-gray-500">
-                <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 rounded-xl">
+              <div className="text-center mt-12 text-[var(--theme-text-secondary)]">
+                <div className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--theme-card)] rounded-xl">
                   <svg
                     className="w-5 h-5"
                     fill="none"

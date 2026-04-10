@@ -70,7 +70,7 @@ export function HeroBanner({
   }
 
   return (
-    <div className="relative w-full group">
+    <div className="relative w-full group z-10">
       {/* 海报容器 - 使用固定宽高比 */}
       <div className="relative w-full aspect-3/4 md:aspect-12/5 overflow-hidden">
         {/* 轮播图片 */}
@@ -125,7 +125,7 @@ export function HeroBanner({
                     }`}
                   >
                     {/* 标题 */}
-                    <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 leading-tight drop-shadow-xl">
+                    <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-[var(--theme-text)] mb-4 leading-tight drop-shadow-xl">
                       {movie.title}
                     </h1>
 
@@ -140,7 +140,7 @@ export function HeroBanner({
 
                       {heroData.genres && heroData.genres.length > 0 && (
                         <div className="flex items-center gap-2">
-                          <span className="hidden md:inline text-gray-400">
+                          <span className="hidden md:inline text-[var(--theme-textSecondary)]">
                             •
                           </span>
                           {heroData.genres
@@ -148,7 +148,7 @@ export function HeroBanner({
                             .map((genre: string, idx: number) => (
                               <span
                                 key={idx}
-                                className="text-gray-200 shadow-black drop-shadow-md"
+                                className="text-[var(--theme-textSecondary)] shadow-black drop-shadow-md"
                               >
                                 {genre}
                               </span>
@@ -158,10 +158,10 @@ export function HeroBanner({
 
                       {movie.episode_info && (
                         <>
-                          <span className="hidden md:inline text-gray-400">
+                          <span className="hidden md:inline text-[var(--theme-textSecondary)]">
                             •
                           </span>
-                          <span className="text-gray-300 bg-white/10 px-2 py-0.5 rounded text-xs backdrop-blur-sm">
+                          <span className="text-[var(--theme-textSecondary)] bg-white/10 px-2 py-0.5 rounded text-xs backdrop-blur-sm">
                             {movie.episode_info}
                           </span>
                         </>
@@ -171,7 +171,7 @@ export function HeroBanner({
                     {/* 简介 - 仅PC端显示 */}
                     {heroData.description && (
                       <p
-                        className="hidden md:block text-gray-300 text-base lg:text-lg mb-8 max-w-2xl leading-relaxed drop-shadow-md"
+                        className="hidden md:block text-[var(--theme-textSecondary)] text-base lg:text-lg mb-8 max-w-2xl leading-relaxed drop-shadow-md"
                         style={{
                           display: "-webkit-box",
                           WebkitLineClamp: 3,
@@ -187,9 +187,9 @@ export function HeroBanner({
                     <div className="flex items-center gap-4">
                       <button
                         onClick={() => onMovieClick(movie)}
-                        className="group flex items-center gap-3 bg-white text-black px-8 py-3.5 rounded-full font-bold hover:bg-gray-200 hover:scale-105 transition-all duration-300 shadow-xl shadow-white/10 hover:shadow-white/20"
+                        className="group flex items-center gap-3 bg-[var(--theme-primary)] text-[var(--theme-text)] px-8 py-3.5 rounded-full font-bold hover:bg-[var(--theme-primary)]/80 hover:scale-105 transition-all duration-300 shadow-2xl shadow-[var(--theme-primary)]/20 hover:shadow-[var(--theme-primary)]/30 animate-fade-in"
                       >
-                        <Play className="w-6 h-6 fill-black group-hover:fill-black transition-colors" />
+                        <Play className="w-6 h-6 fill-[var(--theme-text)] group-hover:fill-[var(--theme-text)] transition-colors" />
                         <span className="text-lg">立即播放</span>
                       </button>
                     </div>

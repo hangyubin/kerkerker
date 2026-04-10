@@ -142,7 +142,7 @@ function DailymotionContent() {
 
   if (error || !channelData) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-8">
+      <div className="min-h-screen bg-[var(--theme-background)] flex items-center justify-center p-8">
         <div className="text-center">
           <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
           <h2 className="text-white text-2xl font-bold mb-2">

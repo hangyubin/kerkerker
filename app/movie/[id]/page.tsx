@@ -358,21 +358,21 @@ export default function MovieDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white font-sans selection:bg-red-500/30">
-      {/* 沉浸式背景 - 调整透明度以保持整体暗黑风格一致性 */}
+    <div className="min-h-screen bg-[var(--theme-background)] text-[var(--theme-text)] font-sans selection:bg-[var(--theme-primary)]/30">
+      {/* 沉浸式背景 - 调整透明度以保持整体风格一致性 */}
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-[#0a0a0a] z-0" />
+        <div className="absolute inset-0 bg-[var(--theme-background)] z-0" />
         <img
           src={getImageUrl(cover)}
           alt={title}
           className="absolute inset-0 w-full h-full object-cover opacity-20 blur-3xl scale-110"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent z-10" />
-        <div className="absolute inset-0 bg-linear-to-r from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent z-10" />
+        <div className="absolute inset-0 bg-linear-to-t from-[var(--theme-background)] via-[var(--theme-background)]/80 to-transparent z-10" />
+        <div className="absolute inset-0 bg-linear-to-r from-[var(--theme-background)] via-[var(--theme-background)]/60 to-transparent z-10" />
       </div>
 
       {/* 导航栏 */}
-      <nav className="sticky top-0 left-0 right-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-black/50">
+      <nav className="sticky top-0 left-0 right-0 z-50 bg-[var(--theme-background)]/95 backdrop-blur-xl border-b border-[var(--theme-border)] shadow-2xl shadow-black/50">
         <div className="max-w-[2000px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center gap-4">
             <button

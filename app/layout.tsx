@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { SWRProvider } from "@/components/providers/swr-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "壳儿 - 免费影视在线观看",
+  title: "光影流年 - 免费影视在线观看",
   description:
-    "壳儿 - 免费观看最新热门影视剧集，海量高清资源在线播放，支持多集连播",
+    "光影流年 - 免费观看最新热门影视剧集，海量高清资源在线播放，支持多集连播",
 };
 
 export default function RootLayout({
@@ -50,19 +51,23 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
-          {`
+          {
+            `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-FXGFKZZHR7');
-          `}
+          `
+          }
         </Script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <SWRProvider>{children}</SWRProvider>
+        <ThemeProvider>
+          <SWRProvider>{children}</SWRProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

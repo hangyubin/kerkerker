@@ -219,8 +219,8 @@ function FilterRow({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="flex items-start gap-3 py-2 border-b border-gray-800/50 last:border-b-0">
-      <span className="text-gray-400 text-sm whitespace-nowrap min-w-12 pt-1">
+    <div className="flex items-start gap-3 py-2 border-b border-[var(--theme-border)] last:border-b-0">
+      <span className="text-[var(--theme-text-secondary)] text-sm whitespace-nowrap min-w-12 pt-1">
         {label}：
       </span>
       <div className="flex flex-wrap gap-x-4 gap-y-2">
@@ -232,8 +232,8 @@ function FilterRow({
               onClick={() => onChange(option === "全部" ? "" : option)}
               className={`text-sm transition-colors ${
                 isActive
-                  ? "text-blue-500 font-medium"
-                  : "text-gray-300 hover:text-white"
+                  ? "text-[var(--theme-primary)] font-medium"
+                  : "text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)]"
               }`}
             >
               {option}
@@ -449,16 +449,16 @@ export default function BrowsePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-950 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-b from-[var(--theme-background)] via-[var(--theme-background)] to-[var(--theme-background)] text-[var(--theme-text)]">
       {/* 顶部导航栏 */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-gray-800/50">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[var(--theme-background)]/90 backdrop-blur-md border-b border-[var(--theme-border)]">
         <div className="px-4 md:px-12 py-5">
           <div className="flex items-center justify-between">
             <button
               onClick={goBack}
-              className="flex items-center gap-2 text-white/80 hover:text-white transition-all group"
+              className="flex items-center gap-2 text-[var(--theme-text)]/80 hover:text-[var(--theme-text)] transition-all group"
             >
-              <div className="p-1.5 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors">
+              <div className="p-1.5 rounded-full bg-[var(--theme-hover)] group-hover:bg-[var(--theme-card)] transition-colors">
                 <svg
                   className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform"
                   fill="none"
@@ -475,7 +475,7 @@ export default function BrowsePage() {
               </div>
               <span className="text-sm md:text-base font-medium">返回</span>
             </button>
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-red-600 to-red-500 bg-clip-text text-transparent">
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] bg-clip-text text-transparent">
               壳儿
             </h1>
           </div>
@@ -512,7 +512,7 @@ export default function BrowsePage() {
 
       {/* 筛选器（仅 latest） */}
       {config.hasFilters && (
-        <div className="px-4 md:px-12 py-4 bg-gray-900/50 border-y border-gray-800/50">
+        <div className="px-4 md:px-12 py-4 bg-[var(--theme-card)] border-y border-[var(--theme-border)]">
           <FilterRow
             label="类型"
             options={GENRE_OPTIONS}
@@ -545,17 +545,17 @@ export default function BrowsePage() {
         {loading ? (
           <div className="flex items-center justify-center py-32">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-4 border-gray-700 border-t-red-600 mx-auto mb-4" />
-              <p className="text-gray-400 text-lg">正在加载精彩内容...</p>
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-[var(--theme-border)] border-t-[var(--theme-primary)] mx-auto mb-4" />
+              <p className="text-[var(--theme-text-secondary)] text-lg">正在加载精彩内容...</p>
             </div>
           </div>
         ) : error ? (
           <div className="flex items-center justify-center py-32">
             <div className="text-center">
-              <p className="text-red-500 mb-4">{error}</p>
+              <p className="text-[var(--theme-primary)] mb-4">{error}</p>
               <button
                 onClick={() => fetchData(1, false)}
-                className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors shadow-lg shadow-red-600/20 flex items-center gap-2 mx-auto"
+                className="px-6 py-3 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] text-white rounded-lg font-medium transition-colors shadow-lg shadow-[var(--theme-primary)]/20 flex items-center gap-2 mx-auto"
               >
                 <RefreshCw className="w-4 h-4" />
                 重新加载
@@ -571,13 +571,13 @@ export default function BrowsePage() {
               return (
                 <div key={index} className="group">
                   <div className="flex items-center justify-between mb-4 mt-2">
-                    <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
+                    <h2 className="text-xl md:text-2xl font-bold text-[var(--theme-text)] flex items-center gap-3">
                       <span>{getCategoryIcon(category.name)}</span>
-                      <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                      <span className="bg-gradient-to-r from-[var(--theme-text)] to-[var(--theme-text-secondary)] bg-clip-text text-transparent">
                         {category.name}
                       </span>
                     </h2>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-[var(--theme-text-secondary)]">
                       {categoryMovies.length} 部
                     </div>
                   </div>
@@ -599,18 +599,18 @@ export default function BrowsePage() {
           // 空状态 (latest)
           <div className="flex items-center justify-center py-32">
             <div className="text-center">
-              <div className="w-20 h-20 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Film className="w-10 h-10 text-gray-600" />
+              <div className="w-20 h-20 bg-[var(--theme-card)] rounded-full flex items-center justify-center mx-auto mb-4">
+                <Film className="w-10 h-10 text-[var(--theme-text-secondary)]" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">暂无内容</h3>
-              <p className="text-gray-400 mb-6">
+              <h3 className="text-xl font-bold text-[var(--theme-text)] mb-2">暂无内容</h3>
+              <p className="text-[var(--theme-text-secondary)] mb-6">
                 没有找到符合筛选条件的影视作品
               </p>
               <button
                 onClick={() =>
                   setFilters({ genre: "", year: "", region: "", sort: "" })
                 }
-                className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors"
+                className="px-6 py-3 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] text-white rounded-lg font-medium transition-colors"
               >
                 重置筛选条件
               </button>
@@ -637,19 +637,19 @@ export default function BrowsePage() {
             {config.hasFilters && (
               <div className="flex justify-center mt-8">
                 {loadingMore ? (
-                  <div className="flex items-center gap-2 text-gray-400">
-                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-gray-600 border-t-red-500" />
+                  <div className="flex items-center gap-2 text-[var(--theme-text-secondary)]">
+                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-[var(--theme-border)] border-t-[var(--theme-primary)]" />
                     <span>加载中...</span>
                   </div>
                 ) : hasMore ? (
                   <button
                     onClick={loadMore}
-                    className="px-8 py-3 bg-white/5 hover:bg-white/10 text-white rounded-lg font-medium transition-colors border border-white/10 hover:border-white/20"
+                    className="px-8 py-3 bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] text-[var(--theme-text)] rounded-lg font-medium transition-colors border border-[var(--theme-border)] hover:border-[var(--theme-text)]/20"
                   >
                     加载更多
                   </button>
                 ) : movies.length > 0 ? (
-                  <p className="text-gray-500 text-sm">已加载全部内容</p>
+                  <p className="text-[var(--theme-text-secondary)] text-sm">已加载全部内容</p>
                 ) : null}
               </div>
             )}

@@ -156,7 +156,7 @@ export default function ShortsPage() {
   // 错误状态
   if (error) {
     return (
-      <div className="h-[100dvh] w-full bg-black flex items-center justify-center">
+      <div className="h-[100dvh] w-full bg-[var(--theme-background)] flex items-center justify-center">
         <div className="text-center px-6">
           <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg
@@ -188,7 +188,7 @@ export default function ShortsPage() {
   // 空状态
   if (dramas.length === 0) {
     return (
-      <div className="h-[100dvh] w-full bg-black flex items-center justify-center">
+      <div className="h-[100dvh] w-full bg-[var(--theme-background)] flex items-center justify-center">
         <div className="text-center">
           <p className="text-white/70 text-lg">暂无短剧内容</p>
         </div>
@@ -197,7 +197,7 @@ export default function ShortsPage() {
   }
 
   return (
-    <div className="h-[100dvh] w-full bg-black overflow-hidden">
+    <div className="h-[100dvh] w-full bg-[var(--theme-background)] overflow-hidden">
       <ShortDramaSwiper
         dramas={dramas}
         onLoadMore={handleLoadMore}

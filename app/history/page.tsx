@@ -90,9 +90,9 @@ export default function HistoryPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-[var(--theme-background)]">
       {/* 顶部导航 */}
-      <header className="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b border-white/10">
+      <header className="sticky top-0 z-50 bg-[var(--theme-background)]/95 backdrop-blur-sm border-b border-[var(--theme-border)]">
         <div className="px-4 md:px-12 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button

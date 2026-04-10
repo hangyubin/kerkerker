@@ -1,10 +1,10 @@
 export function Footer() {
   return (
-    <footer className="mt-20 border-t border-gray-800 bg-gradient-to-b from-black to-gray-950">
+    <footer className="mt-20 border-t border-[var(--theme-border)] bg-gradient-to-b from-[var(--theme-background)] to-[var(--theme-card)]">
       <div className="mx-auto px-4 md:px-12 py-12">
         {/* 免责声明 */}
         <div className="mb-8">
-          <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+          <h3 className="text-lg font-bold text-[var(--theme-text)] mb-4 flex items-center gap-2">
             <svg
               className="w-5 h-5 text-yellow-500"
               fill="currentColor"
@@ -18,10 +18,10 @@ export function Footer() {
             </svg>
             免责声明
           </h3>
-          <div className="space-y-3 text-sm text-gray-400 leading-relaxed">
+          <div className="space-y-3 text-sm text-[var(--theme-textSecondary)] leading-relaxed">
             <p>
               本站为
-              <span className="text-white font-medium">技术学习和交流平台</span>
+              <span className="text-[var(--theme-text)] font-medium">技术学习和交流平台</span>
               ，仅提供影视信息检索和导航服务。所有视频资源均来自互联网公开资源，本站不存储任何影视文件。
             </p>
             <p>
@@ -29,25 +29,25 @@ export function Footer() {
             </p>
             <p>
               本站尊重知识产权，支持正版影视。我们
-              <span className="text-white font-medium">
+              <span className="text-[var(--theme-text)] font-medium">
                 强烈建议用户通过正规渠道
               </span>
               （如爱奇艺、腾讯视频、优酷等）观看影视内容，以支持影视创作者。
             </p>
-            <p className="text-xs text-gray-500 mt-4">
+            <p className="text-xs text-[var(--theme-textSecondary)]/70 mt-4">
               使用本站服务即表示您同意遵守相关法律法规，并自行承担使用本站服务可能产生的风险和责任。
             </p>
           </div>
         </div>
 
         {/* 分隔线 */}
-        <div className="border-t border-gray-800 my-8"></div>
+        <div className="border-t border-[var(--theme-border)] my-8"></div>
 
         {/* 底部信息 */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[var(--theme-textSecondary)]">
           <div className="flex items-center gap-2">
-            <span>© 2026 壳儿</span>
-            <span className="text-gray-700">|</span>
+            <span>© 2026 光影流年</span>
+            <span className="text-[var(--theme-border)]">|</span>
             <span>仅供学习交流使用</span>
           </div>
 
@@ -56,7 +56,7 @@ export function Footer() {
               href="https://github.com/unilei/kerkerker"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-300 transition-colors flex items-center gap-1"
+              className="hover:text-[var(--theme-text)] transition-colors flex items-center gap-1"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path
@@ -69,7 +69,7 @@ export function Footer() {
             </a>
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="hover:text-gray-300 transition-colors flex items-center gap-1"
+              className="hover:text-[var(--theme-text)] transition-colors flex items-center gap-1"
             >
               <svg
                 className="w-4 h-4"

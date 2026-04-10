@@ -1,0 +1,259 @@
+{
+  "timestamp": 1775777050087,
+  "type": "all",
+  "vodSources": [
+    {
+      "key": "cursorbeauty2",
+      "name": "CursorBeauty 2",
+      "api": "http://110.42.33.133:12121/api.php/provide/vod",
+      "playUrl": "https://ryplayer.com?url=",
+      "usePlayUrl": true,
+      "priority": 1,
+      "type": "json"
+    },
+    {
+      "key": "rycjapi",
+      "name": "如意资源站",
+      "api": "https://cj.rycjapi.com/api.php/provide/vod",
+      "playUrl": "https://ryplayer.com?url=",
+      "usePlayUrl": true,
+      "priority": 1,
+      "type": "json"
+    },
+    {
+      "key": "liangzizy",
+      "name": "量子资源",
+      "api": "https://cj.lziapi.com/api.php/provide/vod",
+      "playUrl": "https://lziplayer.com/?url=",
+      "usePlayUrl": true,
+      "priority": 2,
+      "type": "json"
+    },
+    {
+      "key": "hongniuzy",
+      "name": "红牛资源",
+      "api": "https://www.hongniuzy2.com/api.php/provide/vod/from/hnm3u8",
+      "playUrl": "https://www.hnjiexi.com/m3u8/?url=",
+      "usePlayUrl": true,
+      "priority": 3,
+      "type": "json"
+    },
+    {
+      "key": "huyajx",
+      "name": "虎牙解析",
+      "api": "https://www.huyaapi.com/api.php/provide/vod/from/hym3u8/at/json",
+      "playUrl": "https://huyajx.com/play/?url=",
+      "usePlayUrl": true,
+      "priority": 4,
+      "type": "json"
+    },
+    {
+      "key": "dbzy",
+      "name": "豆瓣资源",
+      "api": "https://caiji.dbzy5.com/api.php/provide/vod/from/dbm3u8/at/josn",
+      "playUrl": "https://www.dbjiexi.com:966/jx/?url=",
+      "usePlayUrl": true,
+      "priority": 5,
+      "type": "json"
+    },
+    {
+      "key": "hhzy",
+      "name": "豪华资源",
+      "api": "https://hhzyapi.com/api.php/provide/vod/from/hhm3u8/at/json",
+      "playUrl": "https://hhjiexi.com/play/?url=",
+      "usePlayUrl": true,
+      "priority": 6,
+      "type": "json"
+    },
+    {
+      "key": "moduzy",
+      "name": "魔都资源网",
+      "api": "https://www.mdzyapi.com/api.php/provide/vod",
+      "playUrl": "https://jiexi.modujx01.com/?url=",
+      "usePlayUrl": true,
+      "priority": 7,
+      "type": "json"
+    },
+    {
+      "key": "subocj",
+      "name": "速播资源",
+      "api": "https://subocj.com/api.php/provide/vod/from/subm3u8/at/json",
+      "playUrl": "https://subojiexi.com/play/?url=",
+      "usePlayUrl": true,
+      "priority": 8,
+      "type": "json"
+    },
+    {
+      "key": "ikunzyapi",
+      "name": "iKun资源",
+      "api": "https://ikunzyapi.com/api.php/provide/vod",
+      "playUrl": "https://www.ikdmjx.com/?url=",
+      "usePlayUrl": true,
+      "priority": 9,
+      "type": "json"
+    },
+    {
+      "key": "jinyingzy",
+      "name": "金鹰资源",
+      "api": "https://jyzyapi.com/provide/vod/from/jinyingm3u8/at/json",
+      "playUrl": "https://hd.iapijy.com/play?url=",
+      "usePlayUrl": true,
+      "priority": 10,
+      "type": "json"
+    },
+    {
+      "key": "xinlangzy",
+      "name": "新浪资源",
+      "api": "https://api.xinlangapi.com/xinlangapi.php/provide/vod/from/xlm3u8/at/json/",
+      "playUrl": "https://www.xinlangjiexi.com/m3u8/?url=",
+      "usePlayUrl": true,
+      "priority": 11,
+      "type": "json"
+    },
+    {
+      "key": "guangsuzy",
+      "name": "光速资源",
+      "api": "https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8/at/json/",
+      "playUrl": "https://www.gszyv.com/m3u8/?url=",
+      "usePlayUrl": true,
+      "priority": 12,
+      "type": "json"
+    },
+    {
+      "key": "shanhaizy",
+      "name": "山海资源",
+      "api": "https://zy.sh0o.cn/api.php/provide/vod/at/json",
+      "playUrl": "https://im1907.top/?jx=",
+      "usePlayUrl": true,
+      "priority": 13,
+      "type": "json"
+    },
+    {
+      "key": "maoyanzy",
+      "name": "猫眼资源",
+      "api": "https://api.maoyanapi.top/api.php/provide/vod/from/mym3u8/at/json",
+      "playUrl": "https://jx.maoyanjx.top/player/?url=",
+      "usePlayUrl": true,
+      "priority": 14,
+      "type": "json"
+    },
+    {
+      "key": "maotaizy",
+      "name": "茅台资源",
+      "api": "https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8/at/josn",
+      "playUrl": "https://www.mtjiexi.cc:966/?url=",
+      "usePlayUrl": true,
+      "priority": 15,
+      "type": "json"
+    },
+    {
+      "key": "ukuapi88",
+      "name": "U酷资源网",
+      "api": "https://api.ukuapi88.com/api.php/provide/vod",
+      "playUrl": "https://api.ukubf.com/m3u8/?url=",
+      "usePlayUrl": true,
+      "priority": 16,
+      "type": "json"
+    },
+    {
+      "key": "baofengziyuan",
+      "name": "暴风资源",
+      "api": "https://bfzyapi.com/api.php/provide/vod",
+      "playUrl": "https://vip.vipuuvip.com/?url=",
+      "usePlayUrl": true,
+      "priority": 17,
+      "type": "json"
+    },
+    {
+      "key": "360zy",
+      "name": "360资源",
+      "api": "https://360zy.com/api.php/provide/vod",
+      "playUrl": "https://www.360jiexi.com/player/?url=",
+      "usePlayUrl": true,
+      "priority": 18,
+      "type": "json"
+    },
+    {
+      "key": "wolongzy",
+      "name": "卧龙资源",
+      "api": "https://collect.wolongzy.cc/api.php/provide/vod/",
+      "playUrl": "https://jx.wolongzywcdn.com:65/m3u8.php?url=",
+      "usePlayUrl": true,
+      "priority": 19,
+      "type": "json"
+    },
+    {
+      "key": "jszyapi",
+      "name": "极速资源",
+      "api": "https://jszyapi.com/api.php/provide/vod/from/jsm3u8/at/json",
+      "playUrl": "https://jsjiexi.com/play/?url=",
+      "usePlayUrl": true,
+      "priority": 20,
+      "type": "json"
+    },
+    {
+      "key": "dytt",
+      "name": "电影天堂资源",
+      "api": "https://caiji.dyttzyapi.com/api.php/provide/vod",
+      "playUrl": "https://vip.dyttzyplay.com/?url=",
+      "usePlayUrl": true,
+      "priority": 1,
+      "type": "json"
+    },
+    {
+      "key": "ffzy",
+      "name": "非凡资源站",
+      "api": "http://api.ffzyapi.com/api.php/provide/vod",
+      "playUrl": "https://svip.ffzyplay.com/?url=",
+      "usePlayUrl": true,
+      "priority": 1,
+      "type": "json"
+    }
+  ],
+  "shortsSources": [
+    {
+      "key": "wwzy",
+      "name": "旺旺资源",
+      "api": "https://api.wwzy.tv/api.php/provide/vod/",
+      "typeId": 1,
+      "priority": 0
+    },
+    {
+      "key": "maotai",
+      "name": "茅台资源",
+      "api": "https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8/at/json",
+      "typeId": 37,
+      "priority": 1
+    }
+  ],
+  "dailymotionChannels": [
+    {
+      "username": "kchow125",
+      "displayName": "KChow125",
+      "isActive": true
+    },
+    {
+      "username": "huinan520-349",
+      "displayName": "短剧全聚合",
+      "avatarUrl": "",
+      "isActive": true
+    },
+    {
+      "username": "douyinduanju",
+      "displayName": "抖音短剧",
+      "avatarUrl": "",
+      "isActive": true
+    },
+    {
+      "username": "HIGEGE",
+      "displayName": "HIGEGE",
+      "avatarUrl": "",
+      "isActive": true
+    },
+    {
+      "username": "dm_9ea4e8672798025a29d1d2812d",
+      "displayName": "七月短剧天下",
+      "isActive": true
+    }
+  ]
+}
