@@ -1,6 +1,3 @@
-// 主题类型定义
-export type ThemeName = 'default' | 'disney';
-
 // 主题配置接口
 export interface ThemeConfig {
   name: string;
@@ -19,6 +16,9 @@ export interface ThemeConfig {
   warning: string;
   info: string;
 }
+
+// 主题类型定义
+export type ThemeName = 'default' | 'light';
 
 // 主题配置
 export const themes: Record<ThemeName, ThemeConfig> = {
@@ -39,8 +39,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     warning: '#f59e0b',
     info: '#3b82f6',
   },
-  disney: {
-    name: '迪士尼',
+  light: {
+    name: '浅色',
     primary: '#0066cc',
     secondary: '#ff6b00',
     background: '#f8f9fa',

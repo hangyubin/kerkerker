@@ -254,3 +254,132 @@ label[for] {
     height: 100vh;
   }
 }
+
+/* 视频卡片样式 */
+.card-container {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.card-image-container {
+  position: relative;
+  aspect-ratio: 2/3;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background-color: var(--theme-surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border: 1px solid transparent;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.card-image-error {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--theme-textSecondary);
+  background-color: var(--theme-card);
+}
+
+.card-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--theme-surface);
+  border-radius: 0.75rem;
+}
+
+.loading-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid var(--theme-border);
+  border-top: 2px solid var(--theme-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.card-rating {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  border-radius: 9999px;
+  color: #facc15;
+  font-size: 0.875rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.card-hover-effect {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+}
+
+.card-container:hover .card-hover-effect {
+  opacity: 1;
+}
+
+.play-button {
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--theme-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--theme-text);
+}
+
+.card-title-container {
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.card-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--theme-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.2s ease;
+}
+
+.card-container:hover .card-title {
+  color: var(--theme-primary);
+}
+
+.card-episode-info {
+  font-size: 0.75rem;
+  color: var(--theme-textSecondary);
+  margin-top: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

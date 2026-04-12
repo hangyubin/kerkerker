@@ -503,7 +503,7 @@ export default function PlayPage() {
             </h1>
             <div className="flex flex-wrap items-center gap-2 text-xs">
               {dramaDetail.year && (
-                <span className="px-2 py-1 bg-linear-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-[var(--theme-text)] font-semibold rounded-md shadow-lg shadow-[var(--theme-primary)]/30">
+                <span className="px-2 py-1 bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-[var(--theme-text)] font-semibold rounded-md shadow-lg shadow-[var(--theme-primary)]/30">
                   {dramaDetail.year}
                 </span>
               )}
@@ -582,10 +582,10 @@ export default function PlayPage() {
                           setShowAllEpisodes(false);
                         }}
                         className={`aspect-video rounded-lg text-xs lg:text-sm flex flex-col items-center justify-center p-2 transition-all duration-300 group relative overflow-hidden ${
-                          currentEpisode === index
-                            ? "bg-linear-to-br from-[var(--theme-primary)] to-[var(--theme-secondary)] text-[var(--theme-text)] shadow-lg shadow-[var(--theme-primary)]/40 ring-2 ring-[var(--theme-primary)] scale-105"
-                            : "bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] text-[var(--theme-textSecondary)] hover:text-[var(--theme-text)] hover:scale-105 backdrop-blur-sm"
-                        }`}
+                            currentEpisode === index
+                              ? "bg-gradient-to-br from-[var(--theme-primary)] to-[var(--theme-secondary)] text-[var(--theme-text)] shadow-lg shadow-[var(--theme-primary)]/40 ring-2 ring-[var(--theme-primary)] scale-105"
+                              : "bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] text-[var(--theme-textSecondary)] hover:text-[var(--theme-text)] hover:scale-105 backdrop-blur-sm"
+                          }`}
                       >
                         {episode.name}
                       </button>
@@ -601,7 +601,7 @@ export default function PlayPage() {
                     </h1>
                     <div className="flex flex-wrap items-center gap-2 text-sm mb-4">
                       {dramaDetail.year && (
-                        <span className="px-3 py-1.5 bg-linear-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-[var(--theme-text)] font-semibold rounded-md shadow-lg shadow-[var(--theme-primary)]/30">
+                        <span className="px-3 py-1.5 bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] text-[var(--theme-text)] font-semibold rounded-md shadow-lg shadow-[var(--theme-primary)]/30">
                           {dramaDetail.year}
                         </span>
                       )}
@@ -735,7 +735,7 @@ export default function PlayPage() {
                         disabled={
                           currentEpisode === dramaDetail.episodes.length - 1
                         }
-                        className="flex-1 px-4 py-2.5 bg-linear-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] hover:from-[var(--theme-primary)]/80 hover:to-[var(--theme-secondary)]/80 disabled:from-[var(--theme-card)] disabled:to-[var(--theme-card)] disabled:text-[var(--theme-textSecondary)]/50 text-[var(--theme-text)] rounded-lg transition-all duration-300 text-xs lg:text-sm font-semibold shadow-lg shadow-[var(--theme-primary)]/30 hover:shadow-[var(--theme-primary)]/50 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100 disabled:shadow-none"
+                        className="flex-1 px-4 py-2.5 bg-gradient-to-r from-[var(--theme-primary)] to-[var(--theme-secondary)] hover:from-[var(--theme-primary)]/80 hover:to-[var(--theme-secondary)]/80 disabled:from-[var(--theme-card)] disabled:to-[var(--theme-card)] disabled:text-[var(--theme-textSecondary)]/50 text-[var(--theme-text)] rounded-lg transition-all duration-300 text-xs lg:text-sm font-semibold shadow-lg shadow-[var(--theme-primary)]/30 hover:shadow-[var(--theme-primary)]/50 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100 disabled:shadow-none"
                       >
                         下一集
                       </button>
@@ -751,7 +751,7 @@ export default function PlayPage() {
                             onClick={() => selectEpisode(index)}
                             className={`rounded-lg flex flex-col text-xs lg:text-sm items-center justify-center p-2 transition-all duration-300 group relative overflow-hidden ${
                               currentEpisode === index
-                                ? "bg-linear-to-br from-[var(--theme-primary)] to-[var(--theme-secondary)] text-[var(--theme-text)] shadow-lg shadow-[var(--theme-primary)]/40 ring-2 ring-[var(--theme-primary)] scale-105"
+                                ? "bg-gradient-to-br from-[var(--theme-primary)] to-[var(--theme-secondary)] text-[var(--theme-text)] shadow-lg shadow-[var(--theme-primary)]/40 ring-2 ring-[var(--theme-primary)] scale-105"
                                 : "bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] text-[var(--theme-textSecondary)] hover:text-[var(--theme-text)] hover:scale-105 backdrop-blur-sm"
                             }`}
                           >

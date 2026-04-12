@@ -12,6 +12,9 @@ import { createHlsConfig } from "@/lib/player/hls-config";
 import { PlayerLoading } from "./PlayerLoading";
 import { PlayerErrorDisplay } from "./PlayerError";
 
+// 导入主题系统
+import { getCurrentTheme, themes } from "@/lib/theme";
+
 // 弹幕相关导入
 import type { DanmakuItem } from "@/lib/player/danmaku-service";
 import { autoLoadDanmaku } from "@/lib/player/danmaku-service";
@@ -223,6 +226,10 @@ export function LocalHlsPlayer({
         // 创建 HLS 配置
         const hlsConfig = createHlsConfig(Hls);
 
+        // 获取当前主题
+        const currentTheme = getCurrentTheme();
+        const themeConfig = themes[currentTheme];
+
         // 创建弹幕插件实例
         const danmakuPlugin = artplayerPluginDanmuku({
           danmuku: [],
@@ -230,7 +237,7 @@ export function LocalHlsPlayer({
           speed: 5, // 弹幕持续时间，范围在[1 ~ 10]
           margin: [5, "20%"], // 弹幕上下边距，移动端适配
           opacity: 1, // 弹幕透明度，范围在[0 ~ 1]
-          color: "#FFFFFF", // 默认弹幕颜色，可以被单独弹幕项覆盖
+          color: themeConfig.text, // 默认弹幕颜色，使用主题文本颜色
           mode: 0, // 默认弹幕模式: 0: 滚动，1: 顶部，2: 底部
           modes: [0, 1, 2], // 弹幕可见的模式
           fontSize: "4%", // 弹幕字体大小，使用百分比实现响应式
@@ -246,7 +253,7 @@ export function LocalHlsPlayer({
           emitter: true, // 是否开启弹幕发射器
           maxLength: 200, // 弹幕输入框最大长度, 范围在[1 ~ 1000]
           lockTime: 5, // 输入框锁定时间，范围在[1 ~ 60]
-          theme: "dark", // 弹幕主题，支持 dark 和 light，只在自定义挂载时生效
+          theme: (currentTheme as string) === 'light' ? "light" : "dark", // 根据当前主题设置弹幕主题
           OPACITY: {}, // 不透明度配置项
           FONT_SIZE: {}, // 弹幕字号配置项
           MARGIN: {}, // 显示区域配置项
@@ -285,7 +292,7 @@ export function LocalHlsPlayer({
           playsInline: true,
           autoPlayback: true,
           airplay: true,
-          theme: settingsRef.current.theme || "#ef4444",
+          theme: themeConfig.primary,
           lang: navigator.language.toLowerCase(),
           lock: true,
           fastForward: true,
@@ -660,21 +667,21 @@ export function LocalHlsPlayer({
 
   if (!isClient) {
     return (
-      <div className="relative w-full h-full bg-black flex items-center justify-center">
-        <div className="text-white">初始化播放器...</div>
+      <div className="relative w-full h-full bg-[var(--theme-background)] flex items-center justify-center">
+        <div className="text-[var(--theme-text)]">初始化播放器...</div>
       </div>
     );
   }
 
   return (
-    <div className="relative w-full h-full bg-black">
+    <div className="relative w-full h-full bg-[var(--theme-background)]">
       <div ref={containerRef} className="w-full h-full" />
 
       {/* 自动加载弹幕状态提示 */}
       {autoLoadStatus.loading && autoLoadStatus.message && (
         <div className="absolute top-3 right-3 z-40">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs backdrop-blur-sm border bg-black/70 border-white/20 text-white/90">
-            <Loader2 size={12} className="animate-spin text-white/70" />
+          <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs backdrop-blur-sm border bg-[var(--theme-surface)]/70 border-[var(--theme-border)] text-[var(--theme-text)]/90">
+            <Loader2 size={12} className="animate-spin text-[var(--theme-text)]/70" />
             <span>{autoLoadStatus.message}</span>
           </div>
         </div>

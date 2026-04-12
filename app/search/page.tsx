@@ -20,7 +20,7 @@ const SWR_SEARCH_KEY_PREFIX = "search-results-";
 
 function SearchSkeleton() {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-y-8 gap-x-4 animate-pulse">
+    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-y-6 gap-x-3 animate-pulse">
       {Array.from({ length: 12 }).map((_, i) => (
         <div key={i} className="space-y-3">
           <div className="aspect-2/3 bg-gray-800/50 rounded-lg w-full" />
@@ -296,7 +296,7 @@ function SearchContent() {
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <svg
-                    className="w-5 h-5 text-gray-500 group-focus-within:text-red-500 transition-colors"
+                    className="w-5 h-5 text-[var(--theme-textSecondary)] group-focus-within:text-[var(--theme-primary)] transition-colors"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -390,7 +390,7 @@ function SearchContent() {
                     className="absolute inset-y-0 right-14 pr-2 flex items-center"
                   >
                     <svg
-                      className="w-4 h-4 text-gray-500 hover:text-white transition-colors"
+                      className="w-4 h-4 text-[var(--theme-textSecondary)] hover:text-[var(--theme-text)] transition-colors"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -406,7 +406,7 @@ function SearchContent() {
                 )}
                 <button
                   onClick={handleSearch}
-                  className="absolute inset-y-0 right-1.5 my-1.5 px-4 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-full transition-colors shadow-lg shadow-red-900/20"
+                  className="absolute inset-y-0 right-1.5 my-1.5 px-4 bg-[var(--theme-primary)] hover:bg-[var(--theme-primary)]/80 text-[var(--theme-text)] text-sm font-medium rounded-full transition-colors shadow-lg shadow-[var(--theme-primary)]/20"
                 >
                   搜索
                 </button>
@@ -424,8 +424,8 @@ function SearchContent() {
                   onClick={() => setCurrentSource(null)}
                   className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
                     currentSource === null
-                      ? "bg-white text-black shadow-lg shadow-white/10"
-                      : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-transparent hover:border-white/10"
+                      ? "bg-[var(--theme-primary)] text-[var(--theme-text)] shadow-lg shadow-[var(--theme-primary)]/20"
+                      : "bg-[var(--theme-card)] text-[var(--theme-textSecondary)] hover:bg-[var(--theme-hover)] hover:text-[var(--theme-text)] border border-transparent hover:border-[var(--theme-border)]"
                   }`}
                 >
                   全部
@@ -443,8 +443,8 @@ function SearchContent() {
                       onClick={() => setCurrentSource(source)}
                       className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${
                         currentSource?.key === source.key
-                          ? "bg-red-600 text-white shadow-lg shadow-red-900/20"
-                          : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-transparent hover:border-white/10"
+                          ? "bg-[var(--theme-primary)] text-[var(--theme-text)] shadow-lg shadow-[var(--theme-primary)]/20"
+                          : "bg-[var(--theme-card)] text-[var(--theme-textSecondary)] hover:bg-[var(--theme-hover)] hover:text-[var(--theme-text)] border border-transparent hover:border-[var(--theme-border)]"
                       }`}
                     >
                       {source.name}
@@ -452,8 +452,8 @@ function SearchContent() {
                         <span
                           className={`px-1.5 py-0.5 rounded-full text-[10px] ${
                             currentSource?.key === source.key
-                              ? "bg-white/20 text-white"
-                              : "bg-white/10 text-gray-500"
+                              ? "bg-[var(--theme-text)]/20 text-[var(--theme-text)]"
+                              : "bg-[var(--theme-text)]/10 text-[var(--theme-textSecondary)]"
                           }`}
                         >
                           {count}
@@ -473,12 +473,12 @@ function SearchContent() {
         {/* 状态反馈条 */}
         {(loading || searched) && (
           <div className="mb-8 flex items-center justify-between text-sm">
-            <div className="flex items-center gap-2 text-gray-400">
+            <div className="flex items-center gap-2 text-[var(--theme-textSecondary)]">
               {loading ? (
                 <>
-                  <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                  <span className="w-2 h-2 bg-[var(--theme-primary)] rounded-full animate-pulse" />
                   正在从 {searchProgress.total} 个源中搜索...
-                  <span className="ml-2 px-2 py-0.5 bg-white/5 rounded-md text-xs">
+                  <span className="ml-2 px-2 py-0.5 bg-[var(--theme-card)] rounded-md text-xs">
                     已完成 {searchProgress.completed}/{searchProgress.total}
                   </span>
                 </>
@@ -491,7 +491,7 @@ function SearchContent() {
                   {queryKeyword && (
                     <>
                       · 关键词{" "}
-                      <span className="text-white font-medium">
+                      <span className="text-[var(--theme-text)] font-medium">
                         &ldquo;{queryKeyword}&rdquo;
                       </span>
                     </>
@@ -506,9 +506,9 @@ function SearchContent() {
         {allSources.length === 0 ? (
           // 无视频源配置
           <div className="flex flex-col items-center justify-center py-32 animate-fade-in">
-            <div className="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center mb-6 border border-red-500/20">
+            <div className="w-20 h-20 bg-[var(--theme-primary)]/10 rounded-full flex items-center justify-center mb-6 border border-[var(--theme-primary)]/20">
               <svg
-                className="w-10 h-10 text-red-500"
+                className="w-10 h-10 text-[var(--theme-primary)]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -521,13 +521,13 @@ function SearchContent() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">未配置视频源</h3>
-            <p className="text-gray-400 mb-8 max-w-sm text-center">
+            <h3 className="text-xl font-bold text-[var(--theme-text)] mb-2">未配置视频源</h3>
+            <p className="text-[var(--theme-textSecondary)] mb-8 max-w-sm text-center">
               请先在后台管理中配置视频源后再使用搜索功能
             </p>
             <a
               href="/admin/settings"
-              className="px-8 py-3 bg-white text-black font-medium rounded-full hover:bg-gray-200 transition-colors"
+              className="px-8 py-3 bg-[var(--theme-primary)] text-[var(--theme-text)] font-medium rounded-full hover:bg-[var(--theme-primary)]/80 transition-colors"
             >
               前往配置
             </a>
@@ -538,7 +538,7 @@ function SearchContent() {
         ) : searched || Object.keys(searchResults).length > 0 ? (
           Object.keys(searchResults).length > 0 ? (
             <div className="animate-fade-in">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-y-8 gap-x-4">
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-y-6 gap-x-3">
                 {Object.entries(searchResults)
                   .map(([title, group]) => {
                     // 过滤当前源的结果
@@ -566,7 +566,7 @@ function SearchContent() {
                     return (
                       <div
                         key={title}
-                        className="relative group z-0 hover:z-50"
+                        className="relative card-wrapper z-0 hover:z-50"
                       >
                         {/* 源数量标识 */}
                         <div className="absolute bottom-2 right-2 z-40">
@@ -608,9 +608,9 @@ function SearchContent() {
           ) : (
             /* 无结果 */
             <div className="flex flex-col items-center justify-center py-32">
-              <div className="w-24 h-24 bg-gray-900 rounded-full flex items-center justify-center mb-6">
+              <div className="w-24 h-24 bg-[var(--theme-card)] rounded-full flex items-center justify-center mb-6">
                 <svg
-                  className="w-12 h-12 text-gray-600"
+                  className="w-12 h-12 text-[var(--theme-textSecondary)]"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -623,26 +623,26 @@ function SearchContent() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">
+              <h3 className="text-xl font-bold text-[var(--theme-text)] mb-2">
                 未找到相关内容
               </h3>
-              <p className="text-gray-400 mb-2">
+              <p className="text-[var(--theme-textSecondary)] mb-2">
                 在所有 {allSources.length} 个视频源中搜索 &ldquo;{queryKeyword}
                 &rdquo; 没有结果
               </p>
-              <p className="text-gray-500 text-sm mb-6">
+              <p className="text-[var(--theme-textSecondary)]/80 text-sm mb-6">
                 已搜索: {allSources.map((s) => s.name).join("、")}
               </p>
               <div className="flex items-center space-x-4">
                 <button
                   onClick={goBack}
-                  className="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors"
+                  className="px-6 py-3 bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] text-[var(--theme-text)] rounded-lg transition-colors"
                 >
                   返回首页
                 </button>
                 <button
                   onClick={() => setSearchKeyword("")}
-                  className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                  className="px-6 py-3 bg-[var(--theme-primary)] hover:bg-[var(--theme-primary)]/80 text-[var(--theme-text)] rounded-lg transition-colors"
                 >
                   重新搜索
                 </button>
@@ -652,9 +652,9 @@ function SearchContent() {
         ) : (
           /* 初始状态 */
           <div className="flex flex-col items-center justify-center py-32">
-            <div className="w-24 h-24 bg-gray-900 rounded-full flex items-center justify-center mb-6">
+            <div className="w-24 h-24 bg-[var(--theme-card)] rounded-full flex items-center justify-center mb-6">
               <svg
-                className="w-12 h-12 text-gray-600"
+                className="w-12 h-12 text-[var(--theme-textSecondary)]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -667,11 +667,11 @@ function SearchContent() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">搜索影视资源</h3>
-            <p className="text-gray-400 mb-2">
+            <h3 className="text-xl font-bold text-[var(--theme-text)] mb-2">搜索影视资源</h3>
+            <p className="text-[var(--theme-textSecondary)] mb-2">
               输入关键词，将在 {allSources.length} 个视频源中搜索
             </p>
-            <p className="text-gray-500 text-sm">
+            <p className="text-[var(--theme-textSecondary)]/80 text-sm">
               {allSources.map((s) => s.name).join("、")}
             </p>
           </div>

@@ -36,14 +36,25 @@ export function CategoryRow({
   // 滚动到左侧
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+      scrollContainerRef.current.scrollBy({ left: -400, behavior: 'smooth' });
     }
   };
 
   // 滚动到右侧
   const scrollRight = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+      scrollContainerRef.current.scrollBy({ left: 400, behavior: 'smooth' });
+    }
+  };
+
+  // 鼠标滚轮滚动支持
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (scrollContainerRef.current) {
+      e.preventDefault();
+      // 只处理水平滚动，忽略垂直滚动
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        scrollContainerRef.current.scrollBy({ left: e.deltaX, behavior: 'smooth' });
+      }
     }
   };
 
@@ -107,10 +118,12 @@ export function CategoryRow({
         {/* 滚动容器 */}
         <div 
           ref={scrollContainerRef}
-          className="flex overflow-x-auto space-x-3 md:space-x-4 pb-6 scrollbar-hide scroll-smooth"
+          className="flex overflow-x-auto space-x-3 md:space-x-4 p-4 scrollbar-hide scroll-smooth"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          onWheel={handleWheel}
         >
           {displayMovies.map((movie) => (
-            <div key={movie.id} className="shrink-0 w-40 sm:w-48 md:w-56 transition-all duration-300 hover:scale-105">
+            <div key={movie.id} className="shrink-0 w-36 sm:w-44 md:w-52">
               <DoubanCard movie={movie} onSelect={onMovieClick} />
             </div>
           ))}

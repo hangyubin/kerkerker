@@ -18,26 +18,152 @@ export default function DoubanCard({ movie, onSelect, priority = false }: Douban
   // 豆瓣图片使用代理
   const imageUrl = `/api/image-proxy?url=${encodeURIComponent(movie.cover)}`;
 
+  // 内联样式
+  const containerStyle = {
+    position: 'relative' as const,
+    cursor: 'pointer' as const,
+  };
+
+  const imageContainerStyle = {
+    position: 'relative' as const,
+    aspectRatio: '2/3' as const,
+    borderRadius: '1rem' as const,
+    overflow: 'hidden' as const,
+    backgroundColor: 'var(--theme-surface)',
+    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+    transition: 'all 0.2s ease' as const,
+  };
+
+  const handleImageContainerMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.currentTarget.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.3)';
+    e.currentTarget.style.opacity = '0.95';
+    e.currentTarget.style.transform = 'scale(1.01)';
+  };
+
+  const handleImageContainerMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.2)';
+    e.currentTarget.style.opacity = '1';
+    e.currentTarget.style.transform = 'scale(1)';
+  };
+
+  const imageStyle = {
+    width: '100%' as const,
+    height: '100%' as const,
+    objectFit: 'cover' as const,
+    transition: 'opacity 0.3s ease',
+    opacity: isLoading ? 0 : 1,
+  };
+
+  const errorContainerStyle = {
+    width: '100%' as const,
+    height: '100%' as const,
+    display: 'flex' as const,
+    alignItems: 'center' as const,
+    justifyContent: 'center' as const,
+    color: 'var(--theme-textSecondary)',
+    backgroundColor: 'var(--theme-card)',
+  };
+
+  const loadingContainerStyle = {
+    position: 'absolute' as const,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    display: 'flex' as const,
+    alignItems: 'center' as const,
+    justifyContent: 'center' as const,
+    backgroundColor: 'var(--theme-surface)',
+  };
+
+  const ratingStyle = {
+    position: 'absolute' as const,
+    top: '0.5rem' as const,
+    left: '0.5rem' as const,
+    padding: '0.25rem 0.5rem' as const,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)' as const,
+    backdropFilter: 'blur(4px)' as const,
+    borderRadius: '9999px' as const,
+    color: '#facc15' as const,
+    fontSize: '0.875rem' as const,
+    fontWeight: 'bold' as const,
+    display: 'flex' as const,
+    alignItems: 'center' as const,
+    gap: '0.25rem' as const,
+  };
+
+  const hoverEffectStyle = {
+    position: 'absolute' as const,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)' as const,
+    opacity: 0,
+    transition: 'opacity 0.2s ease',
+    display: 'flex' as const,
+    alignItems: 'center' as const,
+    justifyContent: 'center' as const,
+  };
+
+  const playButtonStyle = {
+    width: '3rem' as const,
+    height: '3rem' as const,
+    backgroundColor: 'var(--theme-primary)',
+    borderRadius: '50%' as const,
+    display: 'flex' as const,
+    alignItems: 'center' as const,
+    justifyContent: 'center' as const,
+    color: 'var(--theme-text)',
+  };
+
+  const titleContainerStyle = {
+    marginTop: '0.5rem' as const,
+    textAlign: 'center' as const,
+  };
+
+  const titleStyle = {
+    fontSize: '0.875rem' as const,
+    fontWeight: 500 as const,
+    color: 'var(--theme-text)',
+    display: '-webkit-box' as const,
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: 'vertical' as const,
+    overflow: 'hidden' as const,
+    transition: 'color 0.2s ease',
+  };
+
+  const episodeInfoStyle = {
+    fontSize: '0.75rem' as const,
+    color: 'var(--theme-textSecondary)',
+    marginTop: '0.25rem' as const,
+    whiteSpace: 'nowrap' as const,
+    overflow: 'hidden' as const,
+    textOverflow: 'ellipsis' as const,
+  };
+
   return (
-    <div
+    <div 
+      style={{
+        ...containerStyle,
+      }} 
       onClick={() => onSelect(movie)}
-      className="group relative cursor-pointer transition-all duration-300 hover:scale-105 hover:z-30"
     >
-      {/* 海报图片 */}
-      <div className="relative aspect-2/3 overflow-hidden rounded-xl bg-[var(--theme-surface)] shadow-lg shadow-black/50 hover:shadow-2xl hover:shadow-black/70 transition-all duration-500 hover:shadow-[var(--theme-primary)]/20 border border-transparent hover:border-[var(--theme-primary)]/30">
+      {/* 海报图片容器 */}
+      <div 
+        style={imageContainerStyle}
+        onMouseEnter={handleImageContainerMouseEnter}
+        onMouseLeave={handleImageContainerMouseLeave}
+      >
+        {/* 图片 */}
         {!imageError ? (
           <img
             src={imageUrl}
             alt={movie.title}
-            // 非首屏图片使用懒加载，不阻塞 hydration
             loading={priority ? "eager" : "lazy"}
-            // 首屏图片优先加载
             fetchPriority={priority ? "high" : "auto"}
-            // 提供尺寸提示，避免布局偏移
             decoding="async"
-            className={`w-full h-full object-cover transition-opacity duration-300 transition-transform duration-700 group-hover:scale-110 ${
-              isLoading ? 'opacity-0' : 'opacity-100'
-            }`}
+            style={imageStyle}
             onLoad={() => setIsLoading(false)}
             onError={() => {
               setImageError(true);
@@ -45,7 +171,7 @@ export default function DoubanCard({ movie, onSelect, priority = false }: Douban
             }}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-500 bg-[var(--theme-card)]">
+          <div style={errorContainerStyle}>
             <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
@@ -54,41 +180,53 @@ export default function DoubanCard({ movie, onSelect, priority = false }: Douban
         
         {/* 加载状态 */}
         {isLoading && !imageError && (
-          <div className="absolute inset-0 flex items-center justify-center bg-[var(--theme-surface)]">
+          <div style={loadingContainerStyle}>
             <div className="animate-spin rounded-full h-8 w-8 border-2 border-[var(--theme-border)] border-t-[var(--theme-primary)]" />
           </div>
         )}
 
         {/* 评分标签 */}
-        {movie.rate  && (
-          <div className="absolute top-2 left-2 px-2 py-1 bg-black/80 backdrop-blur-md rounded-full text-yellow-400 text-sm font-bold flex items-center space-x-1 transform transition-all duration-300 group-hover:scale-110">
+        {movie.rate && (
+          <div style={ratingStyle}>
             <Star className="w-4 h-4 fill-current" />
             <span>{movie.rate}</span>
           </div>
         )}
  
+        {/* 悬浮效果 */}
+        <div 
+          style={hoverEffectStyle}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.opacity = '1';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.opacity = '0';
+          }}
+        >
+          <div style={playButtonStyle}>
+            <Play className="w-6 h-6 fill-current ml-0.5" />
+          </div>
+        </div>
       </div>
 
       {/* 卡片下方标题 */}
-      <div className="mt-2 text-center">
-        <h3 className="text-[var(--theme-text)] font-medium text-sm line-clamp-2 group-hover:text-[var(--theme-primary)] transition-colors">
+      <div style={titleContainerStyle}>
+        <h3 
+          style={titleStyle}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = 'var(--theme-primary)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = 'var(--theme-text)';
+          }}
+        >
           {movie.title}
         </h3>
         {movie.episode_info && movie.episode_info.length > 0 && (
-          <p className="text-[var(--theme-textSecondary)] text-xs mt-1 line-clamp-1">
+          <p style={episodeInfoStyle}>
             {movie.episode_info}
           </p>
         )}
-      </div>
-
-      {/* 悬浮信息层 */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-xl flex flex-col justify-center items-center p-4 text-center">
-        {/* 简单的播放图标 - 中央位置 */}
-        <div className="flex items-center justify-center transition-all duration-300">
-          <div className="w-16 h-16 bg-[var(--theme-primary)]/90 rounded-full flex items-center justify-center shadow-lg shadow-[var(--theme-primary)]/30">
-            <Play className="w-8 h-8 fill-[var(--theme-text)] ml-1" />
-          </div>
-        </div>
       </div>
     </div>
   );
