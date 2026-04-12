@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import type { PlayerConfig } from "@/app/api/player-config/route";
 import type { VodSource } from "@/types/drama";
+import { getCurrentTheme, themes } from "@/lib/theme";
 
 interface PlayerSettingsPanelProps {
   playerConfig: PlayerConfig;
@@ -23,6 +24,10 @@ export function PlayerSettingsPanel({
 }: PlayerSettingsPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  
+  // 获取当前主题
+  const currentTheme = getCurrentTheme();
+  const themeConfig = themes[currentTheme];
 
   // 切换到iframe模式时，自动选择视频源的专属播放器
   const handleModeChange = (mode: "iframe" | "local") => {
@@ -111,7 +116,7 @@ export function PlayerSettingsPanel({
       {/* 触发按钮 */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center space-x-2 px-3 md:px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full transition-all hover:scale-105 text-white text-xs md:text-sm font-medium shadow-lg backdrop-blur-sm"
+        className="group flex items-center space-x-2 px-3 md:px-4 py-2 bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] rounded-full transition-all hover:scale-105 text-[var(--theme-text)] text-xs md:text-sm font-medium shadow-lg backdrop-blur-sm"
         aria-label="播放器设置"
         aria-expanded={isOpen}
       >
@@ -140,13 +145,13 @@ export function PlayerSettingsPanel({
 
       {/* 设置面板 */}
       {isOpen && (
-        <div className="absolute right-0 mt-3 w-80 md:w-96 bg-gray-900/98 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700 overflow-hidden z-50 animate-fade-in">
+        <div className="absolute right-0 mt-3 w-80 md:w-96 bg-[var(--theme-surface)]/98 backdrop-blur-xl rounded-xl shadow-2xl border border-[var(--theme-border)] overflow-hidden z-50 animate-fade-in">
           {/* 标题栏 */}
-          <div className="p-3 border-b border-gray-800 bg-gradient-to-r from-gray-800/50 to-transparent">
+          <div className="p-3 border-b border-[var(--theme-border)] bg-gradient-to-r from-[var(--theme-card)]/50 to-transparent">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-white flex items-center space-x-2">
+              <h3 className="text-sm font-semibold text-[var(--theme-text)] flex items-center space-x-2">
                 <svg
-                  className="w-4 h-4 text-red-500"
+                  className="w-4 h-4 text-[var(--theme-primary)]"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -158,7 +163,7 @@ export function PlayerSettingsPanel({
                 </svg>
                 <span>播放器设置</span>
               </h3>
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-[var(--theme-textSecondary)]">
                 {currentMode === "iframe" ? "iframe" : "本地"}模式
               </span>
             </div>
@@ -166,12 +171,12 @@ export function PlayerSettingsPanel({
 
           <div className="max-h-[70vh] overflow-y-auto">
             {/* 播放器模式选择 */}
-            <div className="p-4 border-b border-gray-800">
+            <div className="p-4 border-b border-[var(--theme-border)]">
               <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
+                <h4 className="text-sm font-semibold text-[var(--theme-textSecondary)] uppercase tracking-wider">
                   播放器模式
                 </h4>
-                <span className="text-xs text-gray-500 bg-gray-800/50 px-2 py-1 rounded">
+                <span className="text-xs text-[var(--theme-textSecondary)] bg-[var(--theme-card)]/50 px-2 py-1 rounded">
                   {currentMode === "iframe" ? "iframe" : "本地"}
                 </span>
               </div>
@@ -182,8 +187,8 @@ export function PlayerSettingsPanel({
                   onClick={() => handleModeChange("iframe")}
                   className={`w-full text-left px-4 py-3 rounded-lg transition-all group ${
                     currentMode === "iframe"
-                      ? "bg-red-600 text-white ring-2 ring-red-400 shadow-lg shadow-red-500/20"
-                      : "bg-gray-800/50 text-gray-300 hover:bg-gray-800 hover:scale-[1.02]"
+                      ? "bg-[var(--theme-primary)] text-[var(--theme-text)] ring-2 ring-[var(--theme-primary)]/50 shadow-lg shadow-[var(--theme-primary)]/20"
+                      : "bg-[var(--theme-card)]/50 text-[var(--theme-text)] hover:bg-[var(--theme-card)] hover:scale-[1.02]"
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -206,8 +211,8 @@ export function PlayerSettingsPanel({
                         <div
                           className={`text-xs mt-1 ${
                             currentMode === "iframe"
-                              ? "text-red-100"
-                              : "text-gray-500"
+                              ? "text-[var(--theme-text)]/80"
+                              : "text-[var(--theme-textSecondary)]"
                           }`}
                         >
                           兼容性好，无需代理
@@ -228,10 +233,10 @@ export function PlayerSettingsPanel({
                   disabled={!playerConfig.enableProxy}
                   className={`w-full text-left px-4 py-3 rounded-lg transition-all group ${
                     currentMode === "local"
-                      ? "bg-red-600 text-white ring-2 ring-red-400 shadow-lg shadow-red-500/20"
+                      ? "bg-[var(--theme-primary)] text-[var(--theme-text)] ring-2 ring-[var(--theme-primary)]/50 shadow-lg shadow-[var(--theme-primary)]/20"
                       : playerConfig.enableProxy
-                      ? "bg-gray-800/50 text-gray-300 hover:bg-gray-800 hover:scale-[1.02]"
-                      : "bg-gray-900/50 text-gray-600 cursor-not-allowed opacity-60"
+                      ? "bg-[var(--theme-card)]/50 text-[var(--theme-text)] hover:bg-[var(--theme-card)] hover:scale-[1.02]"
+                      : "bg-[var(--theme-card)]/30 text-[var(--theme-textSecondary)]/50 cursor-not-allowed opacity-60"
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -260,10 +265,10 @@ export function PlayerSettingsPanel({
                         <div
                           className={`text-xs mt-1 ${
                             currentMode === "local"
-                              ? "text-red-100"
+                              ? "text-[var(--theme-text)]/80"
                               : playerConfig.enableProxy
-                              ? "text-gray-500"
-                              : "text-gray-600"
+                              ? "text-[var(--theme-textSecondary)]"
+                              : "text-[var(--theme-textSecondary)]/50"
                           }`}
                         >
                           {playerConfig.enableProxy
@@ -277,7 +282,7 @@ export function PlayerSettingsPanel({
                     )}
                     {!playerConfig.enableProxy && (
                       <svg
-                        className="w-5 h-5 text-gray-600"
+                        className="w-5 h-5 text-[var(--theme-textSecondary)]/50"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -297,15 +302,15 @@ export function PlayerSettingsPanel({
 
             {/* 直接播放模式提示 (usePlayUrl: false) */}
             {currentMode === "iframe" && disableParseUrl && (
-              <div className="p-4 border-b border-gray-800">
-                <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">
+              <div className="p-4 border-b border-[var(--theme-border)]">
+                <h4 className="text-sm font-semibold text-[var(--theme-textSecondary)] uppercase tracking-wider mb-3">
                   播放模式
                 </h4>
-                <div className="p-4 bg-gradient-to-r from-green-600/20 to-teal-600/20 border border-green-500/30 rounded-lg">
+                <div className="p-4 bg-gradient-to-r from-[var(--theme-primary)]/20 to-[var(--theme-secondary)]/20 border border-[var(--theme-primary)]/30 rounded-lg">
                   <div className="flex items-center space-x-3">
-                    <div className="shrink-0 w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
+                    <div className="shrink-0 w-10 h-10 bg-[var(--theme-primary)]/20 rounded-full flex items-center justify-center">
                       <svg
-                        className="w-5 h-5 text-green-400"
+                        className="w-5 h-5 text-[var(--theme-primary)]"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -319,8 +324,8 @@ export function PlayerSettingsPanel({
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-white font-medium">直接播放</p>
-                      <p className="text-xs text-gray-400 mt-0.5">
+                      <p className="text-[var(--theme-text)] font-medium">直接播放</p>
+                      <p className="text-xs text-[var(--theme-textSecondary)] mt-0.5">
                         不使用解析接口，直接播放原始视频链接
                       </p>
                     </div>
@@ -331,15 +336,15 @@ export function PlayerSettingsPanel({
 
             {/* 当前使用的播放器 */}
             {currentMode === "iframe" && enabledIframePlayers.length > 0 && (
-              <div className="p-4 border-b border-gray-800">
-                <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">
+              <div className="p-4 border-b border-[var(--theme-border)]">
+                <h4 className="text-sm font-semibold text-[var(--theme-textSecondary)] uppercase tracking-wider mb-3">
                   当前播放器
                 </h4>
-                <div className="p-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-lg">
+                <div className="p-4 bg-gradient-to-r from-[var(--theme-primary)]/20 to-[var(--theme-secondary)]/20 border border-[var(--theme-primary)]/30 rounded-lg">
                   <div className="flex items-center space-x-3">
-                    <div className="shrink-0 w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center">
+                    <div className="shrink-0 w-10 h-10 bg-[var(--theme-primary)]/20 rounded-full flex items-center justify-center">
                       <svg
-                        className="w-5 h-5 text-blue-400"
+                        className="w-5 h-5 text-[var(--theme-primary)]"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -360,19 +365,19 @@ export function PlayerSettingsPanel({
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className="text-white font-medium truncate">
+                        <p className="text-[var(--theme-text)] font-medium truncate">
                           {enabledIframePlayers[currentIframePlayerIndex]
                             ?.name || "未知播放器"}
                         </p>
                         {enabledIframePlayers[
                           currentIframePlayerIndex
                         ]?.id.startsWith("vod_source_") && (
-                          <span className="shrink-0 text-xs px-2 py-0.5 bg-green-500/20 text-green-400 border border-green-500/30 rounded">
+                          <span className="shrink-0 text-xs px-2 py-0.5 bg-[var(--theme-primary)]/20 text-[var(--theme-primary)] border border-[var(--theme-primary)]/30 rounded">
                             源推荐
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-gray-400 mt-0.5">
+                      <p className="text-xs text-[var(--theme-textSecondary)] mt-0.5">
                         优先级{" "}
                         {
                           enabledIframePlayers[currentIframePlayerIndex]
@@ -393,18 +398,18 @@ export function PlayerSettingsPanel({
 
             {/* 切换播放器 */}
             {currentMode === "iframe" && enabledIframePlayers.length > 0 && (
-              <div className="p-4 border-b border-gray-800">
+              <div className="p-4 border-b border-[var(--theme-border)]">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
+                  <h4 className="text-sm font-semibold text-[var(--theme-textSecondary)] uppercase tracking-wider">
                     切换播放器
                   </h4>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-[var(--theme-textSecondary)]">
                     {enabledIframePlayers.length} 个可用
                   </span>
                 </div>
-                <p className="text-xs text-gray-500 mb-3 flex items-start space-x-2">
+                <p className="text-xs text-[var(--theme-textSecondary)] mb-3 flex items-start space-x-2">
                   <svg
-                    className="w-4 h-4 shrink-0 mt-0.5 text-blue-400"
+                    className="w-4 h-4 shrink-0 mt-0.5 text-[var(--theme-primary)]"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -425,8 +430,8 @@ export function PlayerSettingsPanel({
                         onClick={() => onIframePlayerChange(index)}
                         className={`w-full text-left px-4 py-2.5 rounded-lg transition-all ${
                           currentIframePlayerIndex === index
-                            ? "bg-red-600 text-white font-medium shadow-md"
-                            : "bg-gray-800/50 text-gray-300 hover:bg-gray-800"
+                            ? "bg-[var(--theme-primary)] text-[var(--theme-text)] font-medium shadow-md"
+                            : "bg-[var(--theme-card)]/50 text-[var(--theme-text)] hover:bg-[var(--theme-card)]"
                         }`}
                       >
                         <div className="flex items-center justify-between">
@@ -434,8 +439,8 @@ export function PlayerSettingsPanel({
                             <span
                               className={`text-xs px-1.5 py-0.5 rounded ${
                                 currentIframePlayerIndex === index
-                                  ? "bg-red-700 text-white"
-                                  : "bg-gray-700 text-gray-400"
+                                  ? "bg-[var(--theme-primary)]/80 text-[var(--theme-text)]"
+                                  : "bg-[var(--theme-card)] text-[var(--theme-textSecondary)]"
                               }`}
                             >
                               {player.priority}
@@ -445,8 +450,8 @@ export function PlayerSettingsPanel({
                               <span
                                 className={`text-xs px-1.5 py-0.5 rounded ${
                                   currentIframePlayerIndex === index
-                                    ? "bg-yellow-500/20 text-yellow-200 border border-yellow-400/30"
-                                    : "bg-green-500/20 text-green-400 border border-green-500/30"
+                                    ? "bg-[var(--theme-primary)]/20 text-[var(--theme-primary)] border border-[var(--theme-primary)]/30"
+                                    : "bg-[var(--theme-primary)]/20 text-[var(--theme-primary)] border border-[var(--theme-primary)]/30"
                                 }`}
                               >
                                 源推荐
@@ -475,8 +480,8 @@ export function PlayerSettingsPanel({
             )}
 
             {/* 快捷键说明 */}
-            <div className="p-4 bg-gradient-to-b from-transparent to-gray-900/30">
-              <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3 flex items-center space-x-2">
+            <div className="p-4 bg-gradient-to-b from-transparent to-[var(--theme-surface)]/30">
+              <h4 className="text-sm font-semibold text-[var(--theme-textSecondary)] uppercase tracking-wider mb-3 flex items-center space-x-2">
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -500,12 +505,12 @@ export function PlayerSettingsPanel({
                 ].map((shortcut, index) => (
                   <div
                     key={index}
-                    className="flex justify-between items-center text-xs group hover:bg-gray-800/30 p-2 rounded transition-colors"
+                    className="flex justify-between items-center text-xs group hover:bg-[var(--theme-card)]/30 p-2 rounded transition-colors"
                   >
-                    <kbd className="px-2 py-1 bg-gray-800 text-gray-300 rounded border border-gray-700 font-mono font-semibold group-hover:border-gray-600">
+                    <kbd className="px-2 py-1 bg-[var(--theme-card)] text-[var(--theme-text)] rounded border border-[var(--theme-border)] font-mono font-semibold group-hover:border-[var(--theme-primary)]/50">
                       {shortcut.key}
                     </kbd>
-                    <span className="text-gray-400 group-hover:text-gray-300">
+                    <span className="text-[var(--theme-textSecondary)] group-hover:text-[var(--theme-text)]">
                       {shortcut.desc}
                     </span>
                   </div>
