@@ -130,32 +130,37 @@ function SearchContent() {
                   );
 
                   startTransition(() => {
-                    // 合并新结果并分组
-                    const mergedResults = [...(Object.values(searchResults).flat()), ...data.results];
-                    const groupedResults = mergedResults.reduce((groups, result) => {
-                      // 使用影片名称作为分组键，去除首尾空格
-                      const key = result.name.trim();
-                      if (!groups[key]) {
-                        groups[key] = [];
-                      }
-                      // 检查是否已经添加了相同源的相同影片
-                      const existingIndex = groups[key].findIndex(
-                        (item: Drama & { source: VodSource }) => item.source.key === result.source.key && item.id === result.id
-                      );
-                      if (existingIndex === -1) {
-                        groups[key].push(result);
-                      }
-                      return groups;
-                    }, {} as Record<string, (Drama & { source: VodSource })[]>);
-                    
-                    setSearchResults(groupedResults);
-                    setSearchStats((prev) => ({
-                      total: Object.values(groupedResults).length,
-                      bySource: {
-                        ...prev.bySource,
-                        [data.sourceKey]: data.count,
-                      },
-                    }));
+                    // 使用函数式更新，避免依赖searchResults
+                    setSearchResults((prevResults) => {
+                      // 合并新结果并分组
+                      const mergedResults = [...(Object.values(prevResults).flat()), ...data.results];
+                      const groupedResults = mergedResults.reduce((groups, result) => {
+                        // 使用影片名称作为分组键，去除首尾空格
+                        const key = result.name.trim();
+                        if (!groups[key]) {
+                          groups[key] = [];
+                        }
+                        // 检查是否已经添加了相同源的相同影片
+                        const existingIndex = groups[key].findIndex(
+                          (item: Drama & { source: VodSource }) => item.source.key === result.source.key && item.id === result.id
+                        );
+                        if (existingIndex === -1) {
+                          groups[key].push(result);
+                        }
+                        return groups;
+                      }, {} as Record<string, (Drama & { source: VodSource })[]>);
+                      
+                      // 同时更新searchStats
+                      setSearchStats((prev) => ({
+                        total: Object.values(groupedResults).length,
+                        bySource: {
+                          ...prev.bySource,
+                          [data.sourceKey]: data.count,
+                        },
+                      }));
+                      
+                      return groupedResults;
+                    });
                   });
 
                   setSearchProgress((prev) => ({
