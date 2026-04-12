@@ -140,7 +140,7 @@ function SearchContent() {
                       }
                       // 检查是否已经添加了相同源的相同影片
                       const existingIndex = groups[key].findIndex(
-                        item => item.source.key === result.source.key && item.id === result.id
+                        (item: Drama & { source: VodSource }) => item.source.key === result.source.key && item.id === result.id
                       );
                       if (existingIndex === -1) {
                         groups[key].push(result);
