@@ -179,7 +179,7 @@ export function DanmakuSelector({
       {/* 触发按钮 */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center space-x-2 px-3 md:px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full transition-all hover:scale-105 text-white text-xs md:text-sm font-medium shadow-lg backdrop-blur-sm"
+        className="group flex items-center space-x-2 px-3 md:px-4 py-2 bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] rounded-full transition-all hover:scale-105 text-[var(--theme-text)] text-xs md:text-sm font-medium shadow-lg backdrop-blur-sm"
         aria-label="弹幕设置"
         aria-expanded={isOpen}
       >
@@ -192,16 +192,16 @@ export function DanmakuSelector({
 
       {/* 下拉菜单 */}
       {isOpen && (
-        <div className="absolute right-0 mt-3 w-80 md:w-96 bg-gray-900/98 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700 overflow-hidden animate-fade-in z-50">
+        <div className="absolute right-0 mt-3 w-80 md:w-96 bg-[var(--theme-background)]/98 backdrop-blur-xl rounded-xl shadow-2xl border border-[var(--theme-border)] overflow-hidden animate-fade-in z-50">
           {/* 头部 */}
-          <div className="p-3 border-b border-gray-800 bg-gradient-to-r from-gray-800/50 to-transparent">
+          <div className="p-3 border-b border-[var(--theme-border)] bg-gradient-to-r from-[var(--theme-card)]/50 to-transparent">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-white flex items-center space-x-2">
-                <DanmakuIcon className="w-4 h-4 text-red-500" />
+              <h3 className="text-sm font-semibold text-[var(--theme-text)] flex items-center space-x-2">
+                <DanmakuIcon className="w-4 h-4 text-[var(--theme-primary)]" />
                 <span>弹幕搜索</span>
               </h3>
               {danmakuCount > 0 && (
-                <span className="text-xs text-green-400">
+                <span className="text-xs text-[var(--theme-success)]">
                   已加载 {danmakuCount} 条
                 </span>
               )}
@@ -209,7 +209,7 @@ export function DanmakuSelector({
           </div>
 
           {/* 搜索框 */}
-          <div className="p-3 border-b border-gray-800/50">
+          <div className="p-3 border-b border-[var(--theme-border)]/50">
             <div className="flex gap-2">
               <div className="flex-1 relative">
                 <input
@@ -218,18 +218,18 @@ export function DanmakuSelector({
                   onChange={(e) => setSearchKeyword(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="输入动漫名称搜索"
-                  className="w-full px-3 py-2 pr-10 bg-white/10 border border-white/20 rounded-lg text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-red-500/50"
+                  className="w-full px-3 py-2 pr-10 bg-[var(--theme-card)] border border-[var(--theme-border)] rounded-lg text-[var(--theme-text)] text-sm placeholder:text-[var(--theme-textSecondary)]/40 focus:outline-none focus:border-[var(--theme-primary)]/50"
                 />
                 {isSearching && (
-                  <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50 animate-spin" />
+                  <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--theme-textSecondary)]/50 animate-spin" />
                 )}
               </div>
               <button
                 onClick={handleSearch}
                 disabled={isSearching || !searchKeyword.trim()}
-                className="px-3 py-2 bg-red-500 hover:bg-red-600 disabled:bg-gray-600 disabled:cursor-not-allowed rounded-lg transition-colors"
+                className="px-3 py-2 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] disabled:bg-[var(--theme-card)]/50 disabled:cursor-not-allowed rounded-lg transition-colors"
               >
-                <Search className="w-4 h-4 text-white" />
+                <Search className="w-4 h-4 text-[var(--theme-text)]" />
               </button>
             </div>
           </div>
@@ -238,7 +238,7 @@ export function DanmakuSelector({
           <div className="max-h-[50vh] overflow-y-auto p-3 space-y-3">
             {/* 错误提示 */}
             {error && (
-              <div className="flex items-center gap-2 p-2 bg-red-500/20 border border-red-500/30 rounded-lg text-red-300 text-xs">
+              <div className="flex items-center gap-2 p-2 bg-[var(--theme-error)]/20 border border-[var(--theme-error)]/30 rounded-lg text-[var(--theme-error)] text-xs">
                 <AlertCircle className="w-4 h-4 flex-shrink-0" />
                 <span>{error}</span>
               </div>
@@ -248,7 +248,7 @@ export function DanmakuSelector({
             {selectedAnime && (
               <button
                 onClick={() => setShowAnimeList(!showAnimeList)}
-                className="w-full flex items-center justify-between p-2 bg-white/10 hover:bg-white/15 rounded-lg transition-colors"
+                className="w-full flex items-center justify-between p-2 bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] rounded-lg transition-colors"
               >
                 <div className="flex items-center gap-2 text-left min-w-0">
                   {selectedAnime.imageUrl && (
@@ -262,18 +262,18 @@ export function DanmakuSelector({
                     />
                   )}
                   <div className="flex-1 min-w-0">
-                    <div className="text-white text-xs font-medium truncate">
+                    <div className="text-[var(--theme-text)] text-xs font-medium truncate">
                       {selectedAnime.animeTitle}
                     </div>
-                    <div className="text-white/50 text-xs">
+                    <div className="text-[var(--theme-textSecondary)]/50 text-xs">
                       {selectedAnime.episodeCount} 集
                     </div>
                   </div>
                 </div>
                 {showAnimeList ? (
-                  <ChevronUp className="w-4 h-4 text-white/50 flex-shrink-0" />
+                  <ChevronUp className="w-4 h-4 text-[var(--theme-textSecondary)]/50 flex-shrink-0" />
                 ) : (
-                  <ChevronDown className="w-4 h-4 text-white/50 flex-shrink-0" />
+                  <ChevronDown className="w-4 h-4 text-[var(--theme-textSecondary)]/50 flex-shrink-0" />
                 )}
               </button>
             )}
@@ -287,8 +287,8 @@ export function DanmakuSelector({
                     onClick={() => handleSelectAnime(anime)}
                     className={`w-full flex items-center gap-2 p-2 rounded-lg transition-colors ${
                       selectedAnime?.animeId === anime.animeId
-                        ? "bg-red-500/30 border border-red-500/50"
-                        : "bg-white/5 hover:bg-white/10"
+                        ? "bg-[var(--theme-primary)]/30 border border-[var(--theme-primary)]/50"
+                        : "bg-[var(--theme-card)]/50 hover:bg-[var(--theme-card)]"
                     }`}
                   >
                     {anime.imageUrl && (
@@ -302,10 +302,10 @@ export function DanmakuSelector({
                       />
                     )}
                     <div className="flex-1 min-w-0 text-left">
-                      <div className="text-white text-xs truncate">
+                      <div className="text-[var(--theme-text)] text-xs truncate">
                         {anime.animeTitle}
                       </div>
-                      <div className="text-white/40 text-xs">
+                      <div className="text-[var(--theme-textSecondary)]/40 text-xs">
                         {anime.episodeCount} 集
                       </div>
                     </div>
@@ -317,12 +317,12 @@ export function DanmakuSelector({
             {/* 剧集选择 */}
             {episodes.length > 0 && (
               <div className="space-y-2">
-                <div className="text-white/70 text-xs font-medium">
+                <div className="text-[var(--theme-textSecondary)]/70 text-xs font-medium">
                   选择剧集
                 </div>
                 {isLoadingEpisodes ? (
                   <div className="flex items-center justify-center py-3">
-                    <Loader2 className="w-5 h-5 text-white/50 animate-spin" />
+                    <Loader2 className="w-5 h-5 text-[var(--theme-textSecondary)]/50 animate-spin" />
                   </div>
                 ) : (
                   <div className="grid grid-cols-8 gap-1">
@@ -332,8 +332,8 @@ export function DanmakuSelector({
                         onClick={() => setSelectedEpisode(episode)}
                         className={`px-1.5 py-1 text-xs rounded transition-colors ${
                           selectedEpisode?.episodeId === episode.episodeId
-                            ? "bg-red-500 text-white"
-                            : "bg-white/10 text-white/70 hover:bg-white/20"
+                            ? "bg-[var(--theme-primary)] text-[var(--theme-text)]"
+                            : "bg-[var(--theme-card)] text-[var(--theme-textSecondary)]/70 hover:bg-[var(--theme-hover)]"
                         }`}
                         title={episode.episodeTitle}
                       >
@@ -350,14 +350,14 @@ export function DanmakuSelector({
               <button
                 onClick={handleLoadDanmaku}
                 disabled={isLoadingDanmaku}
-                className="w-full flex items-center justify-center gap-2 py-2 bg-red-500 hover:bg-red-600 disabled:bg-gray-600 disabled:cursor-not-allowed rounded-lg transition-colors"
+                className="w-full flex items-center justify-center gap-2 py-2 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] disabled:bg-[var(--theme-card)]/50 disabled:cursor-not-allowed rounded-lg transition-colors"
               >
                 {isLoadingDanmaku ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
                   <DanmakuIcon className="w-4 h-4" />
                 )}
-                <span className="text-white text-sm font-medium">
+                <span className="text-[var(--theme-text)] text-sm font-medium">
                   {isLoadingDanmaku ? "加载中..." : "加载弹幕"}
                 </span>
               </button>
@@ -365,7 +365,7 @@ export function DanmakuSelector({
 
             {/* 加载成功提示 */}
             {loadedCount !== null && (
-              <div className="text-center text-green-400 text-xs">
+              <div className="text-center text-[var(--theme-success)] text-xs">
                 ✓ 已加载 {loadedCount} 条弹幕
               </div>
             )}

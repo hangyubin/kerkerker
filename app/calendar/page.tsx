@@ -73,7 +73,7 @@ function CalendarCard({
       className="group relative cursor-pointer transition-all duration-300 hover:scale-102 hover:z-10"
     >
       {/* 海报图片 */}
-      <div className="relative aspect-2/3 overflow-hidden rounded-lg bg-gray-800">
+      <div className="relative aspect-2/3 overflow-hidden rounded-lg bg-[var(--theme-card)]">
         {!imageError ? (
           <img
             src={imageUrl}
@@ -91,14 +91,14 @@ function CalendarCard({
             }}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-500 bg-gradient-to-br from-gray-700 to-gray-800">
+          <div className="w-full h-full flex items-center justify-center text-[var(--theme-textSecondary)] bg-gradient-to-br from-[var(--theme-card)] to-[var(--theme-background)]">
             <Calendar className="w-12 h-12" />
           </div>
         )}
 
         {/* 加载骨架 - 使用渐变动画 */}
         {isLoading && !imageError && (
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-800">
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--theme-card)] to-[var(--theme-background)]">
             <div 
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer"
               style={{ backgroundSize: '200% 100%' }}
@@ -108,26 +108,26 @@ function CalendarCard({
 
         {/* 评分标签 */}
         {entry.vote_average > 0 && (
-          <div className="absolute top-2 left-2 px-2 py-1 bg-black/80 backdrop-blur-sm rounded text-yellow-400 text-sm font-bold flex items-center space-x-1">
+          <div className="absolute top-2 left-2 px-2 py-1 bg-[var(--theme-background)]/80 backdrop-blur-sm rounded text-yellow-400 text-sm font-bold flex items-center space-x-1">
             <Star className="w-3 h-3 fill-current" />
             <span>{entry.vote_average.toFixed(1)}</span>
           </div>
         )}
 
         {/* 集数标签 */}
-        <div className="absolute top-2 right-2 px-2 py-1 bg-red-600/90 backdrop-blur-sm rounded text-white text-xs font-medium">
+        <div className="absolute top-2 right-2 px-2 py-1 bg-[var(--theme-primary)]/90 backdrop-blur-sm rounded text-[var(--theme-text)] text-xs font-medium">
           {episodeInfo}
         </div>
 
         {/* 悬浮层 */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex flex-col justify-end p-3">
-          <h3 className="text-white font-bold text-sm mb-1 line-clamp-2">
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--theme-background)] via-[var(--theme-background)]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex flex-col justify-end p-3">
+          <h3 className="text-[var(--theme-text)] font-bold text-sm mb-1 line-clamp-2">
             {displayName}
           </h3>
-          <p className="text-gray-300 text-xs mb-2">
+          <p className="text-[var(--theme-textSecondary)] text-xs mb-2">
             {episodeInfo} · {entry.episode_name || '最新集'}
           </p>
-          <button className="flex items-center justify-center gap-2 bg-white text-black px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-opacity-90 transition-all">
+          <button className="flex items-center justify-center gap-2 bg-[var(--theme-primary)] text-[var(--theme-text)] px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-opacity-90 transition-all">
             <Play className="w-3 h-3 fill-current" />
             <span>立即播放</span>
           </button>
@@ -136,11 +136,11 @@ function CalendarCard({
 
       {/* 标题 */}
       <div className="mt-2">
-        <h3 className="text-white font-medium text-sm line-clamp-2 group-hover:text-red-500 transition-colors">
+        <h3 className="text-[var(--theme-text)] font-medium text-sm line-clamp-2 group-hover:text-[var(--theme-primary)] transition-colors">
           {displayName}
         </h3>
         {entry.episode_name && entry.episode_name !== displayName && (
-          <p className="text-gray-400 text-xs mt-1 line-clamp-1">
+          <p className="text-[var(--theme-textSecondary)] text-xs mt-1 line-clamp-1">
             {entry.episode_name}
           </p>
         )}
@@ -165,14 +165,14 @@ function CalendarDaySection({
     <div className="px-4 md:px-12">
       {/* 日期标题 */}
       <div className="flex items-center gap-3 mb-4">
-        <div className={`w-2 h-2 rounded-full ${dateInfo.isToday ? 'bg-red-500' : dateInfo.isTomorrow ? 'bg-yellow-500' : 'bg-gray-500'}`} />
-        <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
-          {dateInfo.isToday && <span className="text-red-500">今天</span>}
-          {dateInfo.isTomorrow && <span className="text-yellow-500">明天</span>}
+        <div className={`w-2 h-2 rounded-full ${dateInfo.isToday ? 'bg-[var(--theme-primary)]' : dateInfo.isTomorrow ? 'bg-[var(--theme-warning)]' : 'bg-[var(--theme-textSecondary)]'}`} />
+        <h2 className="text-xl md:text-2xl font-bold text-[var(--theme-text)] flex items-center gap-2">
+          {dateInfo.isToday && <span className="text-[var(--theme-primary)]">今天</span>}
+          {dateInfo.isTomorrow && <span className="text-[var(--theme-warning)]">明天</span>}
           <span>{dateInfo.main}</span>
-          <span className="text-gray-400 text-base font-normal">{dateInfo.sub}</span>
+          <span className="text-[var(--theme-textSecondary)] text-base font-normal">{dateInfo.sub}</span>
         </h2>
-        <span className="text-gray-500 text-sm">
+        <span className="text-[var(--theme-textSecondary)] text-sm">
           {day.entries.length} 部剧集
         </span>
       </div>
@@ -203,21 +203,21 @@ function CalendarSkeleton() {
         <div key={dayIndex} className="px-4 md:px-12">
           {/* 日期标题骨架 */}
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-2 h-2 rounded-full bg-gray-700" />
-            <div className="h-7 w-32 bg-gray-800 rounded relative overflow-hidden">
+            <div className="w-2 h-2 rounded-full bg-[var(--theme-border)]" />
+            <div className="h-7 w-32 bg-[var(--theme-card)] rounded relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer" style={{ backgroundSize: '200% 100%' }} />
             </div>
-            <div className="h-5 w-16 bg-gray-800 rounded" />
+            <div className="h-5 w-16 bg-[var(--theme-card)] rounded" />
           </div>
           
           {/* 卡片骨架 */}
           <div className="flex space-x-3 md:space-x-4 overflow-hidden">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="shrink-0 w-36 sm:w-44 md:w-52">
-                <div className="aspect-2/3 bg-gray-800 rounded-lg relative overflow-hidden">
+                <div className="aspect-2/3 bg-[var(--theme-card)] rounded-lg relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer" style={{ backgroundSize: '200% 100%' }} />
                 </div>
-                <div className="mt-2 h-4 bg-gray-800 rounded w-3/4" />
+                <div className="mt-2 h-4 bg-[var(--theme-card)] rounded w-3/4" />
               </div>
             ))}
           </div>
@@ -295,7 +295,7 @@ export default function CalendarPage() {
   const currentRegion = REGIONS.find(r => r.code === region);
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-[var(--theme-background)]">
       {/* 导航栏 */}
       <Navbar scrolled={scrolled} onSearchOpen={() => setShowSearch(true)} />
 
@@ -308,11 +308,11 @@ export default function CalendarPage() {
           {/* 标题行 */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white flex items-center gap-3">
-                <Calendar className="w-8 h-8 md:w-10 md:h-10 text-red-500" />
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--theme-text)] flex items-center gap-3">
+                <Calendar className="w-8 h-8 md:w-10 md:h-10 text-[var(--theme-primary)]" />
                 追剧日历
               </h1>
-              <p className="text-gray-400 mt-2 text-sm md:text-base">
+              <p className="text-[var(--theme-textSecondary)] mt-2 text-sm md:text-base">
                 {dateRange.start.replace(/-/g, '/')} - {dateRange.end.replace(/-/g, '/')}
               </p>
             </div>
@@ -324,15 +324,15 @@ export default function CalendarPage() {
                 <select
                   value={region}
                   onChange={(e) => setRegion(e.target.value)}
-                  className="appearance-none bg-white/10 text-white px-4 py-2.5 pr-10 rounded-xl text-sm cursor-pointer hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10"
+                  className="appearance-none bg-[var(--theme-card)] text-[var(--theme-text)] px-4 py-2.5 pr-10 rounded-xl text-sm cursor-pointer hover:bg-[var(--theme-hover)] transition-colors backdrop-blur-sm border border-[var(--theme-border)]"
                 >
                   {REGIONS.map((r) => (
-                    <option key={r.code} value={r.code} className="bg-gray-900 text-white">
+                    <option key={r.code} value={r.code} className="bg-[var(--theme-background)] text-[var(--theme-text)]">
                       {r.emoji} {r.label}
                     </option>
                   ))}
                 </select>
-                <Globe className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                <Globe className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--theme-textSecondary)] pointer-events-none" />
               </div>
 
               {/* 周切换 */}
@@ -340,16 +340,16 @@ export default function CalendarPage() {
                 <button
                   onClick={() => setWeekOffset((prev) => prev - 1)}
                   disabled={weekOffset <= -2}
-                  className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors border border-white/10"
+                  className="p-2.5 rounded-xl bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors border border-[var(--theme-border)]"
                 >
-                  <ChevronLeft className="w-5 h-5 text-white" />
+                  <ChevronLeft className="w-5 h-5 text-[var(--theme-text)]" />
                 </button>
                 <button
                   onClick={() => setWeekOffset(0)}
                   className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${
                     weekOffset === 0
-                      ? 'bg-red-600 text-white'
-                      : 'bg-white/10 text-gray-300 hover:bg-white/20 border border-white/10'
+                      ? 'bg-[var(--theme-primary)] text-[var(--theme-text)]'
+                      : 'bg-[var(--theme-card)] text-[var(--theme-textSecondary)] hover:bg-[var(--theme-hover)] border border-[var(--theme-border)]'
                   }`}
                 >
                   本周
@@ -357,9 +357,9 @@ export default function CalendarPage() {
                 <button
                   onClick={() => setWeekOffset((prev) => prev + 1)}
                   disabled={weekOffset >= 2}
-                  className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors border border-white/10"
+                  className="p-2.5 rounded-xl bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors border border-[var(--theme-border)]"
                 >
-                  <ChevronRight className="w-5 h-5 text-white" />
+                  <ChevronRight className="w-5 h-5 text-[var(--theme-text)]" />
                 </button>
               </div>
             </div>
@@ -372,19 +372,19 @@ export default function CalendarPage() {
         <CalendarSkeleton />
       ) : error ? (
         <div className="flex flex-col items-center justify-center py-32">
-          <p className="text-red-400 mb-4">{error}</p>
+          <p className="text-[var(--theme-error)] mb-4">{error}</p>
           <button
             onClick={() => setWeekOffset(0)}
-            className="px-6 py-2.5 bg-red-600 rounded-xl hover:bg-red-700 transition-colors text-white font-medium"
+            className="px-6 py-2.5 bg-[var(--theme-primary)] rounded-xl hover:bg-opacity-90 transition-colors text-[var(--theme-text)] font-medium"
           >
             重试
           </button>
         </div>
       ) : daysWithContent.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-32">
-          <Calendar className="w-20 h-20 text-gray-700 mb-4" />
-          <p className="text-gray-400 text-xl font-medium">本周暂无剧集播出</p>
-          <p className="text-gray-500 text-sm mt-2">试试切换其他地区或时间范围</p>
+          <Calendar className="w-20 h-20 text-[var(--theme-textSecondary)] mb-4" />
+          <p className="text-[var(--theme-textSecondary)] text-xl font-medium">本周暂无剧集播出</p>
+          <p className="text-[var(--theme-textSecondary)]/70 text-sm mt-2">试试切换其他地区或时间范围</p>
         </div>
       ) : (
         <div className="relative z-20 space-y-10 md:space-y-12 lg:space-y-16 pb-16 pt-8">

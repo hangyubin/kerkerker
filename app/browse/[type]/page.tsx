@@ -220,7 +220,7 @@ function FilterRow({
 }) {
   return (
     <div className="flex items-start gap-3 py-2 border-b border-[var(--theme-border)] last:border-b-0">
-      <span className="text-[var(--theme-text-secondary)] text-sm whitespace-nowrap min-w-12 pt-1">
+      <span className="text-[var(--theme-textSecondary)] text-sm whitespace-nowrap min-w-12 pt-1">
         {label}：
       </span>
       <div className="flex flex-wrap gap-x-4 gap-y-2">
@@ -499,10 +499,10 @@ export default function BrowsePage() {
           <div className="flex items-center gap-4 mb-4">
             <div className="text-4xl md:text-5xl">{config.emoji}</div>
             <div>
-              <h1 className="text-2xl lg:text-4xl font-bold text-white mb-1 tracking-tight">
+              <h1 className="text-2xl lg:text-4xl font-bold text-[var(--theme-text)] mb-1 tracking-tight">
                 {config.title}
               </h1>
-              <p className="text-sm md:text-base text-gray-400">
+              <p className="text-sm md:text-base text-[var(--theme-textSecondary)]">
                 {getStatsText()}
               </p>
             </div>
@@ -546,7 +546,7 @@ export default function BrowsePage() {
           <div className="flex items-center justify-center py-32">
             <div className="text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-4 border-[var(--theme-border)] border-t-[var(--theme-primary)] mx-auto mb-4" />
-              <p className="text-[var(--theme-text-secondary)] text-lg">正在加载精彩内容...</p>
+              <p className="text-[var(--theme-textSecondary)] text-lg">正在加载精彩内容...</p>
             </div>
           </div>
         ) : error ? (

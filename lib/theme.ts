@@ -8,6 +8,8 @@ export interface ThemeConfig {
   secondary: string;
   background: string;
   surface: string;
+  card: string;
+  hover: string;
   text: string;
   textSecondary: string;
   border: string;
@@ -26,6 +28,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     secondary: '#333333',
     background: '#000000',
     surface: '#121212',
+    card: '#1e1e1e',
+    hover: '#2a2a2a',
     text: '#ffffff',
     textSecondary: '#b3b3b3',
     border: '#333333',
@@ -41,6 +45,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     secondary: '#ff6b00',
     background: '#f8f9fa',
     surface: '#ffffff',
+    card: '#f0f2f5',
+    hover: '#e8eaed',
     text: '#212529',
     textSecondary: '#495057',
     border: '#dee2e6',

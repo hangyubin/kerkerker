@@ -94,11 +94,11 @@ export function CategoryRow({
       </div>
 
       {/* 横向滚动列表 */}
-      <div className="relative group">
+      <div className="relative">
         {/* 左侧滚动按钮 */}
         <button
           onClick={scrollLeft}
-          className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-[var(--theme-background)]/90 hover:bg-[var(--theme-background)] backdrop-blur-md text-[var(--theme-text)] rounded-full flex items-center justify-center shadow-xl shadow-black/30 transition-all duration-300 hover:scale-110 ${showButtons ? 'opacity-0 group-hover:opacity-100' : 'opacity-0'}`}
+          className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-[var(--theme-background)]/90 hover:bg-[var(--theme-background)] backdrop-blur-md text-[var(--theme-text)] rounded-full flex items-center justify-center shadow-xl shadow-black/30 transition-all duration-300 hover:scale-110 ${showButtons ? 'opacity-0 hover:opacity-100' : 'opacity-0'}`}
           aria-label="向左滚动"
         >
           <ChevronLeft className="w-6 h-6" />
@@ -119,7 +119,7 @@ export function CategoryRow({
         {/* 右侧滚动按钮 */}
         <button
           onClick={scrollRight}
-          className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-[var(--theme-background)]/90 hover:bg-[var(--theme-background)] backdrop-blur-md text-[var(--theme-text)] rounded-full flex items-center justify-center shadow-xl shadow-black/30 transition-all duration-300 hover:scale-110 ${showButtons ? 'opacity-0 group-hover:opacity-100' : 'opacity-0'}`}
+          className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-[var(--theme-background)]/90 hover:bg-[var(--theme-background)] backdrop-blur-md text-[var(--theme-text)] rounded-full flex items-center justify-center shadow-xl shadow-black/30 transition-all duration-300 hover:scale-110 ${showButtons ? 'opacity-0 hover:opacity-100' : 'opacity-0'}`}
           aria-label="向右滚动"
         >
           <ChevronRight className="w-6 h-6" />

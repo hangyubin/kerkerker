@@ -144,18 +144,18 @@ function DailymotionContent() {
     return (
       <div className="min-h-screen bg-[var(--theme-background)] flex items-center justify-center p-8">
         <div className="text-center">
-          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-          <h2 className="text-white text-2xl font-bold mb-2">
+          <AlertCircle className="w-16 h-16 text-[var(--theme-error)] mx-auto mb-4" />
+          <h2 className="text-[var(--theme-text)] text-2xl font-bold mb-2">
             {error || "Failed to load channel data"}
           </h2>
-          <p className="text-gray-400">请稍后再试或检查频道名称</p>
+          <p className="text-[var(--theme-textSecondary)]">请稍后再试或检查频道名称</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-[var(--theme-background)] text-[var(--theme-text)]">
       <style jsx global>{`
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
@@ -167,10 +167,10 @@ function DailymotionContent() {
       `}</style>
 
       {/* Top Navigation */}
-      <div className="px-3 md:px-6 lg:px-10 py-3 border-b border-neutral-900">
+      <div className="px-3 md:px-6 lg:px-10 py-3 border-b border-[var(--theme-border)]">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-red-600 transition-colors text-sm group"
+          className="inline-flex items-center gap-2 text-[var(--theme-textSecondary)] hover:text-[var(--theme-primary)] transition-colors text-sm group"
         >
           <Home
             size={18}

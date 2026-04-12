@@ -8,6 +8,8 @@
   --theme-secondary: #333333;
   --theme-background: #000000;
   --theme-surface: #121212;
+  --theme-card: #1e1e1e;
+  --theme-hover: #2a2a2a;
   --theme-text: #ffffff;
   --theme-textSecondary: #b3b3b3;
   --theme-border: #333333;
@@ -75,16 +77,16 @@ label[for] {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: var(--theme-background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333333;
+  background: var(--theme-border);
   border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555555;
+  background: var(--theme-textSecondary);
 }
 
 /* Netflix 风格的淡入动画 */
@@ -192,14 +194,14 @@ label[for] {
 }
 
 .artplayer-plugin-danmuku .apd-send {
-  background-color: #e50914 !important;
-  color: #ffffff !important;
+  background-color: var(--theme-primary) !important;
+  color: var(--theme-text) !important;
   font-weight: bold !important;
   transition: background-color 0.2s ease;
 }
 
 .artplayer-plugin-danmuku .apd-send:hover {
-  background-color: #b20710 !important;
+  background-color: var(--theme-secondary) !important;
 }
 
 /* ========== 弹幕滚动优化 - 防止闪烁 ========== */

@@ -76,7 +76,7 @@ export function SourceSelector({ sources, currentSourceKey, onSourceChange }: So
       {/* 触发按钮 */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center space-x-2 px-3 md:px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full transition-all hover:scale-105 text-white text-xs md:text-sm font-medium shadow-lg backdrop-blur-sm"
+        className="group flex items-center space-x-2 px-3 md:px-4 py-2 bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] rounded-full transition-all hover:scale-105 text-[var(--theme-text)] text-xs md:text-sm font-medium shadow-lg backdrop-blur-sm"
         aria-label="切换视频源"
         aria-expanded={isOpen}
       >
@@ -96,7 +96,7 @@ export function SourceSelector({ sources, currentSourceKey, onSourceChange }: So
         <span className="hidden sm:inline">{sources.length} 个播放源</span>
         <span className="sm:hidden">{sources.length}</span>
         {currentSource && (
-          <span className="hidden md:inline text-gray-400">
+          <span className="hidden md:inline text-[var(--theme-textSecondary)]">
             · {currentSource.source_name}
           </span>
         )}
@@ -104,17 +104,17 @@ export function SourceSelector({ sources, currentSourceKey, onSourceChange }: So
 
       {/* 下拉菜单 */}
       {isOpen && (
-        <div className="absolute right-0 mt-3 w-72 md:w-80 bg-gray-900/98 backdrop-blur-xl rounded-xl shadow-2xl border border-gray-700 overflow-hidden animate-fade-in z-50">
+        <div className="absolute right-0 mt-3 w-72 md:w-80 bg-[var(--theme-background)]/98 backdrop-blur-xl rounded-xl shadow-2xl border border-[var(--theme-border)] overflow-hidden animate-fade-in z-50">
           {/* 头部 */}
-          <div className="p-3 border-b border-gray-800 bg-gradient-to-r from-gray-800/50 to-transparent">
+          <div className="p-3 border-b border-[var(--theme-border)] bg-gradient-to-r from-[var(--theme-card)]/50 to-transparent">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-white flex items-center space-x-2">
-                <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+              <h3 className="text-sm font-semibold text-[var(--theme-text)] flex items-center space-x-2">
+                <svg className="w-4 h-4 text-[var(--theme-primary)]" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                 </svg>
                 <span>选择播放源</span>
               </h3>
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-[var(--theme-textSecondary)]/70">
                 {sources.filter(s => s.match_confidence === 'high').length} 个精准匹配
               </span>
             </div>
@@ -134,21 +134,21 @@ export function SourceSelector({ sources, currentSourceKey, onSourceChange }: So
                     setIsOpen(false);
                   }}
                   className={`w-full text-left px-4 py-3 transition-all ${isCurrent
-                    ? 'bg-red-600/20 border-l-4 border-red-600'
-                    : 'hover:bg-white/5 border-l-4 border-transparent'
-                    } ${index !== sortedSources.length - 1 ? 'border-b border-gray-800/50' : ''}`}
+                    ? 'bg-[var(--theme-primary)]/20 border-l-4 border-[var(--theme-primary)]'
+                    : 'hover:bg-[var(--theme-card)] border-l-4 border-transparent'
+                    } ${index !== sortedSources.length - 1 ? 'border-b border-[var(--theme-border)]/50' : ''}`}
                   disabled={isCurrent}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1 min-w-0">
                       {/* 源名称 */}
                       <div className="flex items-center space-x-2 mb-1">
-                        <p className={`text-sm font-semibold truncate ${isCurrent ? 'text-red-400' : 'text-white'
+                        <p className={`text-sm font-semibold truncate ${isCurrent ? 'text-[var(--theme-primary)]' : 'text-[var(--theme-text)'
                           }`}>
                           {source.source_name}
                         </p>
                         {isCurrent && (
-                          <span className="flex-shrink-0 text-red-400">
+                          <span className="flex-shrink-0 text-[var(--theme-primary)]">
                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
@@ -156,7 +156,7 @@ export function SourceSelector({ sources, currentSourceKey, onSourceChange }: So
                         )}
                       </div>
                       {/* 视频名称 */}
-                      <p className="text-xs text-gray-400 truncate" title={source.vod_name}>
+                      <p className="text-xs text-[var(--theme-textSecondary)] truncate" title={source.vod_name}>
                         {source.vod_name}
                       </p>
                     </div>
@@ -172,9 +172,9 @@ export function SourceSelector({ sources, currentSourceKey, onSourceChange }: So
           </div>
 
           {/* 底部提示 */}
-          <div className="p-3 border-t border-gray-800 bg-gray-900/50">
-            <p className="text-xs text-gray-500 flex items-start space-x-2">
-              <svg className="w-4 h-4 flex-shrink-0 mt-0.5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+          <div className="p-3 border-t border-[var(--theme-border)] bg-[var(--theme-background)]/50">
+            <p className="text-xs text-[var(--theme-textSecondary)]/70 flex items-start space-x-2">
+              <svg className="w-4 h-4 flex-shrink-0 mt-0.5 text-[var(--theme-primary)]" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
               </svg>
               <span>不同播放源的清晰度和加载速度可能不同</span>

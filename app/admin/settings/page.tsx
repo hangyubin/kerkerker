@@ -274,7 +274,7 @@ function SettingsLoading() {
     <div className="min-h-screen bg-[var(--theme-background)] flex items-center justify-center">
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-2 border-[var(--theme-border)] border-t-[var(--theme-primary)] mx-auto mb-4" />
-        <p className="text-[var(--theme-text-secondary)]">加载中...</p>
+        <p className="text-[var(--theme-textSecondary)]">加载中...</p>
       </div>
     </div>
   );

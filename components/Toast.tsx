@@ -23,10 +23,10 @@ export function Toast({ message, type = 'info', onClose, duration = 3000 }: Toas
   }, [duration]);
 
   const bgColor = {
-    success: 'bg-green-500',
-    error: 'bg-red-500',
-    warning: 'bg-yellow-500',
-    info: 'bg-blue-500'
+    success: 'bg-[var(--theme-success)]',
+    error: 'bg-[var(--theme-error)]',
+    warning: 'bg-[var(--theme-warning)]',
+    info: 'bg-[var(--theme-info)]'
   }[type];
 
   const icon = {
@@ -87,16 +87,16 @@ export function ConfirmDialog({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in">
-      <div className="bg-slate-800 rounded-xl shadow-2xl border border-slate-700 max-w-md w-full mx-4 animate-scale-in">
+      <div className="bg-[var(--theme-surface)] rounded-xl shadow-2xl border border-[var(--theme-border)] max-w-md w-full mx-4 animate-scale-in">
         <div className="p-6">
-          <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-          <p className="text-slate-300">{message}</p>
+          <h3 className="text-xl font-bold text-[var(--theme-text)] mb-2">{title}</h3>
+          <p className="text-[var(--theme-textSecondary)]">{message}</p>
         </div>
         <div className="flex gap-3 px-6 pb-6">
           <button
             onClick={onCancel}
             disabled={isLoading}
-            className="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 px-4 py-2 bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] text-[var(--theme-text)] rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {cancelText}
           </button>
@@ -105,8 +105,8 @@ export function ConfirmDialog({
             disabled={isLoading}
             className={`flex-1 px-4 py-2 text-white rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed ${
               danger
-                ? 'bg-red-600 hover:bg-red-700'
-                : 'bg-blue-600 hover:bg-blue-700'
+                ? 'bg-[var(--theme-error)] hover:bg-[var(--theme-error)]/80'
+                : 'bg-[var(--theme-primary)] hover:bg-[var(--theme-primary)]/80'
             }`}
           >
             {isLoading ? '处理中…' : confirmText}

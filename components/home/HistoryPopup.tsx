@@ -67,29 +67,29 @@ export function HistoryPopup() {
       {/* 触发按钮 */}
       <button
         onClick={handleButtonClick}
-        className="p-2 hover:bg-white/10 rounded-full transition-colors relative"
+        className="p-2 hover:bg-[var(--theme-card)] rounded-full transition-colors relative"
         aria-label="历史记录"
         aria-haspopup={!isMobile}
         aria-expanded={isOpen}
       >
-        <History className="w-5 h-5 md:w-6 md:h-6 text-white" />
+        <History className="w-5 h-5 md:w-6 md:h-6 text-[var(--theme-text)]" />
         {/* 有历史记录时显示小红点 */}
         {history.length > 0 && (
-          <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
+          <span className="absolute top-1 right-1 w-2 h-2 bg-[var(--theme-primary)] rounded-full" />
         )}
       </button>
 
       {/* Popup 弹出层 */}
       {isOpen && (
         <div className="absolute right-0 top-full pt-2 z-50">
-          <div className="w-80 bg-zinc-900 rounded-xl shadow-2xl border border-zinc-800 overflow-hidden">
-            {/* 顶部红色装饰线 */}
-            <div className="h-0.5 bg-red-600" />
+          <div className="w-80 bg-[var(--theme-background)] rounded-xl shadow-2xl border border-[var(--theme-border)] overflow-hidden">
+            {/* 顶部装饰线 */}
+            <div className="h-0.5 bg-[var(--theme-primary)]" />
 
             {/* 标题 */}
-            <div className="px-4 py-3 border-b border-zinc-800">
-              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-                <History className="w-4 h-4 text-red-500" />
+            <div className="px-4 py-3 border-b border-[var(--theme-border)]">
+              <h3 className="text-sm font-semibold text-[var(--theme-text)] flex items-center gap-2">
+                <History className="w-4 h-4 text-[var(--theme-primary)]" />
                 最近观看
               </h3>
             </div>
@@ -98,13 +98,13 @@ export function HistoryPopup() {
             <div className="max-h-80 overflow-y-auto">
               {isLoading ? (
                 <div className="p-6 text-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-2 border-gray-700 border-t-red-600 mx-auto mb-2" />
-                  <p className="text-gray-400 text-sm">加载中…</p>
+                  <div className="animate-spin rounded-full h-8 w-8 border-2 border-[var(--theme-border)] border-t-[var(--theme-primary)] mx-auto mb-2" />
+                  <p className="text-[var(--theme-textSecondary)] text-sm">加载中…</p>
                 </div>
               ) : history.length === 0 ? (
                 <div className="p-6 text-center">
-                  <History className="w-10 h-10 text-gray-600 mx-auto mb-2" />
-                  <p className="text-gray-400 text-sm">暂无观看记录</p>
+                  <History className="w-10 h-10 text-[var(--theme-textSecondary)]/50 mx-auto mb-2" />
+                  <p className="text-[var(--theme-textSecondary)] text-sm">暂无观看记录</p>
                 </div>
               ) : (
                 <div className="py-2">
@@ -112,10 +112,10 @@ export function HistoryPopup() {
                     <button
                       key={item.id}
                       onClick={() => handlePlay(item)}
-                      className="w-full px-4 py-2.5 flex items-center gap-3 hover:bg-white/5 transition-colors text-left group"
+                      className="w-full px-4 py-2.5 flex items-center gap-3 hover:bg-[var(--theme-card)] transition-colors text-left group"
                     >
                       {/* 封面缩略图 */}
-                      <div className="w-12 h-16 rounded overflow-hidden bg-gray-800 flex-shrink-0 relative">
+                      <div className="w-12 h-16 rounded overflow-hidden bg-[var(--theme-card)] flex-shrink-0 relative">
                         {item.cover ? (
                           <img
                             src={item.cover}
@@ -129,36 +129,36 @@ export function HistoryPopup() {
                           />
                         ) : null}
                         {/* 播放图标 overlay */}
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <Play className="w-4 h-4 text-white fill-white" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-[var(--theme-background)]/40 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Play className="w-4 h-4 text-[var(--theme-text)] fill-[var(--theme-text)]" />
                         </div>
                       </div>
 
                       {/* 信息 */}
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-white font-medium truncate group-hover:text-red-400 transition-colors">
+                        <p className="text-sm text-[var(--theme-text)] font-medium truncate group-hover:text-[var(--theme-primary)] transition-colors">
                           {item.name}
                         </p>
                         <div className="flex items-center gap-2 mt-1">
-                          <span className="text-xs text-gray-400">
+                          <span className="text-xs text-[var(--theme-textSecondary)]">
                             第 {item.episode + 1} 集
                           </span>
                           {item.sourceName && (
                             <>
-                              <span className="text-gray-600">·</span>
-                              <span className="text-xs text-gray-500">
+                              <span className="text-[var(--theme-textSecondary)]/50">·</span>
+                              <span className="text-xs text-[var(--theme-textSecondary)]/70">
                                 {item.sourceName}
                               </span>
                             </>
                           )}
                         </div>
-                        <p className="text-xs text-gray-500 mt-0.5">
+                        <p className="text-xs text-[var(--theme-textSecondary)]/70 mt-0.5">
                           {formatTime(item.timestamp)}
                         </p>
                       </div>
 
                       {/* 箭头 */}
-                      <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-gray-400 transition-colors flex-shrink-0" />
+                      <ChevronRight className="w-4 h-4 text-[var(--theme-textSecondary)]/50 group-hover:text-[var(--theme-textSecondary)] transition-colors flex-shrink-0" />
                     </button>
                   ))}
                 </div>
@@ -167,11 +167,11 @@ export function HistoryPopup() {
 
             {/* 底部查看全部 */}
             {history.length > 0 && (
-              <div className="border-t border-zinc-800">
+              <div className="border-t border-[var(--theme-border)]">
                 <Link
                   href="/history"
                   onClick={() => setIsOpen(false)}
-                  className="block px-4 py-3 text-center text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+                  className="block px-4 py-3 text-center text-sm text-[var(--theme-textSecondary)] hover:text-[var(--theme-text)] hover:bg-[var(--theme-card)] transition-colors"
                 >
                   {hasMore
                     ? `查看全部 ${history.length} 条记录`

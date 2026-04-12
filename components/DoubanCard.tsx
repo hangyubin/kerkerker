@@ -69,24 +69,25 @@ export default function DoubanCard({ movie, onSelect, priority = false }: Douban
  
       </div>
 
-      {/* 悬浮信息层 */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-xl flex flex-col justify-end p-4 transform group-hover:translate-y-0 translate-y-4">
-        <h3 className="text-[var(--theme-text)] font-bold text-base mb-2 line-clamp-2 drop-shadow-lg transition-all duration-300 group-hover:translate-y-0 translate-y-2">
+      {/* 卡片下方标题 */}
+      <div className="mt-2 text-center">
+        <h3 className="text-[var(--theme-text)] font-medium text-sm line-clamp-2 group-hover:text-[var(--theme-primary)] transition-colors">
           {movie.title}
         </h3>
-        
         {movie.episode_info && movie.episode_info.length > 0 && (
-          <p className="text-[var(--theme-textSecondary)] text-xs mb-2 drop-shadow-md transition-all duration-300 delay-100 group-hover:translate-y-0 translate-y-2">
+          <p className="text-[var(--theme-textSecondary)] text-xs mt-1 line-clamp-1">
             {movie.episode_info}
           </p>
         )}
+      </div>
 
-        {/* 播放按钮 */}
-        <div className="mt-3 flex items-center space-x-2 transition-all duration-300 delay-200 group-hover:translate-y-0 translate-y-2">
-          <button className="flex items-center gap-2 bg-[var(--theme-primary)] text-[var(--theme-text)] px-4 py-2 rounded-full text-sm font-semibold hover:bg-[var(--theme-primary)]/80 hover:scale-105 transition-all duration-300 shadow-2xl shadow-[var(--theme-primary)]/20 hover:shadow-[var(--theme-primary)]/30">
-            <Play className="w-4 h-4 fill-[var(--theme-text)]" />
-            <span>立即播放</span>
-          </button>
+      {/* 悬浮信息层 */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-xl flex flex-col justify-center items-center p-4 text-center">
+        {/* 简单的播放图标 - 中央位置 */}
+        <div className="flex items-center justify-center transition-all duration-300">
+          <div className="w-16 h-16 bg-[var(--theme-primary)]/90 rounded-full flex items-center justify-center shadow-lg shadow-[var(--theme-primary)]/30">
+            <Play className="w-8 h-8 fill-[var(--theme-text)] ml-1" />
+          </div>
         </div>
       </div>
     </div>
