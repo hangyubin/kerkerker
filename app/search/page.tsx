@@ -194,7 +194,7 @@ function SearchContent() {
         if (allSources.length === 0) {
           // 会在 UI 中显示配置提示
         }
-        setSearchResults([]);
+        setSearchResults({});
       } finally {
         setLoading(false);
       }
