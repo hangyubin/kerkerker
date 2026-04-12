@@ -131,7 +131,7 @@ function SearchContent() {
 
                   startTransition(() => {
                     // 合并新结果并分组
-                    const mergedResults = [...(Object.values(prev).flat()), ...data.results];
+                    const mergedResults = [...(Object.values(searchResults).flat()), ...data.results];
                     const groupedResults = mergedResults.reduce((groups, result) => {
                       // 使用影片名称作为分组键，去除首尾空格
                       const key = result.name.trim();
