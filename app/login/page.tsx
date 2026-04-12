@@ -45,18 +45,18 @@ function LoginForm() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--theme-background)]">
       <div className="w-full max-w-md px-6">
-        <div className="bg-[#1a1a1a] rounded-lg shadow-2xl p-10 border border-[#333]">
-          {/* Netflix Logo Style */}
+        <div className="bg-[var(--theme-card)] rounded-lg shadow-2xl p-10 border border-[var(--theme-border)]">
+          {/* Logo Style */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-[var(--theme-primary)] mb-2">光影流年</h1>
-            <p className="text-[#808080] text-lg">后台管理系统</p>
+            <p className="text-[var(--theme-textSecondary)] text-lg">后台管理系统</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-[#b3b3b3] mb-2"
+                className="block text-sm font-medium text-[var(--theme-textSecondary)] mb-2"
               >
                 密码
               </label>
@@ -65,7 +65,7 @@ function LoginForm() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 bg-[#333] border border-[#454545] rounded text-white placeholder-[#8c8c8c] focus:outline-none focus:ring-2 focus:ring-[#E50914] focus:border-transparent transition"
+                className="w-full px-4 py-3 bg-[var(--theme-surface)] border border-[var(--theme-border)] rounded text-[var(--theme-text)] placeholder-[var(--theme-textSecondary)] focus:outline-none focus:ring-2 focus:ring-[var(--theme-primary)] focus:border-transparent transition"
                 placeholder="请输入管理员密码"
                 required
                 autoFocus
@@ -73,7 +73,7 @@ function LoginForm() {
             </div>
 
             {error && (
-              <div className="bg-[#E50914]/10 border border-[#E50914]/50 rounded p-3 text-[#E50914] text-sm">
+              <div className="bg-[var(--theme-error)]/10 border border-[var(--theme-error)]/50 rounded p-3 text-[var(--theme-error)] text-sm">
                 {error}
               </div>
             )}
@@ -81,13 +81,13 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#E50914] hover:bg-[#B20710] disabled:bg-[#831010] disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded transition duration-200"
+              className="w-full bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] disabled:bg-[var(--theme-border)] disabled:cursor-not-allowed text-[var(--theme-text)] font-bold py-3 px-4 rounded transition duration-200"
             >
               {loading ? "登录中..." : "登录"}
             </button>
           </form>
 
-          <div className="mt-8 text-center text-sm text-[#8c8c8c]">
+          <div className="mt-8 text-center text-sm text-[var(--theme-textSecondary)]">
             <p>默认密码：admin123</p>
             <p className="mt-1">可通过环境变量 ADMIN_PASSWORD 修改</p>
           </div>
@@ -101,8 +101,8 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-[#141414]">
-          <div className="text-white">加载中...</div>
+        <div className="min-h-screen flex items-center justify-center bg-[var(--theme-background)]">
+          <div className="text-[var(--theme-text)]">加载中...</div>
         </div>
       }
     >

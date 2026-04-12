@@ -13,6 +13,7 @@ import { Drama, VodSource } from "@/types/drama";
 import DoubanCard from "@/components/DoubanCard";
 import { useVodSources } from "@/hooks/useVodSources";
 import { mutate } from "swr";
+import { useSearchHistory } from "@/hooks/useSearchHistory";
 
 // SWR 缓存键前缀
 const SWR_SEARCH_KEY_PREFIX = "search-results-";
@@ -42,6 +43,9 @@ function SearchContent() {
   const [searchResults, setSearchResults] = useState<Record<string, (Drama & { source: VodSource })[]>>({});
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
+  const { history: searchHistory, addToHistory, removeFromHistory, clearHistory } = useSearchHistory();
 
   // 使用 SWR 缓存的视频源配置
   const { sources: allSources } = useVodSources();
@@ -198,6 +202,23 @@ function SearchContent() {
     [startTransition]
   );
 
+  // 处理搜索输入变化
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchKeyword(value);
+    setShowSuggestions(true);
+    
+    // 生成搜索建议（基于搜索历史和输入值）
+    if (value.trim()) {
+      const suggestions = searchHistory
+        .filter(item => item.toLowerCase().includes(value.toLowerCase()))
+        .slice(0, 5);
+      setSearchSuggestions(suggestions);
+    } else {
+      setSearchSuggestions([]);
+    }
+  };
+
   // 当搜索关键词变化时执行搜索
   useEffect(() => {
     if (queryKeyword && searchingRef.current !== queryKeyword) {
@@ -209,6 +230,8 @@ function SearchContent() {
   // 处理搜索提交
   const handleSearch = () => {
     if (!searchKeyword.trim()) return;
+    addToHistory(searchKeyword.trim());
+    setShowSuggestions(false);
     router.push(`/search?q=${encodeURIComponent(searchKeyword.trim())}`);
   };
 
@@ -239,10 +262,10 @@ function SearchContent() {
             <div className="flex items-center gap-4 shrink-0">
               <button
                 onClick={goBack}
-                className="p-2 -ml-2 rounded-full hover:bg-white/10 transition-colors group"
+                className="p-2 -ml-2 rounded-full hover:bg-[var(--theme-hover)] transition-colors group"
               >
                 <svg
-                  className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors"
+                  className="w-5 h-5 text-[var(--theme-textSecondary)] group-hover:text-[var(--theme-text)] transition-colors"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -284,12 +307,78 @@ function SearchContent() {
                 <input
                   type="text"
                   value={searchKeyword}
-                  onChange={(e) => setSearchKeyword(e.target.value)}
+                  onChange={handleSearchInputChange}
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                  onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                  onFocus={() => setShowSuggestions(true)}
                   placeholder="搜索电影、电视剧、动漫..."
-                  className="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-12 pr-12 text-sm md:text-base text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 focus:bg-white/10 transition-all"
+                  className="w-full bg-[var(--theme-card)] border border-[var(--theme-border)] rounded-full py-2.5 pl-12 pr-12 text-sm md:text-base text-[var(--theme-text)] placeholder-[var(--theme-textSecondary)] focus:outline-none focus:ring-2 focus:ring-[var(--theme-primary)]/50 focus:border-[var(--theme-primary)]/50 focus:bg-[var(--theme-surface)] transition-all"
                   autoFocus
                 />
+                
+                {/* 搜索建议和历史 */}
+                {showSuggestions && (searchKeyword || searchHistory.length > 0) && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-[var(--theme-card)] border border-[var(--theme-border)] rounded-lg shadow-xl z-50">
+                    {/* 搜索历史 */}
+                    {searchHistory.length > 0 && !searchKeyword && (
+                      <div className="p-4 border-b border-[var(--theme-border)]">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="text-sm font-medium text-[var(--theme-text)]">搜索历史</h3>
+                          <button
+                            onClick={clearHistory}
+                            className="text-xs text-[var(--theme-textSecondary)] hover:text-[var(--theme-text)]"
+                          >
+                            清除
+                          </button>
+                        </div>
+                        <div className="space-y-2">
+                          {searchHistory.map((item, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center justify-between p-2 hover:bg-[var(--theme-hover)] rounded cursor-pointer"
+                              onClick={() => {
+                                setSearchKeyword(item);
+                                handleSearch();
+                              }}
+                            >
+                              <span className="text-sm text-[var(--theme-text)]">{item}</span>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  removeFromHistory(item);
+                                }}
+                                className="text-xs text-[var(--theme-textSecondary)] hover:text-[var(--theme-error)]"
+                              >
+                                ×
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* 搜索建议 */}
+                    {searchSuggestions.length > 0 && searchKeyword && (
+                      <div className="p-4">
+                        <h3 className="text-sm font-medium text-[var(--theme-text)] mb-2">搜索建议</h3>
+                        <div className="space-y-2">
+                          {searchSuggestions.map((suggestion, index) => (
+                            <div
+                              key={index}
+                              className="p-2 hover:bg-[var(--theme-hover)] rounded cursor-pointer"
+                              onClick={() => {
+                                setSearchKeyword(suggestion);
+                                handleSearch();
+                              }}
+                            >
+                              <span className="text-sm text-[var(--theme-text)]">{suggestion}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
                 {searchKeyword && (
                   <button
                     onClick={() => setSearchKeyword("")}

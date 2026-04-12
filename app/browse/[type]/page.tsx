@@ -233,7 +233,7 @@ function FilterRow({
               className={`text-sm transition-colors ${
                 isActive
                   ? "text-[var(--theme-primary)] font-medium"
-                  : "text-[var(--theme-text-secondary)] hover:text-[var(--theme-text)]"
+                  : "text-[var(--theme-textSecondary)] hover:text-[var(--theme-text)]"
               }`}
             >
               {option}
@@ -555,7 +555,7 @@ export default function BrowsePage() {
               <p className="text-[var(--theme-primary)] mb-4">{error}</p>
               <button
                 onClick={() => fetchData(1, false)}
-                className="px-6 py-3 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] text-white rounded-lg font-medium transition-colors shadow-lg shadow-[var(--theme-primary)]/20 flex items-center gap-2 mx-auto"
+                className="px-6 py-3 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] text-[var(--theme-text)] rounded-lg font-medium transition-colors shadow-lg shadow-[var(--theme-primary)]/20 flex items-center gap-2 mx-auto"
               >
                 <RefreshCw className="w-4 h-4" />
                 重新加载
@@ -600,17 +600,17 @@ export default function BrowsePage() {
           <div className="flex items-center justify-center py-32">
             <div className="text-center">
               <div className="w-20 h-20 bg-[var(--theme-card)] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Film className="w-10 h-10 text-[var(--theme-text-secondary)]" />
+                <Film className="w-10 h-10 text-[var(--theme-textSecondary)]" />
               </div>
               <h3 className="text-xl font-bold text-[var(--theme-text)] mb-2">暂无内容</h3>
-              <p className="text-[var(--theme-text-secondary)] mb-6">
+              <p className="text-[var(--theme-textSecondary)] mb-6">
                 没有找到符合筛选条件的影视作品
               </p>
               <button
                 onClick={() =>
                   setFilters({ genre: "", year: "", region: "", sort: "" })
                 }
-                className="px-6 py-3 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] text-white rounded-lg font-medium transition-colors"
+                className="px-6 py-3 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] text-[var(--theme-text)] rounded-lg font-medium transition-colors"
               >
                 重置筛选条件
               </button>

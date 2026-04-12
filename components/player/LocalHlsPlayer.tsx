@@ -317,6 +317,26 @@ export function LocalHlsPlayer({
                     }
                   });
                 }
+                
+                // 更新质量选择器选项
+                if (isMountedRef.current && hls.levels && hls.levels.length > 1) {
+                  const qualitySettings = art.setting.find((s: any) => s.name === "quality");
+                  if (qualitySettings) {
+                    const qualityOptions = [
+                      { html: "自动", value: -1, default: true },
+                    ];
+                    
+                    hls.levels.forEach((level: any, index: number) => {
+                      const bitrate = Math.round(level.bitrate / 1000);
+                      qualityOptions.push({
+                        html: `${bitrate}kbps`,
+                        value: index,
+                      });
+                    });
+                    
+                    qualitySettings.selector = qualityOptions;
+                  }
+                }
               });
 
               // 错误处理
@@ -352,6 +372,27 @@ export function LocalHlsPlayer({
               onSelect: function (item) {
                 if (art && "value" in item && typeof item.value === "number") {
                   art.playbackRate = item.value;
+                }
+              },
+            },
+            {
+              name: "quality",
+              html: "视频质量",
+              selector: [
+                { html: "自动", value: -1, default: true },
+              ],
+              onSelect: function (item) {
+                if (art && "value" in item && typeof item.value === "number" && hlsRef.current) {
+                  const level = item.value;
+                  if (level === -1) {
+                    // 自动模式
+                    hlsRef.current.startLevel = -1;
+                    hlsRef.current.loadLevel = -1;
+                  } else {
+                    // 手动选择质量
+                    hlsRef.current.startLevel = level;
+                    hlsRef.current.loadLevel = level;
+                  }
                 }
               },
             },

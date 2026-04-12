@@ -66,73 +66,85 @@ function formatDramaList(list: DramaListItem[], source: VodSource) {
 
 // 搜索单个源
 async function searchSingleSource(source: VodSource, keyword: string) {
-  try {
-    let response: Response;
+  const MAX_RETRIES = 2;
+  const RETRY_DELAY = 1000;
+  
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      let response: Response;
 
-    // 如果有搜索代理，使用 POST 请求
-    if (source.searchProxy) {
-      response = await fetch(source.searchProxy, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'User-Agent': 'Mozilla/5.0',
-        },
-        body: JSON.stringify({
-          api: source.api,
-          keyword: keyword,
-          page: 1,
-        }),
-        signal: AbortSignal.timeout(15000),
-      });
-    } else {
-      // 标准 GET 请求
-      const apiParams = new URLSearchParams({
-        ac: 'detail',
-        pg: '1',
-        wd: keyword,
-      });
-      
-      const apiUrl = `${source.api}?${apiParams.toString()}`;
-      
-      response = await fetch(apiUrl, {
-        method: 'GET',
-        headers: { 'User-Agent': 'Mozilla/5.0' },
-        signal: AbortSignal.timeout(15000),
-      });
-    }
-
-    if (!response.ok) {
-      return { source, results: [], error: 'API请求失败' };
-    }
-
-    const data: unknown = await response.json();
-
-    // 处理代理 API 响应格式
-    if (source.searchProxy && isProxyResponse(data)) {
-      if (!data.success) {
-        return { source, results: [], error: data.message || '搜索失败' };
+      // 如果有搜索代理，使用 POST 请求
+      if (source.searchProxy) {
+        response = await fetch(source.searchProxy, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'User-Agent': 'Mozilla/5.0',
+          },
+          body: JSON.stringify({
+            api: source.api,
+            keyword: keyword,
+            page: 1,
+          }),
+          signal: AbortSignal.timeout(15000),
+        });
+      } else {
+        // 标准 GET 请求
+        const apiParams = new URLSearchParams({
+          ac: 'detail',
+          pg: '1',
+          wd: keyword,
+        });
+        
+        const apiUrl = `${source.api}?${apiParams.toString()}`;
+        
+        response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: { 'User-Agent': 'Mozilla/5.0' },
+          signal: AbortSignal.timeout(15000),
+        });
       }
-      const formattedList = formatDramaList(data.data || [], source);
-      return { source, results: formattedList, error: null };
-    }
 
-    // 处理标准 API 响应格式
-    if (isStandardResponse(data)) {
-      if (data.code !== 1) {
-        return { source, results: [], error: data.msg || '未知错误' };
+      if (!response.ok) {
+        throw new Error(`API请求失败: ${response.status}`);
       }
-      const formattedList = formatDramaList(data.list || [], source);
-      return { source, results: formattedList, error: null };
-    }
 
-    return { source, results: [], error: '无法解析响应格式' };
-  } catch (error) {
-    return { 
-      source, 
-      results: [], 
-      error: error instanceof Error ? error.message : '搜索失败' 
-    };
+      const data: unknown = await response.json();
+
+      // 处理代理 API 响应格式
+      if (source.searchProxy && isProxyResponse(data)) {
+        if (!data.success) {
+          return { source, results: [], error: data.message || '搜索失败' };
+        }
+        const formattedList = formatDramaList(data.data || [], source);
+        return { source, results: formattedList, error: null };
+      }
+
+      // 处理标准 API 响应格式
+      if (isStandardResponse(data)) {
+        if (data.code !== 1) {
+          return { source, results: [], error: data.msg || '未知错误' };
+        }
+        const formattedList = formatDramaList(data.list || [], source);
+        return { source, results: formattedList, error: null };
+      }
+
+      return { source, results: [], error: '无法解析响应格式' };
+    } catch (error) {
+      console.error(`Source ${source.name} (attempt ${attempt}) failed:`, error);
+      if (attempt < MAX_RETRIES) {
+        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * attempt));
+      } else {
+        return { 
+          source, 
+          results: [], 
+          error: error instanceof Error ? error.message : '搜索失败' 
+        };
+      }
+    }
   }
+  
+  return { source, results: [], error: '搜索失败' };
 }
 
 // 流式搜索 API - 使用 Server-Sent Events

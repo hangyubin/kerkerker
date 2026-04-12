@@ -8,14 +8,38 @@ interface VodSourcesResponse {
 
 // 获取 VOD 视频源配置
 async function fetchVodSources(): Promise<VodSourcesResponse> {
-  const response = await fetch('/api/vod-sources');
-  const result = await response.json();
+  const MAX_RETRIES = 3;
+  const RETRY_DELAY = 1000;
   
-  if (result.code === 200 && result.data) {
-    return {
-      sources: result.data.sources || [],
-      selected: result.data.selected || null,
-    };
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const response = await fetch('/api/vod-sources', {
+        timeout: 10000, // 10秒超时
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const result = await response.json();
+      
+      if (result.code === 200 && result.data) {
+        return {
+          sources: result.data.sources || [],
+          selected: result.data.selected || null,
+        };
+      }
+      
+      throw new Error('Invalid response format');
+    } catch (error) {
+      console.error(`Attempt ${attempt} failed:`, error);
+      if (attempt < MAX_RETRIES) {
+        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * attempt));
+      } else {
+        console.error('All attempts failed, returning empty sources');
+        return { sources: [], selected: null };
+      }
+    }
   }
   
   return { sources: [], selected: null };

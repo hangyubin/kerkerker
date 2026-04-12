@@ -216,7 +216,7 @@ export default function CategoryPage() {
           <div className="flex items-center justify-center py-32">
             <div className="text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-4 border-[var(--theme-border)] border-t-[var(--theme-primary)] mx-auto mb-4" />
-              <p className="text-[var(--theme-text-secondary)] text-lg">正在加载精彩内容...</p>
+              <p className="text-[var(--theme-textSecondary)] text-lg">正在加载精彩内容...</p>
             </div>
           </div>
         ) : error ? (
@@ -225,7 +225,7 @@ export default function CategoryPage() {
               <p className="text-[var(--theme-primary)] mb-4">{error}</p>
               <button
                 onClick={refetch}
-                className="px-6 py-3 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] text-white rounded-lg font-medium transition-colors shadow-lg shadow-[var(--theme-primary)]/20"
+                className="px-6 py-3 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] text-[var(--theme-text)] rounded-lg font-medium transition-colors shadow-lg shadow-[var(--theme-primary)]/20"
               >
                 重新加载
               </button>
@@ -235,13 +235,13 @@ export default function CategoryPage() {
           <div className="flex items-center justify-center py-32">
             <div className="text-center">
               <div className="w-20 h-20 bg-[var(--theme-card)] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Film className="w-10 h-10 text-[var(--theme-text-secondary)]" />
+                <Film className="w-10 h-10 text-[var(--theme-textSecondary)]" />
               </div>
               <h3 className="text-xl font-bold text-[var(--theme-text)] mb-2">暂无内容</h3>
-              <p className="text-[var(--theme-text-secondary)] mb-6">该分类暂无影片数据</p>
+              <p className="text-[var(--theme-textSecondary)] mb-6">该分类暂无影片数据</p>
               <button
                 onClick={goBack}
-                className="px-6 py-3 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] text-white rounded-lg font-medium transition-colors"
+                className="px-6 py-3 bg-[var(--theme-primary)] hover:bg-[var(--theme-secondary)] text-[var(--theme-text)] rounded-lg font-medium transition-colors"
               >
                 返回首页
               </button>
