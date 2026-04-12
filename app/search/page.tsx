@@ -566,16 +566,16 @@ function SearchContent() {
                     return (
                       <div
                         key={title}
-                        className="relative card-wrapper z-0 hover:z-50"
+                        className="relative card-wrapper z-0 hover:z-50 group"
                       >
                         {/* 源数量标识 */}
                         <div className="absolute bottom-2 right-2 z-40">
-                          <div className="relative">
-                            <div className="bg-[var(--theme-primary)] text-[var(--theme-text)] text-xs font-bold px-2 py-1 rounded-full shadow-lg">
+                          <div className="relative source-count-container">
+                            <div className="bg-[var(--theme-primary)] text-[var(--theme-text)] text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200">
                               {filteredGroup.length}
                             </div>
                             {/* 悬停提示 */}
-                            <div className="absolute bottom-full right-0 mb-2 bg-[var(--theme-background)]/90 backdrop-blur-md text-[var(--theme-text)] text-xs p-2 rounded-md shadow-xl w-48 z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none border border-[var(--theme-border)]">
+                            <div className="absolute bottom-full right-0 mb-2 bg-[var(--theme-background)]/90 backdrop-blur-md text-[var(--theme-text)] text-xs p-2 rounded-md shadow-xl w-48 z-50 opacity-0 source-count-container:hover:opacity-100 transition-opacity duration-200 pointer-events-none border border-[var(--theme-border)]">
                               <div className="font-medium mb-1">可用源：</div>
                               <div className="space-y-1">
                                 {filteredGroup.map((item, index) => (
