@@ -13,9 +13,15 @@ async function fetchVodSources(): Promise<VodSourcesResponse> {
   
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
+      // 使用AbortController实现超时功能
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10秒超时
+      
       const response = await fetch('/api/vod-sources', {
-        timeout: 10000, // 10秒超时
+        signal: controller.signal,
       });
+      
+      clearTimeout(timeoutId);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

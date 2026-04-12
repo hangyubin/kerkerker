@@ -479,8 +479,8 @@ function SearchContent() {
                 </>
               ) : (
                 <>
-                  <span className="text-white font-medium">
-                    {searchResults.length}
+                  <span className="text-[var(--theme-text)] font-medium">
+                    {Object.keys(searchResults).length}
                   </span>{" "}
                   个结果
                   {queryKeyword && (

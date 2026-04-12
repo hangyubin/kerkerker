@@ -318,25 +318,7 @@ export function LocalHlsPlayer({
                   });
                 }
                 
-                // 更新质量选择器选项
-                if (isMountedRef.current && hls.levels && hls.levels.length > 1) {
-                  const qualitySettings = art.setting.find((s: any) => s.name === "quality");
-                  if (qualitySettings) {
-                    const qualityOptions = [
-                      { html: "自动", value: -1, default: true },
-                    ];
-                    
-                    hls.levels.forEach((level: any, index: number) => {
-                      const bitrate = Math.round(level.bitrate / 1000);
-                      qualityOptions.push({
-                        html: `${bitrate}kbps`,
-                        value: index,
-                      });
-                    });
-                    
-                    qualitySettings.selector = qualityOptions;
-                  }
-                }
+                // 质量选择器选项会在播放器初始化时设置，这里不需要动态更新
               });
 
               // 错误处理
