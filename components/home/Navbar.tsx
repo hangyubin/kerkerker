@@ -70,9 +70,9 @@ export function Navbar({ scrolled, onSearchOpen }: NavbarProps) {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[var(--theme-background)]/80 backdrop-blur-md border-b border-[var(--theme-border)] shadow-lg shadow-black/80`}
       >
-        <div className="px-4 md:px-12 py-3 md:py-4 flex items-center justify-between">
+        <div className="px-2 md:px-6 py-3 md:py-4 flex items-center justify-between">
           {/* 左侧：汉堡菜单（移动端）+ Logo */}
-          <div className="flex items-center space-x-2 md:space-x-8">
+          <div className="flex items-center space-x-2 md:space-x-4">
             {/* 汉堡菜单按钮 - 仅移动端 */}
             <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

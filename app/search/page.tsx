@@ -132,8 +132,12 @@ function SearchContent() {
                   startTransition(() => {
                     // 使用函数式更新，避免依赖searchResults
                     setSearchResults((prevResults) => {
-                      // 合并新结果并分组
-                      const mergedResults = [...(Object.values(prevResults).flat()), ...data.results];
+                      // 合并新结果并分组，屏蔽解说内容
+                      const filteredResults = data.results.filter((result: Drama & { source: VodSource }) => {
+                        const name = result.name.toLowerCase();
+                        return !name.includes('解说') && !name.includes('讲解') && !name.includes('解析');
+                      });
+                      const mergedResults = [...(Object.values(prevResults).flat()), ...filteredResults];
                       const groupedResults = mergedResults.reduce((groups, result) => {
                         // 使用影片名称作为分组键，去除首尾空格
                         const key = result.name.trim();
