@@ -382,12 +382,12 @@ export default function MovieDetailPage() {
               <ArrowLeft className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
             </button>
             <h1
-              className="text-xl font-bold tracking-tight cursor-pointer hidden sm:block"
-              onClick={goBack}
-            >
-              <span className="text-red-600">壳儿</span>
-              <span className="text-white ml-1">详情</span>
-            </h1>
+                className="text-xl font-bold tracking-tight cursor-pointer hidden sm:block"
+                onClick={goBack}
+              >
+                <span className="text-[var(--theme-primary)]">光影流年</span>
+                <span className="text-[var(--theme-text)] ml-1">电影</span>
+              </h1>
           </div>
         </div>
       </nav>

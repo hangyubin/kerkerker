@@ -147,7 +147,7 @@ function SettingsContent() {
       <div className="bg-[var(--theme-background)] border-b border-[var(--theme-border)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-6">
-            <h1 className="text-2xl font-bold text-[var(--theme-primary)]">壳儿</h1>
+            <h1 className="text-2xl font-bold text-[var(--theme-primary)]">光影流年</h1>
             <span className="text-[var(--theme-text)] text-lg">系统设置</span>
           </div>
           <button
