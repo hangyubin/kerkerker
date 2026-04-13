@@ -351,7 +351,7 @@ export default function PlayPage() {
       <div className="min-h-screen bg-[var(--theme-background)] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-2 border-[var(--theme-border)] border-t-[var(--theme-primary)] mx-auto mb-4" />
-          <p className="text-[var(--theme-textSecondary)] text-lg">加载中...</p>
+          <p className="text-[var(--theme-text)] text-lg">加载中...</p>
         </div>
       </div>
     );
@@ -584,7 +584,7 @@ export default function PlayPage() {
                         className={`aspect-video rounded-lg text-xs lg:text-sm flex flex-col items-center justify-center p-2 transition-all duration-300 group relative overflow-hidden ${
                             currentEpisode === index
                               ? "bg-gradient-to-br from-[var(--theme-primary)] to-[var(--theme-secondary)] text-[var(--theme-text)] shadow-lg shadow-[var(--theme-primary)]/40 ring-2 ring-[var(--theme-primary)] scale-105"
-                              : "bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] text-[var(--theme-textSecondary)] hover:text-[var(--theme-text)] hover:scale-105 backdrop-blur-sm"
+                              : "bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] text-[var(--theme-text)] hover:text-[var(--theme-primary)] hover:scale-105 backdrop-blur-sm"
                           }`}
                       >
                         {episode.name}
