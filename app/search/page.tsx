@@ -245,13 +245,32 @@ function SearchContent() {
     router.push(`/search?q=${encodeURIComponent(searchKeyword.trim())}`);
   };
 
-  // 点击影片 - 清除旧缓存后跳转播放页面
+  // 点击影片 - 保存多源数据后跳转播放页面
   const handlePlayClick = (drama: Drama & { source: VodSource }) => {
-    // 清除旧的 multi_source_matches 缓存，避免 SourceSelector 显示旧数据
     try {
-      localStorage.removeItem("multi_source_matches");
-    } catch {
-      // 静默处理
+      // 找到当前影片的所有可用源
+      const movieKey = cleanTitleFromLabels(drama.name.trim());
+      const movieSources = searchResults[movieKey] || [];
+      
+      // 转换为 AvailableSource 格式
+      const availableSources = movieSources.map(item => ({
+        source_key: item.source.key,
+        source_name: item.source.name,
+        vod_id: item.id,
+        vod_name: item.name,
+        match_confidence: 'high' as const
+      }));
+      
+      // 保存到 localStorage
+      localStorage.setItem(
+        "multi_source_matches",
+        JSON.stringify({
+          matches: availableSources,
+          timestamp: Date.now()
+        })
+      );
+    } catch (error) {
+      console.warn("保存多源数据失败:", error);
     }
 
     router.push(`/play/${drama.id}?source=${drama.source.key}`);
