@@ -1,0 +1,26 @@
+name: Clean GitHub Actions History
+
+on:
+  workflow_dispatch:
+    inputs:
+      days_old:
+        description: 'Delete workflows older than this number of days'
+        required: true
+        default: '30'
+        type: number
+
+jobs:
+  clean-history:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+
+    steps:
+      - name: Cleanup old workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          retain_days: ${{ inputs.days_old }}
+          keep_minimum_runs: 5
