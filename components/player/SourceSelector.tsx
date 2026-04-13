@@ -143,7 +143,7 @@ export function SourceSelector({ sources, currentSourceKey, onSourceChange }: So
                     <div className="flex-1 min-w-0">
                       {/* 源名称 */}
                       <div className="flex items-center space-x-2 mb-1">
-                        <p className={`text-sm font-semibold truncate ${isCurrent ? 'text-[var(--theme-primary)]' : 'text-[var(--theme-text)'
+                        <p className={`text-sm font-semibold truncate ${isCurrent ? 'text-[var(--theme-primary)]' : 'text-[var(--theme-text)]'
                           }`}>
                           {source.source_name}
                         </p>

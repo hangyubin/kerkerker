@@ -627,20 +627,20 @@ export default function PlayPage() {
                     <div className="space-y-3 text-xs lg:text-sm lg:border-t lg:border-[var(--theme-border)] lg:pt-6">
                       {dramaDetail.actor && (
                         <div className="group">
-                          <span className="text-[var(--theme-textSecondary)] font-semibold">
+                          <span className="text-[var(--theme-text)] font-semibold">
                             主演：
                           </span>
-                          <span className="text-[var(--theme-textSecondary)] group-hover:text-[var(--theme-text)] transition-colors">
+                          <span className="text-[var(--theme-text)] group-hover:text-[var(--theme-primary)] transition-colors">
                             {dramaDetail.actor}
                           </span>
                         </div>
                       )}
                       {dramaDetail.director && (
                         <div className="group">
-                          <span className="text-[var(--theme-textSecondary)] font-semibold">
+                          <span className="text-[var(--theme-text)] font-semibold">
                             导演：
                           </span>
-                          <span className="text-[var(--theme-textSecondary)] group-hover:text-[var(--theme-text)] transition-colors">
+                          <span className="text-[var(--theme-text)] group-hover:text-[var(--theme-primary)] transition-colors">
                             {dramaDetail.director}
                           </span>
                         </div>
@@ -651,12 +651,12 @@ export default function PlayPage() {
                   {/* 简介 */}
                   {dramaDetail.blurb && (
                     <div className="border-t border-[var(--theme-border)] pt-4 lg:pt-6">
-                      <h3 className="text-xs lg:text-sm font-semibold text-[var(--theme-textSecondary)] mb-2">
+                      <h3 className="text-xs lg:text-sm font-semibold text-[var(--theme-text)] mb-2">
                         剧情简介
                       </h3>
                       <div className="relative">
                         <p
-                          className={`text-xs lg:text-sm text-[var(--theme-textSecondary)] leading-relaxed transition-all duration-300 ${
+                          className={`text-xs lg:text-sm text-[var(--theme-text)] leading-relaxed transition-all duration-300 ${
                             isDescriptionExpanded ? "" : "line-clamp-4"
                           }`}
                           dangerouslySetInnerHTML={{
