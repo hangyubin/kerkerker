@@ -14,6 +14,7 @@ import DoubanCard from "@/components/DoubanCard";
 import { useVodSources } from "@/hooks/useVodSources";
 import { mutate } from "swr";
 import { useSearchHistory } from "@/hooks/useSearchHistory";
+import { cleanTitleFromLabels } from "@/lib/utils/title-utils";
 
 // SWR 缓存键前缀
 const SWR_SEARCH_KEY_PREFIX = "search-results-";
@@ -139,17 +140,17 @@ function SearchContent() {
                       });
                       const mergedResults = [...(Object.values(prevResults).flat()), ...filteredResults];
                       const groupedResults = mergedResults.reduce((groups, result) => {
-                        // 使用影片名称作为分组键，去除首尾空格
-                        const key = result.name.trim();
-                        if (!groups[key]) {
-                          groups[key] = [];
+                        // 使用清理后的影片名称作为分组键
+                        const cleanedKey = cleanTitleFromLabels(result.name.trim());
+                        if (!groups[cleanedKey]) {
+                          groups[cleanedKey] = [];
                         }
                         // 检查是否已经添加了相同源的相同影片
-                        const existingIndex = groups[key].findIndex(
+                        const existingIndex = groups[cleanedKey].findIndex(
                           (item: Drama & { source: VodSource }) => item.source.key === result.source.key && item.id === result.id
                         );
                         if (existingIndex === -1) {
-                          groups[key].push(result);
+                          groups[cleanedKey].push(result);
                         }
                         return groups;
                       }, {} as Record<string, (Drama & { source: VodSource })[]>);
@@ -544,7 +545,7 @@ function SearchContent() {
             <div className="animate-fade-in">
               <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-y-6 gap-x-3">
                 {Object.entries(searchResults)
-                  .map(([title, group]) => {
+                  .map(([cleanedTitle, group]) => {
                     // 过滤当前源的结果
                     const filteredGroup = group.filter(
                       (drama) => !currentSource || drama.source.key === currentSource.key
@@ -556,7 +557,7 @@ function SearchContent() {
                     const firstDrama = filteredGroup[0];
                     const movieData = {
                       id: String(firstDrama.id),
-                      title: firstDrama.name,
+                      title: cleanedTitle,
                       cover: firstDrama.pic,
                       rate: firstDrama.score || "",
                       episode_info: firstDrama.remarks || firstDrama.note || "",
@@ -569,28 +570,9 @@ function SearchContent() {
 
                     return (
                       <div
-                        key={title}
+                        key={cleanedTitle}
                         className="relative card-wrapper z-0 hover:z-50 group"
                       >
-                        {/* 源数量标识 */}
-                        <div className="absolute bottom-2 right-2 z-40">
-                          <div className="relative source-count-container">
-                            <div className="bg-[var(--theme-primary)] text-[var(--theme-text)] text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200">
-                              {filteredGroup.length}
-                            </div>
-                            {/* 悬停提示 */}
-                            <div className="absolute bottom-full right-0 mb-2 bg-[var(--theme-background)]/90 backdrop-blur-md text-[var(--theme-text)] text-xs p-2 rounded-md shadow-xl w-48 z-50 opacity-0 source-count-container:hover:opacity-100 transition-opacity duration-200 pointer-events-none border border-[var(--theme-border)]">
-                              <div className="font-medium mb-1">可用源：</div>
-                              <div className="space-y-1">
-                                {filteredGroup.map((item, index) => (
-                                  <div key={index} className="flex items-center justify-between">
-                                    <span>{item.source.name}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                         <DoubanCard
                           movie={movieData}
                           onSelect={() => {
@@ -604,6 +586,25 @@ function SearchContent() {
                             }
                           }}
                         />
+                        {/* 源数量标识 - 放在图片右下角 */}
+                        <div className="absolute bottom-2 right-2 z-40 group">
+                          <div className="relative">
+                            <div className="bg-[var(--theme-primary)] text-[var(--theme-text)] text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200">
+                              {filteredGroup.length}
+                            </div>
+                            {/* 悬停提示 */}
+                            <div className="absolute bottom-full right-0 mb-2 bg-[var(--theme-background)]/90 backdrop-blur-md text-[var(--theme-text)] text-xs p-2 rounded-md shadow-xl w-48 z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none border border-[var(--theme-border)]">
+                              <div className="font-medium mb-1">可用源：</div>
+                              <div className="space-y-1">
+                                {filteredGroup.map((item, index) => (
+                                  <div key={index} className="flex items-center justify-between">
+                                    <span>{item.source.name}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     );
                   })}

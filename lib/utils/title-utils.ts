@@ -251,6 +251,55 @@ export function normalizeTitle(title: string): string {
 }
 
 /**
+ * 清理标题中的冗余标签（正片、高清、HD等）
+ */
+export function cleanTitleFromLabels(title: string): string {
+  if (!title) return title;
+  
+  // 需要移除的标签列表
+  const labelsToRemove = [
+    // 清晰度标签
+    '高清', 'HD', '1080p', '720p', '4K', '超清', '标清', '蓝光', 'BD', 'DVD',
+    // 格式标签
+    '正片', '完整版', '未删减版', '未删节', '原版', '修复版', '重制版',
+    // 其他标签
+    '中文字幕', '字幕', '国语', '粤语', '英语', '日语', '韩语',
+    // 英文标签
+    'Full Movie', 'Full HD', 'HD Quality', '1080p', '720p', '4K',
+    'Uncut', 'Remastered', 'Original', 'Subtitle', 'Subbed', 'Dubbed'
+  ];
+  
+  let cleaned = title;
+  
+  // 移除标签
+  for (const label of labelsToRemove) {
+    // 支持中文和英文标签，忽略大小写
+    const regex = new RegExp(`[\\[【（(]?${label}[\\]））)]?`, 'gi');
+    cleaned = cleaned.replace(regex, '');
+    
+    // 移除独立标签（前后有空格的）
+    const spaceRegex = new RegExp(`\\s${label}\\s`, 'gi');
+    cleaned = cleaned.replace(spaceRegex, ' ');
+    
+    // 移除开头的标签
+    const startRegex = new RegExp(`^${label}\\s*`, 'gi');
+    cleaned = cleaned.replace(startRegex, '');
+    
+    // 移除结尾的标签
+    const endRegex = new RegExp(`\\s*${label}$`, 'gi');
+    cleaned = cleaned.replace(endRegex, '');
+  }
+  
+  // 移除常见的分隔符前后的空格
+  cleaned = cleaned.replace(/\s*[-–—:：]\s*/g, ' ');
+  
+  // 清理多余空格
+  cleaned = cleaned.replace(/\s+/g, ' ').trim();
+  
+  return cleaned || title;
+}
+
+/**
  * 计算两个标题的相似度
  */
 export function calculateTitleSimilarity(title1: string, title2: string): number {

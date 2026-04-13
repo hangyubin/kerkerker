@@ -50,8 +50,8 @@ export function SourceSelector({ sources, currentSourceKey, onSourceChange }: So
     return confidenceOrder[b.match_confidence] - confidenceOrder[a.match_confidence];
   });
 
-  // 如果只有一个或没有源，不显示
-  if (sources.length <= 1) {
+  // 即使只有一个源也显示（但禁用切换功能）
+  if (sources.length === 0) {
     return null;
   }
 
@@ -71,17 +71,20 @@ export function SourceSelector({ sources, currentSourceKey, onSourceChange }: So
     );
   };
 
+  const hasMultipleSources = sources.length > 1;
+
   return (
     <div className="relative" ref={dropdownRef}>
       {/* 触发按钮 */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center space-x-2 px-3 md:px-4 py-2 bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] rounded-full transition-all hover:scale-105 text-[var(--theme-text)] text-xs md:text-sm font-medium shadow-lg backdrop-blur-sm"
-        aria-label="切换视频源"
+        onClick={() => hasMultipleSources && setIsOpen(!isOpen)}
+        disabled={!hasMultipleSources}
+        className={`group flex items-center space-x-2 px-3 md:px-4 py-2 bg-[var(--theme-card)] ${hasMultipleSources ? 'hover:bg-[var(--theme-hover)] hover:scale-105 cursor-pointer' : 'cursor-not-allowed opacity-70'} rounded-full transition-all text-[var(--theme-text)] text-xs md:text-sm font-medium shadow-lg backdrop-blur-sm`}
+        aria-label={hasMultipleSources ? "切换视频源" : "当前只有一个播放源"}
         aria-expanded={isOpen}
       >
         <svg
-          className={`w-5 h-5 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-5 h-5 ${hasMultipleSources ? `transition-transform ${isOpen ? 'rotate-180' : ''}` : ''}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -102,8 +105,8 @@ export function SourceSelector({ sources, currentSourceKey, onSourceChange }: So
         )}
       </button>
 
-      {/* 下拉菜单 */}
-      {isOpen && (
+      {/* 下拉菜单 - 只有多个源时才显示 */}
+      {isOpen && hasMultipleSources && (
         <div className="absolute right-0 mt-3 w-72 md:w-80 bg-[var(--theme-background)]/98 backdrop-blur-xl rounded-xl shadow-2xl border border-[var(--theme-border)] overflow-hidden animate-fade-in z-50">
           {/* 头部 */}
           <div className="p-3 border-b border-[var(--theme-border)] bg-gradient-to-r from-[var(--theme-card)]/50 to-transparent">
