@@ -59,9 +59,9 @@ export function SourceSelector({ sources, currentSourceKey, onSourceChange }: So
 
   const getConfidenceBadge = (confidence: 'high' | 'medium' | 'low') => {
     const badges = {
-      high: { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/50', label: '精准' },
-      medium: { bg: 'bg-yellow-500/20', text: 'text-yellow-400', border: 'border-yellow-500/50', label: '相似' },
-      low: { bg: 'bg-gray-500/20', text: 'text-gray-400', border: 'border-gray-500/50', label: '模糊' },
+      high: { bg: 'bg-[var(--theme-success)]/20', text: 'text-[var(--theme-success)]', border: 'border-[var(--theme-success)]/50', label: '精准' },
+      medium: { bg: 'bg-[var(--theme-warning)]/20', text: 'text-[var(--theme-warning)]', border: 'border-[var(--theme-warning)]/50', label: '相似' },
+      low: { bg: 'bg-[var(--theme-textSecondary)]/20', text: 'text-[var(--theme-textSecondary)]', border: 'border-[var(--theme-textSecondary)]/50', label: '模糊' },
     };
     const badge = badges[confidence];
     return (

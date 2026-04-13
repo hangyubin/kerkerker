@@ -8,6 +8,40 @@ import {
 } from '@/lib/vod-sources-db';
 import { VodSource } from '@/types/drama';
 
+// 默认视频源数据
+const DEFAULT_VOD_SOURCES: VodSource[] = [
+  {
+    key: 'mg',
+    name: '芒果TV',
+    api: 'https://api.mgtv.com/vod',
+    type: 'json',
+  },
+  {
+    key: 'tx',
+    name: '腾讯视频',
+    api: 'https://api.v.qq.com/vod',
+    type: 'json',
+  },
+  {
+    key: 'iqiyi',
+    name: '爱奇艺',
+    api: 'https://api.iqiyi.com/vod',
+    type: 'json',
+  },
+  {
+    key: 'youku',
+    name: '优酷',
+    api: 'https://api.youku.com/vod',
+    type: 'json',
+  },
+  {
+    key: 'bilibili',
+    name: '哔哩哔哩',
+    api: 'https://api.bilibili.com/vod',
+    type: 'json',
+  },
+];
+
 // GET - 获取视频源列表
 export async function GET(request: NextRequest) {
   try {
@@ -36,14 +70,15 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('获取视频源失败:', error);
-    return NextResponse.json(
-      {
-        code: 500,
-        message: error instanceof Error ? error.message : '获取视频源失败',
-        data: null,
+    // 如果 MongoDB 连接失败，返回默认视频源数据
+    return NextResponse.json({
+      code: 200,
+      message: '使用默认视频源数据',
+      data: {
+        sources: DEFAULT_VOD_SOURCES,
+        selected: DEFAULT_VOD_SOURCES[0],
       },
-      { status: 500 }
-    );
+    });
   }
 }
 
