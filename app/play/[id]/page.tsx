@@ -508,14 +508,14 @@ export default function PlayPage() {
                 </span>
               )}
               {dramaDetail.type && (
-                <span className="text-[var(--theme-textSecondary)] font-medium">
+                <span className="text-[var(--theme-text)] font-medium">
                   {dramaDetail.type}
                 </span>
               )}
               {dramaDetail.area && (
                 <>
-                  <span className="text-[var(--theme-textSecondary)]/50">•</span>
-                  <span className="text-[var(--theme-textSecondary)] font-medium">
+                  <span className="text-[var(--theme-text)]/50">•</span>
+                  <span className="text-[var(--theme-text)] font-medium">
                     {dramaDetail.area}
                   </span>
                 </>
@@ -533,7 +533,7 @@ export default function PlayPage() {
               className="hidden sm:block absolute top-4 right-4 z-20 p-2 bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] rounded-full transition-all duration-300 group"
               title="关闭侧边栏"
             >
-              <X className="w-5 h-5 text-[var(--theme-textSecondary)] group-hover:text-[var(--theme-text)]" />
+              <X className="w-5 h-5 text-[var(--theme-text)] group-hover:text-[var(--theme-primary)]" />
             </button>
             <div className="p-4 lg:p-6 space-y-4 lg:space-y-6">
               {/* 查看全部集数模式 */}
@@ -543,7 +543,7 @@ export default function PlayPage() {
                   <div className="flex items-center justify-between sticky top-0 bg-[var(--theme-background)] pb-4 border-b border-[var(--theme-border)] z-10">
                     <button
                       onClick={() => setShowAllEpisodes(false)}
-                      className="flex items-center gap-2 text-[var(--theme-textSecondary)] hover:text-[var(--theme-text)] transition-colors group"
+                      className="flex items-center gap-2 text-[var(--theme-text)] hover:text-[var(--theme-primary)] transition-colors group"
                     >
                       <svg
                         className="w-5 h-5 group-hover:-translate-x-1 transition-transform"
@@ -569,7 +569,7 @@ export default function PlayPage() {
                     <h1 className="text-sm lg:text-2xl font-bold text-[var(--theme-text)] mb-2 line-clamp-2 tracking-tight leading-tight">
                       {dramaDetail.name}
                     </h1>
-                    <p className="text-xs lg:text-sm text-[var(--theme-textSecondary)]">选择集数</p>
+                    <p className="text-xs lg:text-sm text-[var(--theme-text)]">选择集数</p>
                   </div>
 
                   {/* 所有集数网格 */}
@@ -606,16 +606,16 @@ export default function PlayPage() {
                         </span>
                       )}
                       {dramaDetail.remarks && (
-                        <span className="px-3 py-1.5 border border-[var(--theme-border)] text-[var(--theme-textSecondary)] rounded-md font-medium backdrop-blur-sm bg-[var(--theme-card)]">
+                        <span className="px-3 py-1.5 border border-[var(--theme-border)] text-[var(--theme-text)] rounded-md font-medium backdrop-blur-sm bg-[var(--theme-card)]">
                           {dramaDetail.remarks}
                         </span>
                       )}
                     </div>
-                    <div className="flex flex-wrap items-center gap-2 text-sm text-[var(--theme-textSecondary)] font-medium">
+                    <div className="flex flex-wrap items-center gap-2 text-sm text-[var(--theme-text)] font-medium">
                       {dramaDetail.type && <span>{dramaDetail.type}</span>}
                       {dramaDetail.area && (
                         <>
-                          <span className="text-[var(--theme-textSecondary)]/50">•</span>
+                          <span className="text-[var(--theme-text)]/50">•</span>
                           <span>{dramaDetail.area}</span>
                         </>
                       )}
@@ -752,7 +752,7 @@ export default function PlayPage() {
                             className={`rounded-lg flex flex-col text-xs lg:text-sm items-center justify-center p-2 transition-all duration-300 group relative overflow-hidden ${
                               currentEpisode === index
                                 ? "bg-gradient-to-br from-[var(--theme-primary)] to-[var(--theme-secondary)] text-[var(--theme-text)] shadow-lg shadow-[var(--theme-primary)]/40 ring-2 ring-[var(--theme-primary)] scale-105"
-                                : "bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] text-[var(--theme-textSecondary)] hover:text-[var(--theme-text)] hover:scale-105 backdrop-blur-sm"
+                                : "bg-[var(--theme-card)] hover:bg-[var(--theme-hover)] text-[var(--theme-text)] hover:text-[var(--theme-primary)] hover:scale-105 backdrop-blur-sm"
                             }`}
                           >
                             {episode.name}
