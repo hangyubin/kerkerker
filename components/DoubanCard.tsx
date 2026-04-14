@@ -9,9 +9,13 @@ interface DoubanCardProps {
   onSelect: (movie: DoubanMovie) => void;
   /** 是否为首屏可见卡片，优先加载 */
   priority?: boolean;
+  /** 源数量 */
+  sourceCount?: number;
+  /** 可用源列表 */
+  sources?: string[];
 }
 
-export default function DoubanCard({ movie, onSelect, priority = false }: DoubanCardProps) {
+export default function DoubanCard({ movie, onSelect, priority = false, sourceCount, sources }: DoubanCardProps) {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
  
@@ -190,6 +194,34 @@ export default function DoubanCard({ movie, onSelect, priority = false }: Douban
           <div style={ratingStyle}>
             <Star className="w-4 h-4 fill-current" />
             <span>{movie.rate}</span>
+          </div>
+        )}
+
+        {/* 源数量标识 - 放在图片右下角 */}
+        {sourceCount && (
+          <div style={{
+            position: 'absolute' as const,
+            bottom: '0.5rem' as const,
+            right: '0.5rem' as const,
+            zIndex: 40,
+          }}>
+            <div className="relative group">
+              <div className="bg-[var(--theme-primary)] text-[var(--theme-text)] text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200">
+                {sourceCount}
+              </div>
+              {/* 悬停提示 - 只有悬停在数字标签上时才显示 */}
+              {sources && sources.length > 0 && (
+                <div className="absolute bottom-full right-0 mb-2 bg-[var(--theme-background)]/90 backdrop-blur-md text-[var(--theme-text)] text-xs p-2 rounded-md shadow-xl w-48 z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none border border-[var(--theme-border)]">
+                  <div className="space-y-1">
+                    {sources.map((source, index) => (
+                      <div key={index} className="flex items-center justify-between">
+                        <span>{source}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         )}
  
