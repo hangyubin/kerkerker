@@ -205,17 +205,13 @@ export default function DoubanCard({ movie, onSelect, priority = false, sourceCo
             right: '0.5rem' as const,
             zIndex: 40,
           }}>
-            {/* 使用 group 类来启用 group-hover */}
-            <div className="relative group cursor-pointer">
-              <div className="bg-[var(--theme-primary)] text-[var(--theme-text)] text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200">
+            <div className="relative group">
+              <div className="bg-[var(--theme-primary)] text-[var(--theme-text)] text-xs font-bold px-2 py-1 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-200 cursor-pointer">
                 {sourceCount}
               </div>
               {/* 悬停提示 - 只有悬停在数字标签上时才显示 */}
               {sources && sources.length > 0 && (
-                <div
-                  className="absolute top-full right-0 mt-2 bg-[var(--theme-background)]/90 backdrop-blur-md text-[var(--theme-text)] text-xs p-2 rounded-md shadow-xl w-48 z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none border border-[var(--theme-border)]"
-                  style={{ pointerEvents: 'none' }}
-                >
+                <div className="absolute bottom-full right-0 mb-2 bg-[var(--theme-background)]/90 backdrop-blur-md text-[var(--theme-text)] text-xs p-2 rounded-md shadow-xl w-48 z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none border border-[var(--theme-border)]">
                   <div className="space-y-1">
                     {sources.map((source, index) => (
                       <div key={index} className="flex items-center justify-between">

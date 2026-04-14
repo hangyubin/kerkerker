@@ -141,7 +141,14 @@ function SearchContent() {
                       const mergedResults = [...(Object.values(prevResults).flat()), ...filteredResults];
                       const groupedResults = mergedResults.reduce((groups, result) => {
                         // 使用清理后的影片名称作为分组键
-                        const cleanedKey = cleanTitleFromLabels(result.name.trim());
+                        const originalTitle = result.name.trim();
+                        const cleanedKey = cleanTitleFromLabels(originalTitle);
+                        // 只在开发环境下打印日志
+                        if (process.env.NODE_ENV === 'development') {
+                          if (originalTitle !== cleanedKey) {
+                            console.log(`📝 清理标题: "${originalTitle}" => "${cleanedKey}"`);
+                          }
+                        }
                         if (!groups[cleanedKey]) {
                           groups[cleanedKey] = [];
                         }
