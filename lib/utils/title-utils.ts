@@ -260,13 +260,25 @@ export function cleanTitleFromLabels(title: string): string {
   const labelsToRemove = [
     // 清晰度标签
     '高清', 'HD', '1080p', '720p', '4K', '超清', '标清', '蓝光', 'BD', 'DVD',
+    '高清版', '超清版', '蓝光版', 'BD版', 'DVD版',
     // 格式标签
     '正片', '完整版', '未删减版', '未删节', '原版', '修复版', '重制版',
-    // 其他标签
+    '完整版', '正片版', '正式版', '完整版', '完结版', '最终版',
+    // 语言标签
     '中文字幕', '字幕', '国语', '粤语', '英语', '日语', '韩语',
+    '中文', '国语版', '粤语版', '英语版', '日语版', '韩语版',
+    '中字', '字幕版', '双语', '双语字幕',
     // 英文标签
     'Full Movie', 'Full HD', 'HD Quality', '1080p', '720p', '4K',
-    'Uncut', 'Remastered', 'Original', 'Subtitle', 'Subbed', 'Dubbed'
+    'Uncut', 'Remastered', 'Original', 'Subtitle', 'Subbed', 'Dubbed',
+    'HD', 'BD', 'DVD', 'Blu-ray', 'Complete', 'Final',
+    // 其他标签
+    '在线观看', '免费观看', '观看', '全集', '完整版', '高清全集',
+    '完整版全集', '超清全集', '蓝光全集', 'BD全集', 'DVD全集',
+    '无删减', '未删减', '未删节', '完整版无删减', '未删减版',
+    '修复版', '重制版', '高清修复版', '超清修复版', '蓝光修复版',
+    'HD修复版', 'BD修复版', 'DVD修复版', '重制版', '高清重制版',
+    '超清重制版', '蓝光重制版', 'HD重制版', 'BD重制版', 'DVD重制版'
   ];
   
   let cleaned = title;
@@ -294,6 +306,12 @@ export function cleanTitleFromLabels(title: string): string {
   cleaned = cleaned.replace(/\s*[-–—:：]\s*/g, ' ');
   
   // 清理多余空格
+  cleaned = cleaned.replace(/\s+/g, ' ').trim();
+  
+  // 移除空括号和方括号
+  cleaned = cleaned.replace(/\[\s*\]/g, '').replace(/\(\s*\)/g, '').replace(/【\s*】/g, '').replace(/（\s*）/g, '');
+  
+  // 再次清理多余空格
   cleaned = cleaned.replace(/\s+/g, ' ').trim();
   
   return cleaned || title;
