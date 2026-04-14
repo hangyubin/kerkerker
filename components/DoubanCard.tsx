@@ -211,7 +211,7 @@ export default function DoubanCard({ movie, onSelect, priority = false, sourceCo
               </div>
               {/* 悬停提示 - 只有悬停在数字标签上时才显示 */}
               {sources && sources.length > 0 && (
-                <div className="absolute bottom-full right-0 mb-2 bg-[var(--theme-background)]/90 backdrop-blur-md text-[var(--theme-text)] text-xs p-2 rounded-md shadow-xl w-56 z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none border border-[var(--theme-border)]">
+                <div className="absolute bottom-full right-0 mb-2 bg-[var(--theme-background)]/90 backdrop-blur-md text-[var(--theme-text)] text-xs p-2 rounded-md shadow-xl w-56 z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none border border-[var(--theme-border)]" style={{ right: 0 }}>
                   <div className="space-y-1">
                     {sources.map((source, index) => (
                       <div key={index} className="flex items-center justify-between">
