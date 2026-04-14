@@ -255,14 +255,16 @@ export function normalizeTitle(title: string): string {
  */
 export function cleanTitleFromLabels(title: string): string {
   if (!title) return title;
-  
+
+  let cleaned = title;
+
   // 首先移除所有括号和方括号中的内容
-  let cleaned = title
+  cleaned = cleaned
     .replace(/\[.*?\]/g, '')  // 移除 [...] 中的内容
     .replace(/\(.*?\)/g, '')  // 移除 (...) 中的内容
     .replace(/【.*?】/g, '')  // 移除 【...】 中的内容
     .replace(/（.*?）/g, '');  // 移除 （...） 中的内容
-  
+
   // 需要移除的标签列表
   const labelsToRemove = [
     // 清晰度标签
@@ -287,27 +289,27 @@ export function cleanTitleFromLabels(title: string): string {
     'HD修复版', 'BD修复版', 'DVD修复版', '重制版', '高清重制版',
     '超清重制版', '蓝光重制版', 'HD重制版', 'BD重制版', 'DVD重制版'
   ];
-  
-  // 移除标签
+
+  // 移除标签 - 直接匹配，不使用单词边界
   for (const label of labelsToRemove) {
-    // 支持中文和英文标签，忽略大小写
-    // 使用更强大的正则表达式，匹配标签前后的各种分隔符
-    const regex = new RegExp(`(^|\s|[-–—:：])${label}($|\s|[-–—:：])`, 'gi');
-    cleaned = cleaned.replace(regex, '$1$2');
+    // 直接替换标签（忽略大小写）
+    const escapedLabel = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escapedLabel, 'gi');
+    cleaned = cleaned.replace(regex, '');
   }
-  
-  // 移除常见的分隔符前后的空格
-  cleaned = cleaned.replace(/\s*[-–—:：]\s*/g, ' ');
-  
+
+  // 移除常见的分隔符前后的空格和分隔符本身
+  cleaned = cleaned.replace(/\s*[-–—:：|·•、,，,。.]\s*/g, ' ');
+
   // 清理多余空格
   cleaned = cleaned.replace(/\s+/g, ' ').trim();
-  
+
   // 移除空括号和方括号
   cleaned = cleaned.replace(/\[\s*\]/g, '').replace(/\(\s*\)/g, '').replace(/【\s*】/g, '').replace(/（\s*）/g, '');
-  
+
   // 再次清理多余空格
   cleaned = cleaned.replace(/\s+/g, ' ').trim();
-  
+
   return cleaned || title;
 }
 
