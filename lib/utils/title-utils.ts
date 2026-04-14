@@ -256,6 +256,13 @@ export function normalizeTitle(title: string): string {
 export function cleanTitleFromLabels(title: string): string {
   if (!title) return title;
   
+  // 首先移除所有括号和方括号中的内容
+  let cleaned = title
+    .replace(/\[.*?\]/g, '')  // 移除 [...] 中的内容
+    .replace(/\(.*?\)/g, '')  // 移除 (...) 中的内容
+    .replace(/【.*?】/g, '')  // 移除 【...】 中的内容
+    .replace(/（.*?）/g, '');  // 移除 （...） 中的内容
+  
   // 需要移除的标签列表
   const labelsToRemove = [
     // 清晰度标签
@@ -281,25 +288,12 @@ export function cleanTitleFromLabels(title: string): string {
     '超清重制版', '蓝光重制版', 'HD重制版', 'BD重制版', 'DVD重制版'
   ];
   
-  let cleaned = title;
-  
   // 移除标签
   for (const label of labelsToRemove) {
     // 支持中文和英文标签，忽略大小写
-    const regex = new RegExp(`[\\[【（(]?${label}[\\]））)]?`, 'gi');
-    cleaned = cleaned.replace(regex, '');
-    
-    // 移除独立标签（前后有空格的）
-    const spaceRegex = new RegExp(`\\s${label}\\s`, 'gi');
-    cleaned = cleaned.replace(spaceRegex, ' ');
-    
-    // 移除开头的标签
-    const startRegex = new RegExp(`^${label}\\s*`, 'gi');
-    cleaned = cleaned.replace(startRegex, '');
-    
-    // 移除结尾的标签
-    const endRegex = new RegExp(`\\s*${label}$`, 'gi');
-    cleaned = cleaned.replace(endRegex, '');
+    // 使用更强大的正则表达式，匹配标签前后的各种分隔符
+    const regex = new RegExp(`(^|\s|[-–—:：])${label}($|\s|[-–—:：])`, 'gi');
+    cleaned = cleaned.replace(regex, '$1$2');
   }
   
   // 移除常见的分隔符前后的空格
