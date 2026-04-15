@@ -285,6 +285,14 @@ export function cleanTitleFromLabels(title: string): string {
     'Uncut', 'Remastered', 'Original', 'Subtitle', 'Subbed', 'Dubbed',
     'HD', 'BD', 'DVD', 'Blu-ray', 'Complete', 'Final', 'Full Version',
     'Movie', 'Film', 'Video',
+    // 版本标签
+    '加更版', '（加更版）', '动态漫', '动漫',
+    // 类型标签
+    '演员篇', '金融季', '常规赛', 'NBA',
+    // 其他标签
+    'VS', '在线', '我屯了千亿物资', '末日',
+    // 年份标签
+    '2026', '2025', '2024', '2023', '2022', '2021', '2020',
     // 其他标签
     '在线观看', '免费观看', '观看', '全集', '完整版', '高清全集',
     '完整版全集', '超清全集', '蓝光全集', 'BD全集', 'DVD全集',
