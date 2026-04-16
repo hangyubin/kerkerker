@@ -264,7 +264,7 @@ function SearchContent() {
         source_key: item.source.key,
         source_name: item.source.name,
         vod_id: item.id,
-        vod_name: item.name,
+        vod_name: cleanTitleFromLabels(item.name),
         match_confidence: 'high' as const
       }));
       
