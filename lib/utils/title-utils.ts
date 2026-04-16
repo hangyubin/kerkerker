@@ -287,12 +287,20 @@ export function cleanTitleFromLabels(title: string): string {
     '无删减', '未删减', '未删节', '未删减版'
   ];
 
-  // 移除标签 - 直接匹配，不使用单词边界
+  // 移除标签 - 对不同类型的标签使用不同的匹配策略
   for (const label of labelsToRemove) {
     // 直接替换标签（忽略大小写）
     const escapedLabel = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(escapedLabel, 'gi');
-    cleaned = cleaned.replace(regex, '');
+    
+    // 对于英文标签和数字标签，使用单词边界
+    if (/^[A-Za-z0-9]+$/.test(label)) {
+      const regex = new RegExp(`\\b${escapedLabel}\\b`, 'gi');
+      cleaned = cleaned.replace(regex, '');
+    } else {
+      // 对于中文标签，直接匹配
+      const regex = new RegExp(escapedLabel, 'gi');
+      cleaned = cleaned.replace(regex, '');
+    }
   }
 
   // 移除常见的分隔符前后的空格和分隔符本身
