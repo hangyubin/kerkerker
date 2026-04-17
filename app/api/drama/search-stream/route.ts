@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { getVodSourcesFromDB } from '@/lib/vod-sources-db';
 import { VodSource } from '@/types/drama';
+import { cleanTitleFromLabels } from '@/lib/utils/title-utils';
 
 interface DramaListItem {
   vod_id: number;
@@ -44,7 +45,10 @@ function isStandardResponse(data: unknown): data is DramaListResponse {
 function formatDramaList(list: DramaListItem[], source: VodSource) {
   return list.map((item) => ({
     id: item.vod_id,
-    name: item.vod_name,
+    // ✅ 在API层面就清理标题，从源头解决问题
+    name: cleanTitleFromLabels(item.vod_name),
+    // 同时保留原始标题用于调试
+    originalName: item.vod_name,
     subName: item.vod_sub || '',
     pic: item.vod_pic || '',
     remarks: item.vod_remarks || '',
@@ -68,7 +72,7 @@ function formatDramaList(list: DramaListItem[], source: VodSource) {
 async function searchSingleSource(source: VodSource, keyword: string) {
   const MAX_RETRIES = 2;
   const RETRY_DELAY = 1000;
-  
+
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
       let response: Response;
@@ -95,9 +99,9 @@ async function searchSingleSource(source: VodSource, keyword: string) {
           pg: '1',
           wd: keyword,
         });
-        
+
         const apiUrl = `${source.api}?${apiParams.toString()}`;
-        
+
         response = await fetch(apiUrl, {
           method: 'GET',
           headers: { 'User-Agent': 'Mozilla/5.0' },
@@ -135,15 +139,15 @@ async function searchSingleSource(source: VodSource, keyword: string) {
       if (attempt < MAX_RETRIES) {
         await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * attempt));
       } else {
-        return { 
-          source, 
-          results: [], 
-          error: error instanceof Error ? error.message : '搜索失败' 
+        return {
+          source,
+          results: [],
+          error: error instanceof Error ? error.message : '搜索失败'
         };
       }
     }
   }
-  
+
   return { source, results: [], error: '搜索失败' };
 }
 
@@ -161,7 +165,7 @@ export async function GET(request: NextRequest) {
 
   // 获取所有视频源
   const allSources = await getVodSourcesFromDB();
-  
+
   if (allSources.length === 0) {
     return new Response(JSON.stringify({ error: '未配置视频源' }), {
       status: 404,
@@ -173,11 +177,11 @@ export async function GET(request: NextRequest) {
   const stream = new ReadableStream({
     async start(controller) {
       const encoder = new TextEncoder();
-      
+
       // 发送初始信息
       controller.enqueue(encoder.encode(
-        `data: ${JSON.stringify({ 
-          type: 'init', 
+        `data: ${JSON.stringify({
+          type: 'init',
           totalSources: allSources.length,
           sources: allSources.map(s => ({ key: s.key, name: s.name }))
         })}\n\n`
@@ -186,7 +190,7 @@ export async function GET(request: NextRequest) {
       // 并行搜索所有源，但每个完成就立即推送
       const searchPromises = allSources.map(async (source) => {
         const result = await searchSingleSource(source, keyword);
-        
+
         // 每个源完成后立即推送结果
         controller.enqueue(encoder.encode(
           `data: ${JSON.stringify({
@@ -198,7 +202,7 @@ export async function GET(request: NextRequest) {
             error: result.error,
           })}\n\n`
         ));
-        
+
         return result;
       });
 
@@ -209,7 +213,7 @@ export async function GET(request: NextRequest) {
       controller.enqueue(encoder.encode(
         `data: ${JSON.stringify({ type: 'done' })}\n\n`
       ));
-      
+
       controller.close();
     },
   });
