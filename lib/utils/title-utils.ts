@@ -254,7 +254,7 @@ export function normalizeTitle(title: string): string {
  * 清理标题中的冗余标签（正片、高清、HD等）
  */
 export function cleanTitleFromLabels(title: string): string {
-  if (!title) return title;
+  if (!title) return '';
 
   let cleaned = title;
 
