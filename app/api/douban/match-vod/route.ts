@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getVodSourcesFromDB } from '@/lib/vod-sources-db';
 import { VodSource } from '@/types/drama';
+import { cleanTitleFromLabels } from '@/lib/utils/title-utils';
 
 interface VodItem {
   id: string | number;
@@ -124,7 +125,7 @@ export async function POST(request: NextRequest) {
           source_key: source.key,
           source_name: source.name,
           vod_id: matchedVod.id,
-          vod_name: matchedVod.name,
+          vod_name: cleanTitleFromLabels(matchedVod.name),
           match_confidence: getMatchConfidence(matchedVod.name, title),
           vod_data: matchedVod,
         };

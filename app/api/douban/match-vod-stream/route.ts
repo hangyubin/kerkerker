@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import { getVodSourcesFromDB } from '@/lib/vod-sources-db';
 import { VodSource } from '@/types/drama';
+import { cleanTitleFromLabels } from '@/lib/utils/title-utils';
 
 interface VodItem {
   id: string | number;
@@ -89,9 +90,9 @@ async function searchSingleSource(
           source_key: source.key,
           source_name: source.name,
           vod_id: bestMatch.id,
-          vod_name: bestMatch.name,
+          vod_name: cleanTitleFromLabels(bestMatch.name),
           match_confidence: getMatchConfidence(bestMatch.name, title),
-          priority: source.priority ?? 999,  // 未设置优先级的排在最后
+          priority: source.priority ?? 999,
         };
       }
     }
