@@ -4,8 +4,9 @@ import { VodSource } from '@/types/drama';
 import { cleanTitleFromLabels } from '@/lib/utils/title-utils';
 
 interface DramaListItem {
-  vod_id: number;
-  vod_name: string;
+  // detail 接口字段
+  vod_id?: number;
+  vod_name?: string;
   vod_pic?: string;
   vod_remarks?: string;
   type_name?: string;
@@ -20,6 +21,23 @@ interface DramaListItem {
   vod_total?: number;
   vod_blurb?: string;
   vod_class?: string;
+  // videolist 接口字段（无 vod_ 前缀）
+  id?: number;
+  name?: string;
+  pic?: string;
+  remarks?: string;
+  type?: string;
+  time?: string;
+  play_from?: string;
+  sub?: string;
+  actor?: string;
+  director?: string;
+  area?: string;
+  year?: string;
+  score?: string;
+  total?: number;
+  blurb?: string;
+  class?: string;
 }
 
 interface DramaListResponse {
@@ -62,7 +80,7 @@ function formatDramaList(list: DramaListItem[], source: VodSource) {
     score: item.vod_score || item.score || '0.0',
     total: item.vod_total || item.total || 0,
     blurb: item.vod_blurb || item.blurb || '',
-    tags: (item.vod_class || item.class) ? (item.vod_class || item.class).split(',').map((tag: string) => tag.trim()) : [],
+    tags: (item.vod_class || item.class || '').split(',').map((tag: string) => tag.trim()),
     vod_class: item.vod_class || item.class || '',
     source: source,
   }));
