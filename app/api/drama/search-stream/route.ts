@@ -94,8 +94,9 @@ async function searchSingleSource(source: VodSource, keyword: string) {
         });
       } else {
         // 标准 GET 请求
+        // 改用 videolist 接口（与NewTV/MoonTVPlus一致），获取更干净的标题
         const apiParams = new URLSearchParams({
-          ac: 'detail',
+          ac: 'videolist',
           pg: '1',
           wd: keyword,
         });
